@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['8000-itjosephk2-teamtracker-vo1qvtvsqz2.ws.codeinstitute-ide.net']
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://8000-itjosephk2-teamtracker-vo1qvtvsqz2.ws.codeinstitute-ide.net',
+    'https://8000-itjosephk2-teamtracker-vo1qvtvsqz2.ws.codeinstitute-ide.net',
+]
+
 
 # Application definition
 

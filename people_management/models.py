@@ -4,20 +4,21 @@ from django.db import models
 class person(models.Model):
     first_name = models.CharField(max_length = 50)
     last_name = models.CharField(max_length = 50)
-    email = models.EmailField(max_length = 250)
+    email = models.EmailField(max_length = 255)
+    phone_number = models.IntegerField()
+    date_of_birth = models.DateField()
+    active = models.BooleanField(default=False)
 
-    job_link_description = models.URLField(max_length = 200)
-    application_posted = models.DateField()
-    date_applied = models.DateField(default=datetime.date.today)
-    cv = models.FileField(blank=True, null=True)
-    cover_letter = models.FileField(blank=True, null=True)
-    date_last_followup = models.DateField()
-    recruiter_name = models.CharField(max_length= 80)
-    recruiter_email = models.EmailField(max_length = 250)
-    manager_name = models.CharField(max_length= 80)
-    
-    company_name = models.CharField(max_length= 60)
-    company_website = models.URLField(max_length = 200)
+    def __str__(self):
+        return self.name
+
+class contract(models.Model):
+    person_id = models.ForeignKey(person, on_delete=models.CASCADE)
+    job_title = models.CharField(max_length=255)
+    contract_start = models.DateField()
+    contract_end = models.DateField()
+    hourly_rate = models.FloatField(default=12.45)
+    contracted_hours = models.FloatField(default=40)
 
     def __str__(self):
         return self.name
