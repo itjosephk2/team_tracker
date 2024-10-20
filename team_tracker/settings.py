@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Custome Apps
+    'dashboard',
     'security',
     'people_management',
     'hr_management',
