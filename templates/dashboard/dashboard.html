@@ -6,6 +6,7 @@
 {% block content %}      
 
     <h1 class="mt-4">Dashboard</h1>
+    <h1>People Data: {{ people }}</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Dashboard</li>
     </ol>
@@ -77,32 +78,37 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>DOB</th>
+                        <th>Status</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>DOB</th>
+                        <th>Status</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
+                    {% for person in people %}
+                        <tr>
+                            <td>{{ person.first_name }} {{ person.last_name }}</td>
+                            <td>{{ person.email }}</td>
+                            <td>{{ person.phone_number }}</td>
+                            <td>{{ person.date_of_birth }}</td>
+                            <td>{{ person.active }}</td>
+                            <td><i class="fa-solid fa-pen-to-square" style="color: #74C0FC;"></i></td>
+                            <td><i class="fa-solid fa-delete-left" style="color: #d01b1b;"></i></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
