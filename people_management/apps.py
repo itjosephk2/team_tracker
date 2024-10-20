@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class PeopleManagemenetConfig(AppConfig):
+class PeopleManagementConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'people_managemenet'
+    name = 'people_management'
