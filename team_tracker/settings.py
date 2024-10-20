@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Custome Apps
+    'security',
+    'people_management',
+    'hr_management',
+    'payroll',
+    'work_force-management',
 ]
 
 MIDDLEWARE = [
