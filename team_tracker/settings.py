@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'security',
     'people_management',
     'hr_management',
-    'payroll',
     'work_force_management',
 ]
 
