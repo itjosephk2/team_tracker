@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-v486k_jt+xl22$y2$np@vuc2beg9i$heh=0-*d#zfhkoqx5gcw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['8000-itjosephk2-teamtracker-vo1qvtvsqz2.ws.codeinstitute-ide.net']
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://8000-itjosephk2-teamtracker-vo1qvtvsqz2.ws.codeinstitute-ide.net',
+    'https://8000-itjosephk2-teamtracker-vo1qvtvsqz2.ws.codeinstitute-ide.net',
+]
 
 
 # Application definition
@@ -37,6 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Custome Apps
+    'security',
+    'people_management',
+    'hr_management',
+    'work_force_management',
 ]
 
 MIDDLEWARE = [
@@ -115,7 +125,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
