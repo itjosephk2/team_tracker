@@ -11,4 +11,6 @@
     <p>{{person.date_of_birth}}</p>
     <p>{{person.active}}</p>
 
+    <a href="{% url 'update_person' pk=person.id %}" class='btn btn-primary'>Update</a>
+
 {% endblock %}

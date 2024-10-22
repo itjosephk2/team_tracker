@@ -11,21 +11,17 @@ from people_management.models import Person
 class ListPeopleView(ListView):
     model = Person
     context_object_name = 'people'
-    template_name = 'people_management/list_people.html'
 
 class ViewPersonDetails(DetailView):
     model = Person
     context_object_name = 'person'
-    template_name = 'people_management/view_person.html'
 
 class CreateNewPerson(CreateView):
     model = Person
-    template_name = 'people_management/view_person.html'
     success_url = reverse_lazy('people')
     form_class = PersonForm
 
 class UpdatePerson(UpdateView):
     model = Person
-    template_name = 'people_management/create_person.html'
     success_url = reverse_lazy('people')
     form_class = PersonForm
