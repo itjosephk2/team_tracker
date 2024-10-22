@@ -6,6 +6,4 @@ def dashboard(request):
     people = Person.objects.all()
     return render(request, 'dashboard/dashboard.html', {'people': people})
 
-def test(request):
-    return render(request, "dashboard/test.html")
     
