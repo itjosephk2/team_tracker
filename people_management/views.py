@@ -7,9 +7,9 @@ def list_people(request):
     return render(request, 'people_management/list_people.html', {'people': people})
 
 def view_person(request, pk):
-    person = Person.object.get(pk=pk)
+    person = Person.objects.get(pk=pk)
     return render(request, 'people_management/view_person.html', {'person' : person})
 
-def add(request):
-    people = Person.objects.all()
-    return render(request, 'people_management/create_person.html', {'people': people})
+# def add(request):
+#     people = Person.objects.all()
+#     return render(request, 'people_management/create_person.html', {'people': people})
