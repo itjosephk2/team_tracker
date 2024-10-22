@@ -6,7 +6,6 @@
 {% block content %}      
 
     <h1 class="mt-4">Dashboard</h1>
-    <h1>People Data: {{ people }}</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Dashboard</li>
     </ol>
@@ -69,9 +68,12 @@
         </div>
     </div>
     <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            DataTable Example
+        <div class="card-header table-header-flex-box">
+            <div>
+                <i class="fas fa-table me-1"></i>
+                All Employees
+            </div>
+            <button class='btn btn-success'><a>Add New Employee</a></button>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -82,8 +84,8 @@
                         <th>Phone Number</th>
                         <th>DOB</th>
                         <th>Status</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th data-sortable='false'></th>
+                        <th data-sortable='false'></th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -93,8 +95,8 @@
                         <th>Phone Number</th>
                         <th>DOB</th>
                         <th>Status</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th data-sortable='false'></th>
+                        <th data-sortable='false'></th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -105,8 +107,13 @@
                             <td>{{ person.phone_number }}</td>
                             <td>{{ person.date_of_birth }}</td>
                             <td>{{ person.active }}</td>
-                            <td><i class="fa-solid fa-pen-to-square" style="color: #74C0FC;"></i></td>
-                            <td><i class="fa-solid fa-delete-left" style="color: #d01b1b;"></i></td>
+                            <td>
+                                <button class='btn btn-info'><a><i class="fa-solid fa-pen-to-square"></i></a></button>
+                                
+                            </td>
+                            <td>
+                                <button class='btn btn-danger'><a><i class="fa-solid fa-delete-left" ></i></a></button>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
