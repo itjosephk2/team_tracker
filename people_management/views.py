@@ -20,7 +20,7 @@ class ViewPersonDetails(DetailView):
 
 class CreateNewPerson(CreateView):
     model = Person
-    template_name = 'people_management/create_person.html'
+    template_name = 'people_management/view_person.html'
     success_url = reverse_lazy('people')
     form_class = PersonForm
 
