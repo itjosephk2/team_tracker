@@ -2,6 +2,7 @@ from typing import List
 from django.shortcuts import render
 from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy
 
 from people_management.models import Person
 
@@ -16,7 +17,8 @@ class ViewPersonDetails(DetailView):
     context_object_name = 'person'
     template_name = 'people_management/view_person.html'
 
-class AddNewPerson(CreateView):
+class CreateNewPerson(CreateView):
     model = Person
-    fields = ['first_name', 'last_name', 'email', ]
+    fields = ['first_name', 'last_name', 'email', 'phone_number', 'date_of_birth', 'active']
     template_name = 'people_management/create_person.html'
+    success_url = reverse_lazy('people')

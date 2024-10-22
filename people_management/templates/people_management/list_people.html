@@ -6,8 +6,7 @@
 {% block content %}      
     <ul>
     {% for person in people %}
-        <li>{{ person.first_name }}</li>
-        <li>{{ person.last_name }}</li>
+        <li>{{ person.first_name }} {{ person.last_name }}</li>
     {% endfor %}
     </ul>
 
