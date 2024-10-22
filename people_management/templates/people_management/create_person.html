@@ -5,10 +5,13 @@
 
 {% block content %}      
 
-    <form action="{% url 'create_person' %}" method="POST">
+    <form method="POST">
         {% csrf_token %}
         {{form}}
         <button type='submit' class="btn btn-success my-5">Create</button>
     </form>
+
+    {% if form.errors %}
+    {% endif %}
 
 {% endblock %}
