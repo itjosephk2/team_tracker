@@ -1,15 +1,22 @@
+from typing import List
 from django.shortcuts import render
+from django.http import Http404
+from django.views.generic import ListView, DetailView, CreateView
+
 from people_management.models import Person
 
 # Create your views here.
-def list_people(request):
-    people = Person.objects.all()
-    return render(request, 'people_management/list_people.html', {'people': people})
+class ListPeopleView(ListView):
+    model = Person
+    context_object_name = 'people'
+    template_name = 'people_management/list_people.html'
 
-def view_person(request, pk):
-    person = Person.objects.get(pk=pk)
-    return render(request, 'people_management/view_person.html', {'person' : person})
+class ViewPersonDetails(DetailView):
+    model = Person
+    context_object_name = 'person'
+    template_name = 'people_management/view_person.html'
 
-# def add(request):
-#     people = Person.objects.all()
-#     return render(request, 'people_management/create_person.html', {'people': people})
+class AddNewPerson(CreateView):
+    model = Person
+    fields = ['first_name', 'last_name', 'email', ]
+    template_name = 'people_management/create_person.html'
