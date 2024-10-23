@@ -1,5 +1,5 @@
 from django import forms
-from .models import Person
+from .models import Person, Contract
 
 class PersonForm(forms.ModelForm):
     class Meta:
@@ -24,3 +24,15 @@ class PersonForm(forms.ModelForm):
         if 'j' not in firs_name:
             raise ValidationError('Name must have a j in it')
         return first_name
+
+class ContractForm(forms.ModelForm):
+    class Meta:
+        model = Contract
+        fields = [
+            'person', 
+            'job_title', 
+            'contract_start', 
+            'contract_end', 
+            'hourly_rate', 
+            'contracted_hours'
+        ]

@@ -1,0 +1,15 @@
+
+
+{% extends 'dashboard/base.html'%}
+
+
+{% block content %}      
+    <ul>
+    {% for contract in contracts %}
+        <a href="{% url 'view_contract' pk=contract.id %}"><li>{{contract.person}} {{ contract.job_title }}</li></a>
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'create_contract' %}" class='btn btn-success'>Add New</a>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+
+
+{% extends 'dashboard/base.html'%}
+
+
+{% block content %}      
+
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type='submit' class="btn btn-success my-5">Save</button>
+    </form>
+    <a href="{% url 'contracts' %}" class='btn btn-dark'>Cancel</a>
+
+    {% if form.errors %}
+    {% endif %}
+
+{% endblock %}
