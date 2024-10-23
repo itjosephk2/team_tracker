@@ -8,8 +8,8 @@ from django.urls import reverse_lazy
 from .forms import PersonForm
 from people_management.models import Person
 
-# Create your views here.
-class ListPeopleView(ListView):
+# Person Views
+class ListPeople(ListView):
     model = Person
     context_object_name = 'people'
 
@@ -27,6 +27,29 @@ class UpdatePerson(UpdateView):
     success_url = reverse_lazy('people')
     form_class = PersonForm
 
-class DetePerson(DeleteView):
+class DeletePerson(DeleteView):
+    model = Person
+    success_url = reverse_lazy('people')
+
+# Contract Views
+class ListContracts(ListView):
+    model = Person
+    context_object_name = 'people'
+
+class ViewContractDetails(DetailView):
+    model = Person
+    context_object_name = 'person'
+
+class CreateNewContract(CreateView):
+    model = Person
+    success_url = reverse_lazy('people')
+    form_class = PersonForm
+
+class UpdateContract(UpdateView):
+    model = Person
+    success_url = reverse_lazy('people')
+    form_class = PersonForm
+
+class DeteContract(DeleteView):
     model = Person
     success_url = reverse_lazy('people')
