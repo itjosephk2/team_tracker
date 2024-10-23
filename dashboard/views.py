@@ -38,6 +38,3 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     people = Person.objects.all()
     template_name = 'dashboard/dashboard.html'
     extra_context = {'people': people}
-
-
-    
