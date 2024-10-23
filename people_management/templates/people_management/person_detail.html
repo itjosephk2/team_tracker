@@ -11,6 +11,8 @@
     <p>{{person.date_of_birth}}</p>
     <p>{{person.active}}</p>
 
+    <a href="{% url 'people' %}" class='btn btn-dark'>Cancel</a>
     <a href="{% url 'update_person' pk=person.id %}" class='btn btn-primary'>Update</a>
+    <a href="{% url 'delete_person' pk=person.id %}" class='btn btn-danger'>Delete</a>
 
 {% endblock %}
