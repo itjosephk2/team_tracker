@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from people_management.models import Person
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
 
 # Create your views here.
-def dashboard(request):
+class DashboardView(TemplateView):
     people = Person.objects.all()
-    return render(request, 'dashboard/dashboard.html', {'people': people})
+    template_name = 'dashboard/dashboard.html'
+    extra_context = {'people': people}
 
-def test(request):
-    return render(request, "dashboard/test.html")
+class AuthorizedView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/authorized.html'
+
     

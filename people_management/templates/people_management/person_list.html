@@ -1,0 +1,15 @@
+
+
+{% extends 'dashboard/base.html'%}
+
+
+{% block content %}      
+    <ul>
+    {% for person in people %}
+        <a href="{% url 'view_person' pk=person.id %}"><li>{{ person.first_name }} {{ person.last_name }}</li></a>
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'create_person' %}" class='btn btn-success'>Add New</a>
+
+{% endblock %}
