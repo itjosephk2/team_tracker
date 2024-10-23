@@ -12,7 +12,7 @@
     <p>{{contract.contracted_hours}}</p>
 
     <a href="{% url 'contracts' %}" class='btn btn-dark'>Cancel</a>
-    <a href="{% url 'update_contact' pk=contract.id %}" class='btn btn-primary'>Update</a>
+    <a href="{% url 'update_contract' pk=contract.id %}" class='btn btn-primary'>Update</a>
     <a href="{% url 'delete_contract' pk=contract.id %}" class='btn btn-danger'>Delete</a>
 
 {% endblock %}

@@ -34,7 +34,7 @@ class DeletePerson(DeleteView):
 # Contract Views
 class ListContracts(ListView):
     model = Contract
-    context_object_name = 'contract'
+    context_object_name = 'contracts'
 
 class ViewContractDetails(DetailView):
     model = Contract

@@ -6,7 +6,7 @@
 {% block content %}      
     <ul>
     {% for contract in contracts %}
-        <a href="{% url 'view_contracts' pk=contract.id %}"><li>{{ contract.job_title }}</li></a>
+        <a href="{% url 'view_contract' pk=contract.id %}"><li>{{contract.person}} {{ contract.job_title }}</li></a>
     {% endfor %}
     </ul>
 
