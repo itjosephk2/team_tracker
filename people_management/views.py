@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 
-from .forms import PersonForm
+from .forms import PersonForm, ContractForm
 from people_management.models import Person, Contract
 
 # Person Views
@@ -43,12 +43,12 @@ class ViewContractDetails(DetailView):
 class CreateNewContract(CreateView):
     model = Contract
     success_url = reverse_lazy('contracts')
-    form_class = PersonForm
+    form_class = ContractForm
 
 class UpdateContract(UpdateView):
     model = Contract
     success_url = reverse_lazy('contracts')
-    form_class = PersonForm
+    form_class = ContractForm
 
 class DeteContract(DeleteView):
     model = Contract
