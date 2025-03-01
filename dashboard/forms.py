@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
+
 # Custom User Registration Form
 class CustomUserCreationForm(UserCreationForm):
     is_staff = forms.BooleanField(required=False, label='Staff Status')
@@ -17,6 +18,7 @@ class CustomUserCreationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
 
 # Custom Login Form
 class CustomLoginForm(AuthenticationForm):
