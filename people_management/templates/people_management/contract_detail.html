@@ -1,0 +1,18 @@
+
+{% extends 'dashboard/base.html'%}
+
+
+{% block content %}      
+   
+    <p>{{contract.person}}</p>
+    <p>{{contract.job_title}}</p>
+    <p>{{contract.contract_start}}</p>
+    <p>{{contract.contract_end}}</p>
+    <p>{{contract.hourly_rate}}</p>
+    <p>{{contract.contracted_hours}}</p>
+
+    <a href="{% url 'contracts' %}" class='btn btn-dark'>Cancel</a>
+    <a href="{% url 'update_contract' pk=contract.id %}" class='btn btn-primary'>Update</a>
+    <a href="{% url 'delete_contract' pk=contract.id %}" class='btn btn-danger'>Delete</a>
+
+{% endblock %}

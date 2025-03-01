@@ -1,0 +1,17 @@
+{% extends 'dashboard/base.html'%}
+
+
+{% block content %}      
+
+    <form method="POST">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{person.first_name}} {{person.last_name}}"</p>
+        <p>This action cannot be undone!</p>
+        <input type="submit" class="btn btn-danger" value="DELETE"/>
+    </form>
+    <a href="{% url 'people' %}" class='btn btn-dark'>Cancel</a>
+
+    {% if form.errors %}
+    {% endif %}
+
+{% endblock %}
