@@ -49,6 +49,7 @@ class PersonForm(forms.ModelForm):
                 raise ValidationError('Person must be at least 16 years old')
         return dob
 
+
 class ContractForm(forms.ModelForm):
     class Meta:
         model = Contract
