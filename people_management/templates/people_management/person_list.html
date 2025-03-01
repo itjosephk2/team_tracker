@@ -6,26 +6,28 @@
     <div class="card shadow-lg p-3 rounded">
         <ul class="list-group list-group-flush">
             {% for person in people %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="{% url 'view_person' pk=person.id %}" class="text-decoration-none">
-                        <strong>{{ person.first_name }} {{ person.last_name }}</strong>
-                        <br>
-                        <small>Email:</small> {{ person.email }}  
-                        <br>
-                        <small>Phone:</small> {{ person.phone_number }}  
-                        <br>
-                        <small>Date of Birth:</small> {{ person.date_of_birth }}  
-                        <br>
-                        <small>Status:</small> 
-                        {% if person.active %}
-                            <span class="badge bg-success">Active</span>
-                        {% else %}
-                            <span class="badge bg-secondary">Inactive</span>
-                        {% endif %}
-                    </a>
-                    <div>
-                        <a href="{% url 'update_person' pk=person.id %}" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="{% url 'delete_person' pk=person.id %}" class="btn btn-danger btn-sm">Delete</a>
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ person.first_name }} {{ person.last_name }}</strong>  
+                            <br>
+                            <small>Email:</small> {{ person.email }}  
+                            <br>
+                            <small>Phone:</small> {{ person.phone_number }}  
+                            <br>
+                            <small>Date of Birth:</small> {{ person.date_of_birth }}  
+                            <br>
+                            <small>Status:</small> 
+                            {% if person.active %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <a href="{% url 'update_person' pk=person.id %}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{% url 'delete_person' pk=person.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
                     </div>
                 </li>
             {% empty %}

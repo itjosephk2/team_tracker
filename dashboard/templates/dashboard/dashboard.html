@@ -73,7 +73,7 @@
                 <i class="fas fa-table me-1"></i>
                 All Employees
             </div>
-            <button class='btn btn-success'><a>Add New Employee</a></button>
+            <button class='btn btn-success'><a href="{% url 'create_person' %}" class="text-white">Add New Person</a></button>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -84,8 +84,8 @@
                         <th>Phone Number</th>
                         <th>DOB</th>
                         <th>Status</th>
-                        <th data-sortable='false'></th>
-                        <th data-sortable='false'></th>
+                        <th data-sortable='false'>Edit</th>
+                        <th data-sortable='false'>Delete</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -95,8 +95,8 @@
                         <th>Phone Number</th>
                         <th>DOB</th>
                         <th>Status</th>
-                        <th data-sortable='false'></th>
-                        <th data-sortable='false'></th>
+                        <th data-sortable='false'>Edit</th>
+                        <th data-sortable='false'>Delete</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -108,11 +108,14 @@
                             <td>{{ person.date_of_birth }}</td>
                             <td>{{ person.active }}</td>
                             <td>
-                                <button class='btn btn-info'><a><i class="fa-solid fa-pen-to-square"></i></a></button>
-                                
+                                <button class='btn btn-info'>
+                                    <a href="{% url 'update_person' person.pk %}" class="text-white"><i class="fa-solid fa-pen-to-square"></i></a>
+                                </button>
                             </td>
                             <td>
-                                <button class='btn btn-danger'><a><i class="fa-solid fa-delete-left"></i></a></button>
+                                <button class='btn btn-danger'>
+                                    <a href="{% url 'delete_person' person.pk %}" class="text-white"><i class="fa-solid fa-delete-left"></i></a>
+                                </button>
                             </td>
                         </tr>
                     {% endfor %}

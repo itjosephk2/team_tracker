@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied 
 from .forms import CustomUserCreationForm
 
+
 class SignupView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'dashboard/register.html'
@@ -27,14 +28,20 @@ class SignupView(CreateView):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
+
 class LoginInterface(LoginView):
     template_name = 'dashboard/login.html'
+
 
 class LogoutInterface(LogoutView):
     template_name = 'dashboard/logout.html'
 
+
 class DashboardView(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
-    people = Person.objects.all()
     template_name = 'dashboard/dashboard.html'
-    extra_context = {'people': people}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['people'] = Person.objects.all()  # Fetch people here for every request
+        return context

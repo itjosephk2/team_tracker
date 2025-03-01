@@ -4,9 +4,9 @@ from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
-
 from .forms import PersonForm, ContractForm
 from people_management.models import Person, Contract
+
 
 # Person Views
 class ListPeople(ListView):

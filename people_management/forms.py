@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from datetime import date
 from .models import Person, Contract
 
+
 class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
@@ -12,7 +13,6 @@ class PersonForm(forms.ModelForm):
             'email', 
             'phone_number', 
             'date_of_birth', 
-            'active'
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
@@ -34,7 +34,7 @@ class PersonForm(forms.ModelForm):
             raise ValidationError('No domain for email')
         return email
 
-    def clean_first_name(self):  # Fixed method name
+    def clean_first_name(self):
         first_name = self.cleaned_data.get('first_name', '').strip()
         if not first_name:
             raise ValidationError('First name cannot be empty')
@@ -48,6 +48,7 @@ class PersonForm(forms.ModelForm):
             if age < 16:
                 raise ValidationError('Person must be at least 16 years old')
         return dob
+
 
 class ContractForm(forms.ModelForm):
     class Meta:

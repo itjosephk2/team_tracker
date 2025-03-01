@@ -1,18 +1,24 @@
-
-
-{% extends 'dashboard/base.html'%}
-
+{% extends 'dashboard/base.html' %}
 
 {% block content %}      
-
-    <form method="POST">
+<div class="container mt-5">
+    <h2>{% if form.instance.pk %}Edit{% else %}New{% endif %} Person</h2>
+    <form method="POST" class="p-4 shadow-lg rounded bg-light">
         {% csrf_token %}
-        {{form}}
-        <button type='submit' class="btn btn-success my-5">Save</button>
+        
+        <div class="mb-3">
+            {{ form.non_field_errors }}
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                <div class="text-danger">{{ field.errors }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-success my-3">Save</button>
+        <a href="{% url 'people' %}" class="btn btn-dark">Cancel</a>
     </form>
-    <a href="{% url 'people' %}" class='btn btn-dark'>Cancel</a>
-
-    {% if form.errors %}
-    {% endif %}
-
+</div>
 {% endblock %}
