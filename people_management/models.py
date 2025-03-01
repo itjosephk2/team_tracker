@@ -1,7 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 from datetime import date
 
-# Create your models here.
 class Person(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -16,6 +16,8 @@ class Person(models.Model):
         blank=True,
         related_name="team_members"
     )
+    # The user field is optional, so employee can exist without being linked to a user
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee", null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.id})"
@@ -25,6 +27,7 @@ class Person(models.Model):
         today = date.today()
         self.active = self.contracts.filter(contract_start__lte=today, contract_end__gte=today).exists()
         self.save()
+
 
 
 class Contract(models.Model):
