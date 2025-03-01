@@ -29,7 +29,6 @@ class Person(models.Model):
         self.save()
 
 
-
 class Contract(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='contracts')
     job_title = models.CharField(max_length=255)  # Using job_title instead of a Job model

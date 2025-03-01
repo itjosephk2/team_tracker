@@ -1,0 +1,45 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">User Details</h2>
+
+        <div class="card shadow-lg p-3 rounded">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>First Name:</strong> {{ user.first_name }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Last Name:</strong> {{ user.last_name }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Email:</strong> {{ user.email }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Username:</strong> {{ user.username }}
+                </li>
+
+                <!-- Display the user status (active or not) -->
+                <li class="list-group-item">
+                    <strong>Active:</strong> 
+                    {% if user.is_active %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </li>
+            </ul>
+
+            <div class="d-flex justify-content-between mt-3">
+                <!-- Cancel button to go back to the user list -->
+                <a href="{% url 'users' %}" class="btn btn-dark">Cancel</a>
+                
+                <!-- Button to navigate to the update user page -->
+                <a href="{% url 'update_user' pk=user.id %}" class="btn btn-primary">Update</a>
+                
+                <!-- Button to navigate to the delete user page -->
+                <a href="{% url 'delete_user' pk=user.id %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
