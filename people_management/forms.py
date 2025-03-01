@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from datetime import date
 from .models import Person, Contract
 
+
 class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
