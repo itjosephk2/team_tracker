@@ -55,7 +55,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            Start Bootstrap
+            <div>{{ request.user.get_full_name }}</div>  <!-- Displays the full name of the logged-in user -->
         </div>
     </nav>
 </div>
