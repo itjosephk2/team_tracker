@@ -1,15 +1,34 @@
-
-
-{% extends 'dashboard/base.html'%}
-
+{% extends 'dashboard/base.html' %}
 
 {% block content %}      
-    <ul>
-    {% for contract in contracts %}
-        <a href="{% url 'view_contract' pk=contract.id %}"><li>{{contract.person}} {{ contract.job_title }}</li></a>
-    {% endfor %}
-    </ul>
+<div class="container mt-5">
+    <h2>Contracts</h2>
+    <div class="card shadow-lg p-3 rounded">
+        <ul class="list-group list-group-flush">
+            {% for contract in contracts %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'view_contract' pk=contract.id %}" class="text-decoration-none">
+                        <strong>{{ contract.person }}</strong> - {{ contract.job_title }}
+                        <br>
+                        <small>Start Date:</small> {{ contract.contract_start }}  
+                        <br>
+                        <small>End Date:</small> {{ contract.contract_end|default:"Ongoing" }}  
+                        <br>
+                        <small>Hourly Rate:</small> ${{ contract.hourly_rate }}  
+                        <br>
+                        <small>Hours Per Week:</small> {{ contract.contracted_hours }}
+                    </a>
+                    <div>
+                        <a href="{% url 'update_contract' pk=contract.id %}" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="{% url 'delete_contract' pk=contract.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-muted text-center">No contracts available.</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <a href="{% url 'create_contract' %}" class='btn btn-success'>Add New</a>
-
+    <a href="{% url 'create_contract' %}" class="btn btn-success mt-3">Add New Contract</a>
+</div>
 {% endblock %}
