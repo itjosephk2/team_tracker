@@ -7,10 +7,15 @@
         <ul class="list-group list-group-flush">
             {% for user in users %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <strong>{{ user.username }}</strong> - {{ user.first_name }} {{ user.last_name }}
-                    
                     <div>
-                        <!-- View button with white text -->
+                        <strong>{{ user.username }}</strong>
+                        {% if user.employee %}
+                            - Linked to: {{ user.employee.first_name }} {{ user.employee.last_name }}
+                        {% else %}
+                            - Not Linked
+                        {% endif %}
+                    </div>
+                    <div>
                         <a href="{% url 'view_user' pk=user.id %}" class="btn btn-info btn-sm text-white">View</a>
                         <a href="{% url 'update_user' pk=user.id %}" class="btn btn-primary btn-sm">Edit</a>
                         <a href="{% url 'delete_user' pk=user.id %}" class="btn btn-danger btn-sm">Delete</a>

@@ -4,8 +4,10 @@ from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
+from django_filters.views import FilterView
 from .forms import PersonForm, ContractForm
 from people_management.models import Person, Contract
+from people_management.filters import ContractFilter
 
 
 # Person Views
@@ -37,8 +39,10 @@ class DeletePerson(DeleteView):
 
 
 # Contract Views
-class ListContracts(ListView):
+class FilteredContractListView(FilterView):
     model = Contract
+    filterset_class = ContractFilter
+    template_name = 'people_management/contract_list.html'
     context_object_name = 'contracts'
 
 
@@ -59,6 +63,6 @@ class UpdateContract(UpdateView):
     form_class = ContractForm
 
 
-class DeteContract(DeleteView):
+class DeleteContract(DeleteView):
     model = Contract
     success_url = reverse_lazy('contracts')

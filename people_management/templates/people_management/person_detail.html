@@ -1,18 +1,43 @@
+{% extends 'dashboard/base.html' %}
 
-{% extends 'dashboard/base.html'%}
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Person Details</h2>
 
+        <div class="card shadow-lg p-3 rounded">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>First Name:</strong> {{ person.first_name }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Last Name:</strong> {{ person.last_name }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Email:</strong> {{ person.email }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Phone Number:</strong> {{ person.phone_number }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Date of Birth:</strong> {{ person.date_of_birth }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Active:</strong>
+                    {% if person.active %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </li>
+            </ul>
 
-{% block content %}      
-   
-    <p>{{person.first_name}}</p>
-    <p>{{person.last_name}}</p>
-    <p>{{person.email}}</p>
-    <p>{{person.phone_number}}</p>
-    <p>{{person.date_of_birth}}</p>
-    <p>{{person.active}}</p>
-
-    <a href="{% url 'people' %}" class='btn btn-dark'>Cancel</a>
-    <a href="{% url 'update_person' pk=person.id %}" class='btn btn-primary'>Update</a>
-    <a href="{% url 'delete_person' pk=person.id %}" class='btn btn-danger'>Delete</a>
-
+            <div class="mt-3 text-end pe-3">
+                <div class="btn-group gap-2" role="group">
+                    <a href="{% url 'people' %}" class="btn btn-dark rounded">Cancel</a>
+                    <a href="{% url 'update_person' pk=person.id %}" class="btn btn-primary rounded">Update</a>
+                    <a href="{% url 'delete_person' pk=person.id %}" class="btn btn-danger rounded">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
