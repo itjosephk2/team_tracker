@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
-from .forms import CustomUserCreationForm, CustomUserChangeForm  # Assuming you have these forms
+from .forms import UserForm  # Assuming you have these forms
 
 
 # User Views
@@ -21,13 +21,13 @@ class ViewUserDetails(DetailView):
 
 class CreateNewUser(CreateView):
     model = User
-    form_class = CustomUserCreationForm  # Custom form for user creation
+    form_class = UserForm  # Custom form for user creation
     success_url = reverse_lazy('users')  # Redirect to user list after successful creation
 
 
 class UpdateUser(UpdateView):
     model = User
-    form_class = CustomUserChangeForm  # Custom form for user updating
+    form_class = UserForm  # Custom form for user updating
     success_url = reverse_lazy('users')  # Redirect to user list after successful update
 
 
