@@ -1,0 +1,13 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Gateway Timeout{% endblock %}
+
+{% block content %}
+<div class="container text-center my-5">
+    <h1 class="display-4">504 - Gateway Timeout</h1>
+    <p class="lead">
+        The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.
+    </p>
+    <a href="{% url 'dahboard' %}" class="btn btn-primary">Return Home</a>
+</div>
+{% endblock %}
