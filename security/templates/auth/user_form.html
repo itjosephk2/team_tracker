@@ -1,0 +1,30 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>{% if form.instance.pk %}Edit{% else %}New{% endif %} User</h2>
+    <form method="POST" class="p-4 shadow-lg rounded bg-light">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        {% for field in form %}
+            <div class="row mb-3">
+                <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                <div class="col-sm-9">
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-sm-9 offset-sm-3">
+                <button type="submit" class="btn btn-success my-3">Save</button>
+                <a href="{% url 'users' %}" class="btn btn-dark">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
