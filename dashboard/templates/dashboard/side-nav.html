@@ -37,6 +37,7 @@
                 </div>
 
                 <!-- Security Section -->
+                {% if request.user.is_authenticated and request.user.employee.role == "hr_admin" %}
                 <div class="sb-sidenav-menu-heading">Security</div>
                 <!-- Users -->
                 <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
@@ -50,6 +51,7 @@
                         <a class="nav-link" href="{% url 'create_user' %}">Create User</a>
                     </nav>
                 </div>
+                {% endif %}
 
             </div>
         </div>

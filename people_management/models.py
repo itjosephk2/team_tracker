@@ -2,28 +2,44 @@ from django.contrib.auth.models import User
 from django.db import models
 from datetime import date
 
+
 class Person(models.Model):
+    ROLE_CHOICES = [
+        ('employee', 'Employee'),
+        ('manager', 'Manager'),
+        ('hr_admin', 'HR Admin'),
+    ]
+    
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=255)
     phone_number = models.CharField(max_length=15)
     date_of_birth = models.DateField()
-    active = models.BooleanField(default=False)  # Keep active stored in the DB
+    active = models.BooleanField(default=False)
     manager = models.ForeignKey(
-        'self',  # Self-referential ForeignKey
-        on_delete=models.SET_NULL,  # Keep employee if manager is removed
+        'self',
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="team_members"
     )
-    # The user field is optional, so employee can exist without being linked to a user
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee", null=True, blank=True)
+    user = models.OneToOneField(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name="employee", 
+        null=True, 
+        blank=True
+    )
+    role = models.CharField(
+        max_length=20, 
+        choices=ROLE_CHOICES, 
+        default='employee'
+    )
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.id})"
 
     def update_active_status(self):
-        """Updates the active status based on contracts."""
         today = date.today()
         self.active = self.contracts.filter(contract_start__lte=today, contract_end__gte=today).exists()
         self.save()
