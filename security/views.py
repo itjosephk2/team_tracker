@@ -18,23 +18,23 @@ class HRAdminRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
 
 # User Views
-class ListUsers(HRAdminRequiredMixin, ListView):
+class ListUsers(ListView):
     model = User
     context_object_name = 'users'
 
 
-class ViewUserDetails(HRAdminRequiredMixin, DetailView):
+class ViewUserDetails(DetailView):
     model = User
     context_object_name = 'user'
 
 
-class CreateNewUser(HRAdminRequiredMixin, CreateView):
+class CreateNewUser(CreateView):
     model = User
     form_class = UserForm  # Custom form for user creation
     success_url = reverse_lazy('users')  # Redirect to user list after successful creation
 
 
-class UpdateUser(HRAdminRequiredMixin, UpdateView):
+class UpdateUser(UpdateView):
     model = User
     form_class = UserForm  # Custom form for user updating
     success_url = reverse_lazy('users')  # Redirect to user list after successful update

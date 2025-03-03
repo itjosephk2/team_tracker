@@ -7,7 +7,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy  # Added import
 from .forms import CustomUserCreationForm, CustomLoginForm
-
+from .views import Person
 
 class SignupView(CreateView):
     form_class = CustomUserCreationForm
@@ -41,5 +41,5 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['people'] = Person.objects.all()  # Fetch people here for every request
+        context['person'] = Person.objects.all()  # Fetch people here for every request
         return context
