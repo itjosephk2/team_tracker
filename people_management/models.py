@@ -3,13 +3,13 @@ from django.db import models
 from datetime import date
 
 
+from security.models import Role  # Ensure you import Role from the correct app
+
+def get_default_role():
+    """Fetch the Employee role to use as the default."""
+    return Role.objects.get(name="Employee")
+
 class Person(models.Model):
-    ROLE_CHOICES = [
-        ('employee', 'Employee'),
-        ('manager', 'Manager'),
-        ('hr_admin', 'HR Admin'),
-    ]
-    
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=255)
@@ -30,10 +30,13 @@ class Person(models.Model):
         null=True, 
         blank=True
     )
-    role = models.CharField(
-        max_length=20, 
-        choices=ROLE_CHOICES, 
-        default='employee'
+    role = models.ForeignKey(
+        Role,
+        on_delete=models.SET_DEFAULT,  # If role is deleted, reassign to Employee
+        null=True,
+        blank=True,
+        related_name="people",
+        default="Employee"  # ✅ This ensures Employee is always the default
     )
 
     def __str__(self):
@@ -43,6 +46,7 @@ class Person(models.Model):
         today = date.today()
         self.active = self.contracts.filter(contract_start__lte=today, contract_end__gte=today).exists()
         self.save()
+
 
 
 class Contract(models.Model):
