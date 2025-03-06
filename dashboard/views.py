@@ -41,5 +41,9 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['person'] = Person.objects.all()  # Fetch people here for every request
+        context['people'] = Person.objects.only('id', 'first_name', 'last_name')  # Load only necessary fields
         return context
+
+    
+def error_403(request):
+    return render(request, '403.html', status=403)

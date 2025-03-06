@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from dashboard.views import error_403
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('dashboard.urls')),
     path('people_management/', include('people_management.urls')),
     path('security/', include('security.urls')),
+    path('403/', error_403, name='403_page'),
 ]

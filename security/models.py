@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import Permission
 
+
 class PermissionDefinition(models.Model):
     """System-managed permissions with editable display names."""
     codename = models.CharField(max_length=100, unique=True)  # System identifier (fixed)
