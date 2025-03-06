@@ -40,6 +40,6 @@ class UpdateUser(UpdateView):
     success_url = reverse_lazy('users')  # Redirect to user list after successful update
 
 
-class DeleteUser(HRAdminRequiredMixin, DeleteView):
+class DeleteUser(DeleteView):
     model = User
     success_url = reverse_lazy('users')  # Redirect to user list after deletion

@@ -11,5 +11,5 @@ urlpatterns = [
     path('contracts/<int:pk>/', views.ViewContractDetails.as_view(), name='view_contract'),
     path('contracts/<int:pk>/update_contract/', views.UpdateContract.as_view(), name='update_contract'),
     path('contracts/<int:pk>/delete_contract/', views.DeleteContract.as_view(), name='delete_contract'),
-    path('contracts/create_new_contract/', views.CreateNewContract.as_view(), name='create_contract'),  
+    path('contracts/create_new_contract/', views.CreateNewContract.as_view(), name='create_contract'), 
 ]

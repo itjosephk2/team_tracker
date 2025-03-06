@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'security',
     'people_management',
     'hr_management',
-    'work_force_management',
 ]
 
 MIDDLEWARE = [
@@ -88,14 +87,14 @@ WSGI_APPLICATION = 'team_tracker.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'quota_syrup_deal_460910',
-    'USER': 'neondb_owner',
-    'PASSWORD': 'D7QR6uxVXwMS',
-    'HOST': 'ep-ancient-fog-a2g6sztt.eu-central-1.aws.neon.tech',
-    'PORT': '5432',  # Default PostgreSQL port
-}
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'quota_syrup_deal_460910',
+        'USER': 'neondb_owner',
+        'PASSWORD': 'D7QR6uxVXwMS',
+        'HOST': 'ep-ancient-fog-a2g6sztt.eu-central-1.aws.neon.tech',
+        'PORT': '5432',  # Default PostgreSQL port
+    }
 }
 
 
