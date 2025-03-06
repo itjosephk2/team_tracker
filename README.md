@@ -1,131 +1,219 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+Team Tracker
 
-Welcome Joseph Keane,
+Team Tracker is a full-stack web application designed to manage employee records, roles, and permissions efficiently. It provides role-based access control (RBAC), enabling HR admins to manage employees while allowing managers and employees access to relevant data.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+Table of Contents
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+User Experience (UX)
 
-## Gitpod Reminders
+Agile Methodology
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+Features
 
-`python3 -m http.server`
+Technologies Used
 
-A blue button should appear to click: _Make Public_,
+Installation & Setup
 
-Another blue button should appear to click: _Open Browser_.
+Testing
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+Deployment
 
-A blue button should appear to click: _Make Public_,
+Known Issues & Future Improvements
 
-Another blue button should appear to click: _Open Browser_.
+Acknowledgments
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+User Experience (UX)
 
-To log into the Heroku toolbelt CLI:
+Project Goals
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+Efficient Employee Management: Maintain accurate records of employees, contracts, and roles.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+Role-Based Permissions: Ensure users only access relevant information.
 
-### Connecting your Mongo database
+Secure Authentication: Enforce login protection and access control.
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+Responsive & User-Friendly Interface: Accessible across different devices.
 
-------
+User Roles & Goals
 
-## Release History
+Role
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+Goals
 
-**June 18, 2024,** Add Mongo back into template
+HR Admin
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+Manage all employees and assign roles.
 
-**May 28 2024:** Fix Mongo and Links installs
+Manager
 
-**April 26 2024:** Update node version to 16
+View and manage team members.
 
-**September 20 2023:** Update Python version to 3.9.17.
+Employee
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+View personal details and contracts.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+Agile Methodology
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+Team Tracker was developed using Agile methodology. The project followed iterative development cycles with continuous feedback and improvements.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+User Stories
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+As an HR Admin, I want to add employees so I can manage the workforce.
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+As an HR Admin, I want to assign roles so employees have correct access.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+As a Manager, I want to view my team members so I can track their details.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+As an Employee, I want to view my personal details so I can check my contract status.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+As an HR Admin, I want to restrict permissions so sensitive data is protected.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+Task Tracking
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+GitHub Projects was used for task tracking (View Here).
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+Features were divided into milestones with clear goals.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+User stories and sprint progress were documented within GitHub Projects.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+Pull requests followed structured code reviews before merging.
 
-------
+Features
 
-## FAQ about the uptime script
+User Authentication & Authorization
 
-**Why have you added this script?**
+Secure login and logout functionality.
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+Role-based permissions to control access.
 
-**How will this affect me?**
+Employee Management
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+Create, update, and delete employee records.
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+Assign managers to employees.
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+Contract Management
 
-**So….?**
+Add employment contracts with job titles, start/end dates, and salary information.
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+Role-Based Access Control (RBAC)
 
-**Can I opt out?**
+Assign permissions based on roles.
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+Prevent unauthorized access to sensitive data.
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+Dashboard Overview
 
-**Anything more?**
+Summary of employees and active contracts.
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+Search & Filtering
 
----
+Easily locate employees and contracts.
 
-Happy coding!
+Technologies Used
+
+Languages & Frameworks
+
+Backend: Django (Python)
+
+Frontend: Django Templates, HTML, CSS
+
+Database: SQLite (for development), PostgreSQL (for production)
+
+Version Control: Git & GitHub
+
+Deployment: (To be added - Heroku, Railway, or other cloud platforms)
+
+Installation & Setup
+
+Prerequisites
+
+Ensure you have the following installed:
+
+Python 3.9+
+
+pip
+
+virtualenv
+
+Setup Steps
+
+Clone the Repository:
+
+git clone https://github.com/itjosephk2/team_tracker.git
+cd team_tracker
+
+Create a Virtual Environment:
+
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+Install Dependencies:
+
+pip install -r requirements.txt
+
+Run Migrations:
+
+python manage.py migrate
+
+Create a Superuser (Admin Account):
+
+python manage.py createsuperuser
+
+Run the Server:
+
+python manage.py runserver
+
+Access the application at http://127.0.0.1:8000/
+
+Testing
+
+Unit Tests: Located in tests.py files within each app.
+
+Run Tests:
+
+python manage.py test
+
+Example Test Case:
+
+from django.test import TestCase
+from people_management.models import Person
+
+class PersonModelTest(TestCase):
+    def test_create_person(self):
+        person = Person.objects.create(first_name="John", last_name="Doe")
+        self.assertEqual(person.first_name, "John")
+
+Manual Testing:
+
+Verify login, role-based access, CRUD functionality.
+
+Test edge cases (invalid logins, unauthorized access attempts).
+
+Deployment
+
+(Once deployment is complete, add specific details here.)
+
+Deployment Steps
+
+Deploy the application using Heroku/Railway.
+
+Set up environment variables for security (DEBUG=False).
+
+Configure database settings for PostgreSQL.
+
+Known Issues & Future Improvements
+
+Add Automated Testing: Improve test coverage.
+
+Enhance Frontend UI: Make forms and dashboard more user-friendly.
+
+Implement Email Notifications: Notify users about contract updates.
+
+Acknowledgments
+
+Special thanks to Django documentation and Stack Overflow for troubleshooting support.
+
+Project inspired by modern HR management tools.
+
+Project Repository: GitHub
