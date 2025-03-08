@@ -18,11 +18,20 @@ class PermissionDefinition(models.Model):
 
 class Role(models.Model):
     """Roles as containers for permissions."""
-    name = models.CharField(max_length=50, unique=True)
+    EMPLOYEE = "Employee"
+    MANAGER = "Manager"
+    HR_ADMIN = "HR Admin"
+
+    ROLE_CHOICES = [
+        (EMPLOYEE, "Employee"),
+        (MANAGER, "Manager"),
+        (HR_ADMIN, "HR Admin"),
+    ]
+
+    name = models.CharField(max_length=50, choices=ROLE_CHOICES, unique=True)
     description = models.TextField(blank=True, null=True)
     permissions = models.ManyToManyField(PermissionDefinition, blank=True)
-    is_default = models.BooleanField(default=False)  # Prevent deletion/editing of system roles
-
+    
     def __str__(self):
         return self.name
 
@@ -31,15 +40,13 @@ class Role(models.Model):
         verbose_name_plural = "Roles"
 
     def save(self, *args, **kwargs):
-        """Prevent modification of default roles."""
-        if self.is_default and self.pk:
+        """Prevent modification of predefined roles."""
+        if self.pk:  # Only check when updating
             original = Role.objects.get(pk=self.pk)
-            if original.name != self.name or original.description != self.description or set(original.permissions.all()) != set(self.permissions.all()):
-                raise ValueError("Default roles cannot be modified.")
+            if original.name != self.name:
+                raise ValueError("Predefined roles cannot be renamed.")
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        """Prevent deletion of default roles but allow deletion of custom roles."""
-        if self.is_default:
-            raise ValueError("Default roles cannot be deleted.")
-        super().delete(*args, **kwargs)
+        """Prevent deletion of predefined roles."""
+        raise ValueError("Predefined roles cannot be deleted.")

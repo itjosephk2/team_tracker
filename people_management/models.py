@@ -5,9 +5,12 @@ from datetime import date
 
 from security.models import Role  # Ensure you import Role from the correct app
 
+
 def get_default_role():
-    """Fetch the Employee role to use as the default."""
-    return Role.objects.get(name="Employee")
+    """Fetch or create the Employee role and return its ID."""
+    role, _ = Role.objects.get_or_create(name="Employee")
+    return role.id 
+
 
 class Person(models.Model):
     first_name = models.CharField(max_length=50)
@@ -32,11 +35,11 @@ class Person(models.Model):
     )
     role = models.ForeignKey(
         Role,
-        on_delete=models.SET_DEFAULT,  # If role is deleted, reassign to Employee
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="people",
-        default="Employee"  # ✅ This ensures Employee is always the default
+        default=get_default_role 
     )
 
     def __str__(self):
@@ -46,7 +49,6 @@ class Person(models.Model):
         today = date.today()
         self.active = self.contracts.filter(contract_start__lte=today, contract_end__gte=today).exists()
         self.save()
-
 
 
 class Contract(models.Model):
