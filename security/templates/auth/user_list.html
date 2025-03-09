@@ -16,9 +16,9 @@
                         {% endif %}
                     </div>
                     <div>
-                        <a href="{% url 'view_user' pk=user.id %}" class="btn btn-info btn-sm text-white">View</a>
-                        <a href="{% url 'update_user' pk=user.id %}" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="{% url 'delete_user' pk=user.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{% url 'security:user_detail' pk=user.id %}" class="btn btn-info btn-sm text-white">View</a>
+                        <a href="{% url 'security:user_edit' pk=user.id %}" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="{% url 'security:user_delete' pk=user.id %}" class="btn btn-danger btn-sm">Delete</a>
                     </div>
                 </li>
             {% empty %}
@@ -27,6 +27,6 @@
         </ul>
     </div>
 
-    <a href="{% url 'create_user' %}" class="btn btn-success mt-3">Add New</a>
+    <a href="{% url 'security:user_create' %}" class="btn btn-success mt-3">Add New</a>
 </div>
 {% endblock %}
