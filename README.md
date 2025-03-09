@@ -1,3 +1,4 @@
+
 # Team Tracker
 
 
@@ -11,9 +12,10 @@ Team Tracker is a full-stack web application designed to manage employee records
 4. [Technologies Used](#technologies-used)
 5. [Installation & Setup](#installation-setup)
 6. [Testing](#testing)
-7. [Deployment](#deployment)
-8. [Known Issues & Future Improvements](#known-issues--future-improvements)
-9. [Acknowledgments](#acknowledgments)
+7. [Troubleshooting Common Errors](#troubleshooting-common-errors)
+8. [Deployment](#deployment)
+9. [Known Issues & Future Improvements](#known-issues--future-improvements)
+10. [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -122,6 +124,7 @@ Ensure you have the following installed:
 4. **Run Migrations:**
 
    ```bash
+   python manage.py makemigrations security people_management
    python manage.py migrate
    ```
 
@@ -164,6 +167,27 @@ Ensure you have the following installed:
 
 ---
 
+## Troubleshooting Common Errors
+
+### **Database Errors During Testing**
+**Error:** `django.db.utils.ProgrammingError: relation "security_permissiondefinition" does not exist`
+
+**Solution:** Ensure migrations are properly applied before running tests:
+```bash
+python manage.py makemigrations security people_management
+python manage.py migrate
+```
+If the error persists, try resetting the test database:
+```bash
+python manage.py flush
+```
+Then, rerun:
+```bash
+python manage.py test
+```
+
+---
+
 ## Deployment
 
 (Once deployment is complete, add specific details here.)
@@ -192,4 +216,3 @@ Ensure you have the following installed:
 ---
 
 **Project Repository:** [GitHub](https://github.com/itjosephk2/team_tracker)
-
