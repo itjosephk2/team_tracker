@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import Permission
+from django.core.exceptions import ValidationError
 
 
 class PermissionDefinition(models.Model):
@@ -22,16 +22,12 @@ class Role(models.Model):
     MANAGER = "Manager"
     HR_ADMIN = "HR Admin"
 
-    ROLE_CHOICES = [
-        (EMPLOYEE, "Employee"),
-        (MANAGER, "Manager"),
-        (HR_ADMIN, "HR Admin"),
-    ]
+    PREDEFINED_ROLES = {EMPLOYEE, MANAGER, HR_ADMIN}  # Set for quick lookups
 
-    name = models.CharField(max_length=50, choices=ROLE_CHOICES, unique=True)
+    name = models.CharField(max_length=50, unique=True)  # Removed choices to allow custom roles
     description = models.TextField(blank=True, null=True)
     permissions = models.ManyToManyField(PermissionDefinition, blank=True)
-    
+
     def __str__(self):
         return self.name
 
@@ -39,14 +35,20 @@ class Role(models.Model):
         verbose_name = "Role"
         verbose_name_plural = "Roles"
 
-    def save(self, *args, **kwargs):
-        """Prevent modification of predefined roles."""
-        if self.pk:  # Only check when updating
+    def clean(self):
+        """Prevent renaming predefined roles."""
+        if self.pk:
             original = Role.objects.get(pk=self.pk)
-            if original.name != self.name:
-                raise ValueError("Predefined roles cannot be renamed.")
+            if original.name in self.PREDEFINED_ROLES and original.name != self.name:
+                raise ValidationError("Predefined roles cannot be renamed.")
+
+    def save(self, *args, **kwargs):
+        """Ensure predefined roles cannot be renamed."""
+        self.clean()  # Validate before saving
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         """Prevent deletion of predefined roles."""
-        raise ValueError("Predefined roles cannot be deleted.")
+        if self.name in self.PREDEFINED_ROLES:
+            raise ValidationError("Predefined roles cannot be deleted.")
+        super().delete(*args, **kwargs)
