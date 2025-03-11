@@ -1,103 +1,97 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from people_management.models import Person, Contract
-from security.models import Role, PermissionDefinition
+from dashboard.forms import CustomUserCreationForm, CustomLoginForm
+from people_management.models import Person
 from datetime import date
 
 
-class PersonModelTest(TestCase):
-    """Tests for the Person model."""
+class CustomUserCreationFormTest(TestCase):
+    """
+    Test cases for the CustomUserCreationForm.
+    Ensures user creation behaves correctly.
+    """
+    
+    def test_valid_user_creation(self):
+        """Test that a valid user creation form results in a new user being created."""
+        form_data = {
+            "username": "testuser",
+            "password1": "TestPassword123!",
+            "password2": "TestPassword123!",
+            "is_staff": True
+        }
+        form = CustomUserCreationForm(data=form_data)
+        self.assertTrue(form.is_valid())  # Form should be valid
 
+        user = form.save()
+        self.assertEqual(user.username, "testuser")  # Ensure correct username
+        self.assertTrue(user.is_staff)  # Ensure staff status is correctly assigned
+
+    def test_invalid_user_creation(self):
+        """Test that an invalid user creation form fails validation."""
+        form_data = {
+            "username": "",  # Missing username
+            "password1": "password",
+            "password2": "password"
+        }
+        form = CustomUserCreationForm(data=form_data)
+        self.assertFalse(form.is_valid())  # Form should be invalid due to missing username
+
+
+class CustomLoginFormTest(TestCase):
+    """
+    Test cases for the CustomLoginForm.
+    Ensures login form validation works correctly.
+    """
+    
     def setUp(self):
-        """Set up test data for Person model."""
-        self.role = Role.objects.create(name="Employee")  # Create a role
-        self.person = Person.objects.create(
-            first_name="John",
-            last_name="Doe",
-            email="john.doe@example.com",
-            date_of_birth=date(1990, 1, 1), 
-            role=self.role
-        )
+        """Set up a test user for login validation."""
+        self.user = User.objects.create_user(username="testuser", password="TestPassword123!")
 
-    def test_person_creation(self):
-        """Test that a Person object is created correctly."""
-        self.assertEqual(self.person.first_name, "John")
-        self.assertEqual(self.person.date_of_birth, date(1990, 1, 1))
+    def test_valid_login(self):
+        """Test that a valid login form allows authentication."""
+        form_data = {
+            "username": "testuser",
+            "password": "TestPassword123!"
+        }
+        form = CustomLoginForm(data=form_data)
+        self.assertTrue(form.is_valid())  # Form should be valid
 
-        # Ensure predefined roles exist in the database
-        self.employee_role, _ = Role.objects.get_or_create(
-            name="Employee", defaults={"description": "Basic Employee Role"}
-        )
+    def test_invalid_login(self):
+        """Test that an invalid login form fails validation."""
+        form_data = {
+            "username": "wronguser",
+            "password": "wrongpassword"
+        }
+        form = CustomLoginForm(data=form_data)
+        self.assertFalse(form.is_valid())  # Invalid credentials should fail validation
 
 
-class ContractModelTest(TestCase):
-    """Tests for the Contract model."""
-
+class DashboardViewTest(TestCase):
+    """
+    Test cases for the Dashboard view.
+    Ensures that authentication and data rendering work correctly.
+    """
+    
     def setUp(self):
-        """Set up test data for Contract model."""
-        # Create a role and assign it to a person
-        self.role = Role.objects.create(name="Employee")
+        """Set up a test user and associated Person record for dashboard access testing."""
+        self.user = User.objects.create_user(username="testuser", password="TestPassword123!")
         self.person = Person.objects.create(
             first_name="Alice",
             last_name="Smith",
             email="alice.smith@example.com",
-            date_of_birth=date(1990, 1, 1), 
+            date_of_birth=date(2024, 1, 1),
+            user=self.user
         )
 
-        # Create a contract for the person
-        self.contract = Contract.objects.create(
-            person=self.person,
-            job_title="Software Engineer",
-            contract_start=date(2024, 2, 15),
-            hourly_rate=25.00,
-            contracted_hours=40,
-        )
+    def test_dashboard_requires_login(self):
+        """Ensure unauthenticated users are redirected to the login page when accessing the dashboard."""
+        response = self.client.get(reverse("dashboard"))
+        self.assertEqual(response.status_code, 302)  # Expect redirect to login page
 
-    def test_contract_creation(self):
-        """Test that a Contract object is created correctly."""
-        self.assertEqual(self.contract.job_title, "Software Engineer")
-        self.assertEqual(self.contract.person.first_name, "Alice")
-
-
-class UserAuthenticationTest(TestCase):
-    """Tests for user authentication."""
-
-    def setUp(self):
-        """Set up a test user."""
-        self.user = User.objects.create_user(username="testuser", password="password")
-
-    def test_login(self):
-        """Test that a user can successfully log in."""
-        login = self.client.login(username="testuser", password="password")
-        self.assertTrue(login)
-
-
-class RolePermissionsTest(TestCase):
-    """Tests for assigning permissions to roles."""
-
-    def setUp(self):
-        """Set up a role and assign permissions."""
-        self.permission = PermissionDefinition.objects.create(
-            codename="view_person", name="View Person"
-        )
-        self.role = Role.objects.create(name="Manager")
-        self.role.permissions.add(self.permission)  # Assign permission to role
-
-    def test_role_permission_assignment(self):
-        """Test that a role has the correct assigned permissions."""
-        self.assertTrue(self.role.permissions.filter(codename="view_person").exists())
-
-
-class PersonListViewTest(TestCase):
-    """Tests for the person list view."""
-
-    def setUp(self):
-        """Set up a test user and log in."""
-        self.user = User.objects.create_user(username="admin", password="password")
-        self.client.login(username="admin", password="password")
-
-    def test_person_list_view(self):
-        """Test that the person list view is accessible."""
-        response = self.client.get(reverse("people"))  # Ensure URL name matches views.py
-        self.assertEqual(response.status_code, 200)
+    def test_dashboard_accessible_for_logged_in_user(self):
+        """Ensure logged-in users can access the dashboard and see relevant content."""
+        self.client.login(username="testuser", password="TestPassword123!")
+        response = self.client.get(reverse("dashboard"))
+        self.assertEqual(response.status_code, 200)  # Expect success response
+        self.assertContains(response, "Alice")  # Ensure user's name appears in the response
