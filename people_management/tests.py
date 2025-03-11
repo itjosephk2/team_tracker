@@ -94,4 +94,4 @@ class DashboardViewTest(TestCase):
         self.client.login(username="testuser", password="TestPassword123!")
         response = self.client.get(reverse("dashboard"))
         self.assertEqual(response.status_code, 200)  # Expect success response
-        self.assertContains(response, "Alice")  # Ensure user's name appears in the response
+        self.assertContains(response, "Alice")  # Ensure user's name appears in the respons
