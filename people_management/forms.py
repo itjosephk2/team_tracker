@@ -13,7 +13,6 @@ class PersonForm(forms.ModelForm):
             'email', 
             'phone_number', 
             'date_of_birth',
-            'role',  # New field for the person's role
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
@@ -21,7 +20,6 @@ class PersonForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),
             'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'role': forms.Select(attrs={'class': 'form-select'}),  # Widget for role selection
         }
         error_messages = {
             'first_name': {'max_length': 'First name cannot be longer than 50 characters!'},

@@ -27,7 +27,6 @@ class Migration(migrations.Migration):
                 ('date_of_birth', models.DateField()),
                 ('active', models.BooleanField(default=False)),
                 ('manager', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='team_members', to='people_management.person')),
-                ('role', models.ForeignKey(blank=True, default=people_management.models.get_default_role, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='people', to='security.role')),
                 ('user', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='employee', to=settings.AUTH_USER_MODEL)),
             ],
         ),

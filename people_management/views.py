@@ -11,20 +11,7 @@ from people_management.filters import ContractFilter
 from functools import wraps
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
-
-
-def role_required(allowed_roles):
-    def decorator(view_func):
-        @wraps(view_func)
-        def _wrapped_view(request, *args, **kwargs):
-            if hasattr(request.user, 'employee'):
-                user_role = request.user.employee.role
-                if user_role in allowed_roles:
-                    return view_func(request, *args, **kwargs)
-            # Redirect to a custom 403 page
-            return redirect('403_page')  # Ensure you have a URL pattern named '403_page'
-        return _wrapped_view
-    return decorator
+from django.contrib.auth.decorators import user_passes_test
 
 
 # Person Views
@@ -37,7 +24,7 @@ class ViewPersonDetails(DetailView):
     model = Person
     context_object_name = 'person'
 
-# @method_decorator(role_required(['manager', 'hr_admin']), name='dispatch')
+
 class CreateNewPerson(CreateView):
     model = Person
     success_url = reverse_lazy('people')

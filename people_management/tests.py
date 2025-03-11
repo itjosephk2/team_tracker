@@ -29,9 +29,6 @@ class PersonModelTest(TestCase):
         self.employee_role, _ = Role.objects.get_or_create(
             name="Employee", defaults={"description": "Basic Employee Role"}
         )
-        self.manager_role, _ = Role.objects.get_or_create(
-            name="Manager", defaults={"description": "Manager Role"}
-        )
 
 
 class ContractModelTest(TestCase):
@@ -46,7 +43,6 @@ class ContractModelTest(TestCase):
             last_name="Smith",
             email="alice.smith@example.com",
             date_of_birth=date(1990, 1, 1), 
-            role=self.role,
         )
 
         # Create a contract for the person
