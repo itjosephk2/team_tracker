@@ -32,7 +32,7 @@
 
             <div class="d-flex justify-content-between mt-3">
                 <!-- Cancel button to go back to the user list -->
-                <a href="{% url 'users' %}" class="btn btn-dark">Cancel</a>
+                <a href="{% url 'security:user_list' %}" class="btn btn-dark">Cancel</a>
                 
                 <!-- Button to navigate to the update user page -->
                 <a href="{% url 'update_user' pk=user.id %}" class="btn btn-primary">Update</a>
