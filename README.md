@@ -211,7 +211,7 @@ python manage.py test
 ## Acknowledgments
 
 - Special thanks to **Django documentation** and **Stack Overflow** for troubleshooting support.
-- Project inspired by modern HR management tools e.g. PeopleXD.
+- Project inspired by modern HR management tools.
 
 ---
 
