@@ -27,19 +27,19 @@ class ViewPersonDetails(DetailView):
 
 class CreateNewPerson(CreateView):
     model = Person
-    success_url = reverse_lazy('people')
+    success_url = reverse_lazy('people_management:people')
     form_class = PersonForm
 
 
 class UpdatePerson(UpdateView):
     model = Person
-    success_url = reverse_lazy('people')
+    success_url = reverse_lazy('people_management:people')
     form_class = PersonForm
 
 
 class DeletePerson(DeleteView):
     model = Person
-    success_url = reverse_lazy('people')
+    success_url = reverse_lazy('people_management:people')
 
 
 # Contract Views
@@ -57,16 +57,16 @@ class ViewContractDetails(DetailView):
 
 class CreateNewContract(CreateView):
     model = Contract
-    success_url = reverse_lazy('contracts')
+    success_url = reverse_lazy('people_management:contracts')
     form_class = ContractForm
 
 
 class UpdateContract(UpdateView):
     model = Contract
-    success_url = reverse_lazy('contracts')
+    success_url = reverse_lazy('people_management:contracts')
     form_class = ContractForm
 
 
 class DeleteContract(DeleteView):
     model = Contract
-    success_url = reverse_lazy('contracts')
+    success_url = reverse_lazy('people_management:contracts')

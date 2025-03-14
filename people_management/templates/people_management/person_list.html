@@ -26,9 +26,9 @@
                         </div>
                         <div>
                             <!-- View Link -->
-                            <a href="{% url 'view_person' pk=person.id %}" class="btn btn-info btn-sm text-white">View</a>
-                            <a href="{% url 'update_person' pk=person.id %}" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="{% url 'delete_person' pk=person.id %}" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="{% url 'people_management:view_person' pk=person.id %}" class="btn btn-info btn-sm text-white">View</a>
+                            <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-danger btn-sm">Delete</a>
                         </div>
                     </div>
                 </li>
@@ -38,6 +38,6 @@
         </ul>
     </div>
 
-    <a href="{% url 'create_person' %}" class="btn btn-success mt-3">Add New Employee</a>
+    <a href="{% url 'people_management:create_person' %}" class="btn btn-success mt-3">Add New Employee</a>
 </div>
 {% endblock %}

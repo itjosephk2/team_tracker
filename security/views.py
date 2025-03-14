@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import permission_required
 from django.urls import reverse_lazy
 from django import forms
 from .forms import CustomUserCreationForm, CustomLoginForm, UserForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 def is_hr_admin(user):
@@ -26,7 +27,7 @@ class SignupView(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(reverse_lazy("dashboard"))
+            return redirect(reverse_lazy("dashboard:dashboard"))
         return super().dispatch(request, *args, **kwargs)
 
 

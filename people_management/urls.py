@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'people_management'
+
 urlpatterns = [
     path('people/', views.ListPeople.as_view(), name='people'), 
     path('people/<int:pk>/', views.ViewPersonDetails.as_view(), name='view_person'),

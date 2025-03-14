@@ -1,6 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand -->
-    <a class="navbar-brand ps-3" href="{% url 'dashboard' %}">People Tracker</a>
+    <a class="navbar-brand ps-3" href="{% url 'dashboard:dashboard' %}">People Tracker</a>
 
     <!-- Navbar items (aligned to the right) -->
     <ul class="navbar-nav ms-auto me-3 me-lg-4">  <!-- `ms-auto` pushes this to the right -->
@@ -12,7 +12,7 @@
                 <li><a class="dropdown-item" href="#!">Settings</a></li>
                 <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                <li><a class="dropdown-item" href="{% url 'security:logout' %}">Logout</a></li>
             </ul>
         </li>
     </ul>

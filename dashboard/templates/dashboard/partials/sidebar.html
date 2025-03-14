@@ -3,7 +3,7 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link" href="{% url 'dashboard' %}">
+                <a class="nav-link" href="{% url 'dashboard:dashboard' %}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
@@ -18,8 +18,8 @@
                 </a>
                 <div class="collapse" id="collapsePeople" aria-labelledby="headingPeople" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{% url 'people' %}">View People</a>
-                        <a class="nav-link" href="{% url 'create_person' %}">Create Person</a>
+                        <a class="nav-link" href="{% url 'people_management:people' %}">View People</a>
+                        <a class="nav-link" href="{% url 'people_management:create_person' %}">Create Person</a>
                     </nav>
                 </div>
 
@@ -31,8 +31,8 @@
                 </a>
                 <div class="collapse" id="collapseContracts" aria-labelledby="headingContracts" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{% url 'contracts' %}">View Contracts</a>
-                        <a class="nav-link" href="{% url 'create_contract' %}">Create Contract</a>
+                        <a class="nav-link" href="{% url 'people_management:contracts' %}">View Contracts</a>
+                        <a class="nav-link" href="{% url 'people_management:create_contract' %}">Create Contract</a>
                     </nav>
                 </div>
 

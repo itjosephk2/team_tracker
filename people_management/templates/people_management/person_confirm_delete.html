@@ -9,7 +9,7 @@
         <p>This action cannot be undone!</p>
         <input type="submit" class="btn btn-danger" value="DELETE"/>
     </form>
-    <a href="{% url 'people' %}" class='btn btn-dark'>Cancel</a>
+    <a href="{% url 'people_management:people' %}" class='btn btn-dark'>Cancel</a>
 
     {% if form.errors %}
     {% endif %}
