@@ -43,19 +43,19 @@ class LogoutInterface(LogoutView):
 class ListUsers(LoginRequiredMixin, ListView):
     model = User
     context_object_name = "users"
-    template_name = "security/user_list.html"
+    template_name = "security/users/list.html"
 
 
 class ViewUserDetails(LoginRequiredMixin, DetailView):
     model = User
     context_object_name = "user"
-    template_name = "security/user_detail.html"
+    template_name = "security/users/detail.html"
 
 
 class CreateNewUser(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = User
     form_class = UserForm
-    template_name = "security/user_form.html"
+    template_name = "security/users/form.html"
     success_url = reverse_lazy("security:user_list")
 
     def test_func(self):
@@ -65,7 +65,7 @@ class CreateNewUser(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = User
     form_class = UserForm
-    template_name = "security/user_form.html"
+    template_name = "security/users/form.html"
     success_url = reverse_lazy("security:user_list")
 
     def test_func(self):
@@ -74,7 +74,7 @@ class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = User
-    template_name = "security/user_confirm_delete.html"
+    template_name = "security/users/confirm_delete.html"
     success_url = reverse_lazy("security:user_list")
 
     def test_func(self):
@@ -96,7 +96,7 @@ class GroupForm(forms.ModelForm):
 @permission_required("auth.view_group", raise_exception=True)
 def group_list(request):
     groups = Group.objects.all()
-    return render(request, "security/group_list.html", {"groups": groups})
+    return render(request, "security/groups/list.html", {"groups": groups})
 
 
 @permission_required("auth.change_group", raise_exception=True)
@@ -111,7 +111,7 @@ def group_edit(request, pk=None):
     else:
         form = GroupForm(instance=group)
 
-    return render(request, "security/group_form.html", {"form": form, "group": group})
+    return render(request, "security/groups/form.html", {"form": form, "group": group})
 
 
 @permission_required("auth.delete_group", raise_exception=True)
@@ -122,4 +122,4 @@ def group_delete(request, pk):
         group.delete()
         return redirect("security:group_list")
 
-    return render(request, "security/group_confirm_delete.html", {"group": group})
+    return render(request, "security/groups/confirm_delete.html", {"group": group})
