@@ -1,7 +1,5 @@
-
-
 {% extends 'dashboard/base.html'%}
-
+{% load static %}
 
 {% block content %}      
 
@@ -63,5 +61,7 @@
             </table>
         </div>
     </div>
-
+{% endblock %}
+{% block extra_scripts %}
+    <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
 {% endblock %}

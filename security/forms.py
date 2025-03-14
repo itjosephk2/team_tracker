@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from people_management.models import Person  # Ensure correct import
-from security.models import Role, PermissionDefinition
 
 
 # User Form
@@ -76,42 +75,3 @@ class UserForm(forms.ModelForm):
             person.user = user
             person.save()
         return user
-
-
-# Role Form
-class RoleForm(forms.ModelForm):
-    """
-    Form for managing roles and assigning permissions.
-    """
-    permissions = forms.ModelMultipleChoiceField(
-        queryset=PermissionDefinition.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"}),  # Bootstrap checkboxes
-        required=False
-    )
-
-    class Meta:
-        model = Role
-        fields = ["name", "description", "permissions"]
-        widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter role name"}),
-            "description": forms.Textarea(attrs={"class": "form-control", "rows": 3, "placeholder": "Enter role description"}),
-        }
-
-    def clean_name(self):
-        """
-        Prevent renaming predefined roles.
-        """
-        name = self.cleaned_data.get("name")
-        if self.instance.pk and self.instance.name in Role.PREDEFINED_ROLES and self.instance.name != name:
-            raise forms.ValidationError("This role name is reserved and cannot be changed.")
-        return name
-
-    def save(self, commit=True):
-        """
-        Save the role and update associated permissions.
-        """
-        role = super().save(commit=False)
-        if commit:
-            role.save()
-            self.cleaned_data["permissions"].set(role.permissions.all())
-        return role
