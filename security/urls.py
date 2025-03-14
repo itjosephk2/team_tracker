@@ -9,7 +9,7 @@ urlpatterns = [
     path("users/<int:pk>/", views.ViewUserDetails.as_view(), name="user_detail"),  # View user details
     path("users/edit/<int:pk>/", views.UpdateUser.as_view(), name="user_edit"),  # Edit user
     path("users/delete/<int:pk>/", views.DeleteUser.as_view(), name="user_delete"),  # Delete user
-    path("users/add/", views.CreateNewUser.as_view(), name="user_add"),  # Create new user
+    path("users/add/", views.CreateNewUser.as_view(), name="user_create"),  # Create new user
     
     # Group Management URLs
     path("groups/", views.group_list, name="group_list"),  # List all groups
