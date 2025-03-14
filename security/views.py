@@ -5,7 +5,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
 from django.urls import reverse_lazy
 from django import forms
-from people_management.models import Person
 from .forms import CustomUserCreationForm, CustomLoginForm, UserForm
 
 
