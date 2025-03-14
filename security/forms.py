@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from people_management.models import Person  # Ensure correct import
+from people_management.models import Person  # Ensure correct importg
 
 
 # User Form
