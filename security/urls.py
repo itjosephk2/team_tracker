@@ -1,32 +1,36 @@
 from django.urls import path
-from django.contrib.auth import views as auth_views  # Built-in Django auth views
-from . import views
+from django.contrib.auth import views as auth_views
+from .views import (
+    LoginInterface, LogoutInterface, SignupView,
+    ListUsers, ViewUserDetails, UpdateUser, DeleteUser, CreateNewUser,
+    ListGroups, GroupDetailView, CreateGroup, UpdateGroup, DeleteGroup
+)
 
 app_name = "security"
 
 urlpatterns = [
     # Authentication URLs
-    path('login/', views.LoginInterface.as_view(), name='login'),
-    path('logout/', views.LogoutInterface.as_view(), name='logout'),
-    path('signup/', views.SignupView.as_view(), name='signup'),
+    path('login/', LoginInterface.as_view(), name='login'),
+    path('logout/', LogoutInterface.as_view(), name='logout'),
+    path('signup/', SignupView.as_view(), name='signup'),
 
-    # Password Reset URLs
-    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    # # Password Reset URLs
+    # path('password_reset/', PasswordResetView.as_view(), name='password_reset'),
+    # path('password_reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    # path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    # path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     # User Management
-    path("users/", views.ListUsers.as_view(), name="user_list"),
-    path("users/<int:pk>/", views.ViewUserDetails.as_view(), name="user_detail"),
-    path("users/edit/<int:pk>/", views.UpdateUser.as_view(), name="user_edit"),
-    path("users/delete/<int:pk>/", views.DeleteUser.as_view(), name="user_delete"),
-    path("users/add/", views.CreateNewUser.as_view(), name="user_create"),
+    path("users/", ListUsers.as_view(), name="user_list"),
+    path("users/<int:pk>/", ViewUserDetails.as_view(), name="user_detail"),
+    path("users/edit/<int:pk>/", UpdateUser.as_view(), name="user_edit"),
+    path("users/delete/<int:pk>/", DeleteUser.as_view(), name="user_delete"),
+    path("users/add/", CreateNewUser.as_view(), name="user_create"),
 
-    # Group Management
-    path("groups/", views.group_list, name="group_list"),
-    path("groups/<int:pk>/", views.ViewUserDetails.as_view(), name="group_detail"),
-    path("groups/add/", views.group_edit, name="group_add"),
-    path("groups/edit/<int:pk>/", views.group_edit, name="group_edit"),
-    path("groups/delete/<int:pk>/", views.group_delete, name="group_delete"),
+    # Group Management (Updated to Class-Based Views)
+    path("groups/", ListGroups.as_view(), name="group_list"),
+    path("groups/<int:pk>/", GroupDetailView.as_view(), name="group_detail"),
+    path("groups/add/", CreateGroup.as_view(), name="group_add"),
+    path("groups/edit/<int:pk>/", UpdateGroup.as_view(), name="group_edit"),
+    path("groups/delete/<int:pk>/", DeleteGroup.as_view(), name="group_delete"),
 ]

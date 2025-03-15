@@ -1,0 +1,21 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Group Details</h2>
+    <div class="card shadow-lg p-3 rounded">
+        <h4 class="card-title">{{ group.name }}</h4>
+        <h5 class="mt-3">Assigned Permissions:</h5>
+        <ul class="list-group">
+            {% for permission in group.permissions.all %}
+                <li class="list-group-item">{{ permission.name }}</li>
+            {% empty %}
+                <li class="list-group-item text-muted">No permissions assigned.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <a href="{% url 'security:group_edit' pk=group.id %}" class="btn btn-primary mt-3">Edit</a>
+    <a href="{% url 'security:group_list' %}" class="btn btn-secondary mt-3">Back to Groups</a>
+</div>
+{% endblock %}

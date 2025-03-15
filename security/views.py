@@ -1,8 +1,7 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import permission_required
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django import forms
 from .forms import CustomUserCreationForm, CustomLoginForm, UserForm
@@ -10,11 +9,13 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 
 def is_hr_admin(user):
-    """Helper function to check if a user is an HR Admin."""
+    """Check if a user belongs to the HR Admin group."""
     return user.groups.filter(name="Admin").exists()
 
 
+# Authentication Views
 class SignupView(CreateView):
+    """Handles user registration."""
     form_class = CustomUserCreationForm
     template_name = "security/auth/register.html"
     success_url = reverse_lazy("security:login")
@@ -32,27 +33,33 @@ class SignupView(CreateView):
 
 
 class LoginInterface(LoginView):
+    """Handles user login."""
     form_class = CustomLoginForm
     template_name = "security/auth/login.html"
 
 
 class LogoutInterface(LogoutView):
+    """Handles user logout."""
     next_page = reverse_lazy("security:login")
 
 
+# User Management Views
 class ListUsers(LoginRequiredMixin, ListView):
+    """Displays a list of users."""
     model = User
     context_object_name = "users"
     template_name = "security/users/list.html"
 
 
 class ViewUserDetails(LoginRequiredMixin, DetailView):
+    """Displays details of a user."""
     model = User
     context_object_name = "user"
     template_name = "security/users/detail.html"
 
 
 class CreateNewUser(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """Allows HR Admin to create a new user."""
     model = User
     form_class = UserForm
     template_name = "security/users/form.html"
@@ -63,6 +70,7 @@ class CreateNewUser(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
 class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """Allows HR Admin to update user information."""
     model = User
     form_class = UserForm
     template_name = "security/users/form.html"
@@ -73,6 +81,7 @@ class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """Allows HR Admin to delete a user."""
     model = User
     template_name = "security/users/confirm_delete.html"
     success_url = reverse_lazy("security:user_list")
@@ -81,7 +90,9 @@ class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return is_hr_admin(self.request.user)
 
 
+# Group Management Forms
 class GroupForm(forms.ModelForm):
+    """Form for creating and editing groups with permissions."""
     permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects.all(),
         widget=forms.CheckboxSelectMultiple,
@@ -93,33 +104,44 @@ class GroupForm(forms.ModelForm):
         fields = ["name", "permissions"]
 
 
-@permission_required("auth.view_group", raise_exception=True)
-def group_list(request):
-    groups = Group.objects.all()
-    return render(request, "security/groups/list.html", {"groups": groups})
+# Group Management Views
+class ListGroups(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    """Displays a list of groups."""
+    model = Group
+    context_object_name = "groups"
+    template_name = "security/groups/list.html"
+    permission_required = "auth.view_group"
 
 
-@permission_required("auth.change_group", raise_exception=True)
-def group_edit(request, pk=None):
-    group = get_object_or_404(Group, pk=pk) if pk else Group()
-
-    if request.method == "POST":
-        form = GroupForm(request.POST, instance=group)
-        if form.is_valid():
-            form.save()
-            return redirect("security:group_list")
-    else:
-        form = GroupForm(instance=group)
-
-    return render(request, "security/groups/form.html", {"form": form, "group": group})
+class GroupDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    """Displays details of a group."""
+    model = Group
+    template_name = "security/groups/detail.html"
+    context_object_name = "group"
+    permission_required = "auth.view_group"
 
 
-@permission_required("auth.delete_group", raise_exception=True)
-def group_delete(request, pk):
-    group = get_object_or_404(Group, pk=pk)
+class CreateGroup(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    """Allows authorized users to create a new group."""
+    model = Group
+    form_class = GroupForm
+    template_name = "security/groups/form.html"
+    success_url = reverse_lazy("security:group_list")
+    permission_required = "auth.add_group"
 
-    if request.method == "POST":
-        group.delete()
-        return redirect("security:group_list")
 
-    return render(request, "security/groups/confirm_delete.html", {"group": group})
+class UpdateGroup(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    """Allows authorized users to edit an existing group."""
+    model = Group
+    form_class = GroupForm
+    template_name = "security/groups/form.html"
+    success_url = reverse_lazy("security:group_list")
+    permission_required = "auth.change_group"
+
+
+class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    """Allows authorized users to delete a group."""
+    model = Group
+    template_name = "security/groups/confirm_delete.html"
+    success_url = reverse_lazy("security:group_list")
+    permission_required = "auth.delete_group"

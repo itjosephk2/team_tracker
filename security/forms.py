@@ -1,9 +1,10 @@
 import secrets
 from django import forms
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group, Permission
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.mail import send_mail
 from people_management.models import Person
+
 
 class CustomUserCreationForm(UserCreationForm):
     """
@@ -120,3 +121,18 @@ class UserForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+    
+    
+class GroupForm(forms.ModelForm):
+    """Form for creating and editing groups with permissions."""
+    
+    permissions = forms.ModelMultipleChoiceField(
+        queryset=Permission.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        help_text="Select the permissions for this group."
+    )
+
+    class Meta:
+        model = Group
+        fields = ["name", "permissions"]
