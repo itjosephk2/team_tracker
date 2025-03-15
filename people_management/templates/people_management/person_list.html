@@ -3,20 +3,38 @@
 {% block content %}      
 <div class="container mt-5">
     <h2>All Employees</h2>
+    
+    <!-- Filter Form -->
+    <form method="get" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <select name="status" class="form-select">
+                    <option value="">All Statuses</option>
+                    <option value="active" {% if request.GET.status == "active" %}selected{% endif %}>Active</option>
+                    <option value="inactive" {% if request.GET.status == "inactive" %}selected{% endif %}>Inactive</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+
     <div class="card shadow-lg p-3 rounded">
         <ul class="list-group list-group-flush">
             {% for person in people %}
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <strong>{{ person.first_name }} {{ person.last_name }}</strong>  
-                            <br>
-                            <small>Email:</small> {{ person.email }}  
-                            <br>
-                            <small>Phone:</small> {{ person.phone_number }}  
-                            <br>
-                            <small>Date of Birth:</small> {{ person.date_of_birth }}  
-                            <br>
+                <li class="list-group-item" style="cursor: pointer;" onclick="window.location='{% url 'people_management:view_person' pk=person.id %}'">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <strong>{{ person.first_name }} {{ person.last_name }}</strong>
+                        </div>
+                        <div class="col-md-2">
+                            <small>Phone:</small> {{ person.phone_number }}
+                        </div>
+                        <div class="col-md-4">
+                            <small>Date of Birth:</small> {{ person.date_of_birth }}
+                        </div>
+                        <div class="col-md-2">
                             <small>Status:</small> 
                             {% if person.active %}
                                 <span class="badge bg-success">Active</span>
@@ -24,11 +42,10 @@
                                 <span class="badge bg-secondary">Inactive</span>
                             {% endif %}
                         </div>
-                        <div>
-                            <!-- View Link -->
-                            <a href="{% url 'people_management:view_person' pk=person.id %}" class="btn btn-info btn-sm text-white">View</a>
-                            <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        <div class="col-md-2 text-end">
+                            <!-- Action Links: Stop event propagation so row click doesn't trigger -->
+                            <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-primary btn-sm" onclick="event.stopPropagation()">Edit</a>
+                            <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-danger btn-sm" onclick="event.stopPropagation()">Delete</a>
                         </div>
                     </div>
                 </li>
