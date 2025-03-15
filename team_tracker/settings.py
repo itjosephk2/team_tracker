@@ -91,13 +91,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Ensure STATICFILES_DIRS is empty in production (DEBUG=False)
 if DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / "static"]  # Only use in development
+    STATICFILES_DIRS = [BASE_DIR / "static"]  # Only for development
 else:
-    STATICFILES_DIRS = []  # Heroku uses `STATIC_ROOT`
+    STATICFILES_DIRS = []  # Heroku uses STATIC_ROOT
 
 # Use Whitenoise to serve static files in production
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -117,15 +118,20 @@ LOGGING = {
     "disable_existing_loggers": False,
     "handlers": {
         "file": {
-            "level": "ERROR",
+            "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": BASE_DIR / "errors.log",
+            "filename": BASE_DIR / "staticfiles_debug.log",
         },
     },
     "loggers": {
         "django": {
             "handlers": ["file"],
             "level": "ERROR",
+            "propagate": True,
+        },
+        "django.contrib.staticfiles": {
+            "handlers": ["file"],
+            "level": "DEBUG",
             "propagate": True,
         },
     },
