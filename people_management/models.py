@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from datetime import date
-
 
 class Person(models.Model):
     """
@@ -19,7 +20,7 @@ class Person(models.Model):
     active = models.BooleanField(default=False, help_text="Indicates if the person is currently employed.")
 
     manager = models.ForeignKey(
-        'self',  # Self-referential foreign key to link a manager
+        'self',  
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -28,7 +29,7 @@ class Person(models.Model):
     )
 
     user = models.OneToOneField(
-        User,  # Links this Person to a Django `User` instance for authentication
+        User,  
         on_delete=models.CASCADE,
         related_name="person",
         null=True,
@@ -37,28 +38,23 @@ class Person(models.Model):
     )
 
     def __str__(self):
-        """
-        Returns a string representation of the Person object.
-        """
         return f"{self.first_name} {self.last_name} (ID: {self.id})"
 
     def update_active_status(self):
         """
         Updates the `active` field based on active contracts.
-        
+
         The person is considered active if they have at least one contract 
         where the current date falls within the contract period.
         """
         today = date.today()
-        self.active = self.contracts.filter(contract_start__lte=today, contract_end__gte=today).exists()
+        self.active = self.contracts.filter(contract_start__lte=today).exclude(contract_end__lt=today).exists()
         self.save()
 
 
 class Contract(models.Model):
     """
     Represents an employment contract for a Person.
-
-    Stores job title, contract dates, hourly rate, and contracted hours.
     """
 
     person = models.ForeignKey(
@@ -77,7 +73,36 @@ class Contract(models.Model):
     contracted_hours = models.FloatField(default=40, help_text="Number of contracted hours per week.")
 
     def __str__(self):
-        """
-        Returns a string representation of the Contract object.
-        """
         return f"{self.person} - {self.job_title}"
+
+
+# -------------------------------
+# ✅ Move Signals Outside the Model
+# -------------------------------
+
+@receiver(post_save, sender=Contract)
+def activate_person_on_contract(sender, instance, **kwargs):
+    """Activate a person only if today's date is within the contract period."""
+    today = date.today()
+    
+    if instance.person and not instance.person.active:
+        if instance.contract_start <= today and (instance.contract_end is None or today <= instance.contract_end):
+            instance.person.active = True
+            instance.person.save()
+
+
+@receiver(post_delete, sender=Contract)
+def deactivate_person_if_no_valid_contracts(sender, instance, **kwargs):
+    """Deactivate the person if they have no valid (active) contracts."""
+    today = date.today()
+
+    has_valid_contract = Contract.objects.filter(
+        person=instance.person,
+        contract_start__lte=today,  # Started already
+    ).exclude(
+        contract_end__lt=today  # Not already expired
+    ).exists()
+
+    if instance.person and not has_valid_contract:
+        instance.person.active = False
+        instance.person.save()

@@ -17,7 +17,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"  # Convert string to boolean
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
 
 # Ensure CSRF_TRUSTED_ORIGINS is properly formatted
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://127.0.0.1").split(",")
 
 # Application definition
 INSTALLED_APPS = [
