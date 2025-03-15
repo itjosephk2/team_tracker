@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'dashboard',
     'security',
     'people_management',
-    'hr_management',
 ]
 
 MIDDLEWARE = [
