@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from datetime import date
 
+
 class Person(models.Model):
     """
     Represents an employee in the system.
@@ -11,6 +12,11 @@ class Person(models.Model):
     Each Person can be linked to a Django `User` for authentication.
     A Person may also have a manager (who is another Person instance).
     """
+    ROLE_CHOICES = [
+        ("employee", "Employee"),
+        ("manager", "Manager"),
+        ("hr_admin", "HR Admin"),
+    ]
 
     first_name = models.CharField(max_length=50, help_text="The employee's first name.")
     last_name = models.CharField(max_length=50, help_text="The employee's last name.")
@@ -28,8 +34,15 @@ class Person(models.Model):
         help_text="Manager supervising this employee."
     )
 
+    role = models.CharField(
+        max_length=10,
+        choices=ROLE_CHOICES,
+        default="employee",
+        help_text="The role of the person in the company."
+    )
+
     user = models.OneToOneField(
-        User,  
+        "auth.User",  
         on_delete=models.CASCADE,
         related_name="person",
         null=True,
@@ -75,10 +88,6 @@ class Contract(models.Model):
     def __str__(self):
         return f"{self.person} - {self.job_title}"
 
-
-# -------------------------------
-# ✅ Move Signals Outside the Model
-# -------------------------------
 
 @receiver(post_save, sender=Contract)
 def activate_person_on_contract(sender, instance, **kwargs):

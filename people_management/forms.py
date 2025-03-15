@@ -13,6 +13,8 @@ class PersonForm(forms.ModelForm):
             'email', 
             'phone_number', 
             'date_of_birth',
+            'role',  # Role is now included and mandatory
+            'manager',  # Manager selection added
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
@@ -20,6 +22,8 @@ class PersonForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),
             'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'role': forms.Select(attrs={'class': 'form-select'}),  # Dropdown for role
+            'manager': forms.Select(attrs={'class': 'form-select'}),  # Dropdown for selecting a manager
         }
         error_messages = {
             'first_name': {'max_length': 'First name cannot be longer than 50 characters!'},
@@ -27,6 +31,16 @@ class PersonForm(forms.ModelForm):
             'email': {'max_length': 'Email cannot be longer than 255 characters!'},
             'phone_number': {'max_length': 'Phone number cannot be longer than 15 characters!'},
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Make role a required field
+        self.fields["role"].required = True  
+
+        # Filter managers to only show users with "manager" or "hr_admin" roles
+        self.fields["manager"].queryset = Person.objects.filter(role__in=["manager", "hr_admin"])
+        self.fields["manager"].required = False  # Manager is optional (only set for non-managers)
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -48,6 +62,12 @@ class PersonForm(forms.ModelForm):
             if age < 16:
                 raise ValidationError('Person must be at least 16 years old')
         return dob
+
+    def clean_manager(self):
+        manager = self.cleaned_data.get('manager')
+        if manager and manager.role == "employee":
+            raise ValidationError("An employee cannot be assigned as a manager.")
+        return manager
 
 
 class ContractForm(forms.ModelForm):
