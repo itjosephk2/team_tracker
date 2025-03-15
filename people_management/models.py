@@ -90,7 +90,6 @@ def activate_person_on_contract(sender, instance, **kwargs):
             instance.person.active = True
             instance.person.save()
 
-
 @receiver(post_delete, sender=Contract)
 def deactivate_person_if_no_valid_contracts(sender, instance, **kwargs):
     """Deactivate the person if they have no valid (active) contracts."""
