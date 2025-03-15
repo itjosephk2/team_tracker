@@ -35,10 +35,10 @@
                 <a href="{% url 'security:user_list' %}" class="btn btn-dark">Cancel</a>
                 
                 <!-- Button to navigate to the update user page -->
-                <a href="{% url 'update_user' pk=user.id %}" class="btn btn-primary">Update</a>
+                <a href="{% url 'security:user_edit' pk=user.id %}" class="btn btn-primary">Update</a>
                 
                 <!-- Button to navigate to the delete user page -->
-                <a href="{% url 'delete_user' pk=user.id %}" class="btn btn-danger">Delete</a>
+                <a href="{% url 'security:user_delete' pk=user.id %}" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </div>

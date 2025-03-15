@@ -11,7 +11,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 def is_hr_admin(user):
     """Helper function to check if a user is an HR Admin."""
-    return user.groups.filter(name="HR Admin").exists()
+    return user.groups.filter(name="Admin").exists()
 
 
 class SignupView(CreateView):
