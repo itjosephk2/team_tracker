@@ -1,20 +1,67 @@
 {% extends 'dashboard/base.html'%}
 {% load static %}
 
-{% block content %}      
+{% block content %}
 
-    <h1 class="mt-4">Dashboard</h1>
-    
-    <div class="card mb-4">
-        <div class="card-header table-header-flex-box">
-            <div>
-                <i class="fas fa-table me-1"></i>
-                All Employees
+<div class="container mt-4">
+    <div class="row">
+        <!-- Personal Details Widget -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-user me-1"></i> Personal Details
+                </div>
+                <div class="card-body">
+                    {% if request.user.person %}
+                        <p><strong>First Name:</strong> {{ request.user.person.first_name }}</p>
+                        <p><strong>Last Name:</strong> {{ request.user.person.last_name }}</p>
+                        <p><strong>Email:</strong> {{ request.user.person.email }}</p>
+                        <p><strong>Phone Number:</strong> {% if request.user.person.phone_number %}{{ request.user.person.phone_number }}{% else %}N/A{% endif %}</p>
+                        <p><strong>Date of Birth:</strong> {{ request.user.person.date_of_birth }}</p>
+                        <p><strong>Manager:</strong> {% if request.user.person.manager %}{{ request.user.person.manager.first_name }} {{ request.user.person.manager.last_name }}{% else %}No Manager Assigned{% endif %}</p>
+                    {% else %}
+                        <p>No personal details available.</p>
+                    {% endif %}
+                </div>
             </div>
-            <button class='btn btn-success'><a href="{% url 'people_management:create_person' %}" class="text-white">Add New Person</a></button>
+        </div>
+
+        <!-- Contract Details Widget -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-file-contract me-1"></i> Contract Details
+                </div>
+                <div class="card-body">
+                    {% if request.user.person and request.user.person.contracts.exists %}
+                        {% for contract in request.user.person.contracts.all %}
+                            <div class="contract">
+                                <p><strong>Job Title:</strong> {{ contract.job_title }}</p>
+                                <p><strong>Hourly Rate:</strong> £{{ contract.hourly_rate }}</p>
+                                <p><strong>Contracted Hours:</strong> {{ contract.contracted_hours }} per week</p>
+                                <p><strong>Contract Start:</strong> {{ contract.contract_start }}</p>
+                                <p><strong>Contract End:</strong> {% if contract.contract_end %}{{ contract.contract_end }}{% else %}Ongoing{% endif %}</p>
+                            </div>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        <p>No contract information available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if people %}
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white d-flex justify-content-between">
+            <div>
+                <i class="fas fa-users me-1"></i> All Employees
+            </div>
+            <a href="{% url 'people_management:create_person' %}" class="btn btn-success">Add New Person</a>
         </div>
         <div class="card-body">
-            <table id="datatablesSimple">
+            <table id="datatablesSimple" class="table table-striped">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -22,21 +69,9 @@
                         <th>Phone Number</th>
                         <th>DOB</th>
                         <th>Status</th>
-                        <th data-sortable='false'>Edit</th>
-                        <th data-sortable='false'>Delete</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>DOB</th>
-                        <th>Status</th>
-                        <th data-sortable='false'>Edit</th>
-                        <th data-sortable='false'>Delete</th>
-                    </tr>
-                </tfoot>
                 <tbody>
                     {% for person in people %}
                         <tr>
@@ -44,24 +79,27 @@
                             <td>{{ person.email }}</td>
                             <td>{{ person.phone_number }}</td>
                             <td>{{ person.date_of_birth }}</td>
-                            <td>{{ person.active }}</td>
+                            <td>{% if person.active %}Active{% else %}Inactive{% endif %}</td>
                             <td>
-                                <button class='btn btn-info'>
-                                    <a href="{% url 'people_management:update_person' person.pk %}" class="text-white"><i class="fa-solid fa-pen-to-square"></i></a>
-                                </button>
+                                <a href="{% url 'people_management:update_person' person.pk %}" class="btn btn-dark btn-sm mx-1">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </a>
+                                <a href="{% url 'people_management:delete_person' person.pk %}" class="btn btn-dark btn-sm mx-1">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </a>
                             </td>
-                            <td>
-                                <button class='btn btn-danger'>
-                                    <a href="{% url 'people_management:delete_person' person.pk %}" class="text-white"><i class="fa-solid fa-delete-left"></i></a>
-                                </button>
-                            </td>
+                            
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    {% endif %}
+</div>
+
 {% endblock %}
+
 {% block extra_scripts %}
-    <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+<script src="{% static 'js/datatables-simple-demo.js' %}"></script>
 {% endblock %}
