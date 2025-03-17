@@ -2,7 +2,7 @@
 
 {% block content %}      
 <div class="container mt-5">
-    <h2>All Employees</h2>
+    <h2 class="mb-3">All Employees</h2>
     
     <!-- Filter Form -->
     <form method="get" class="mb-4">
@@ -15,46 +15,52 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Filter</button>
+                <button type="submit" class="btn btn-outline-dark">Filter</button>
             </div>
         </div>
     </form>
 
-    <div class="card shadow-lg p-3 rounded">
+    <div class="card shadow-sm p-3 rounded">
         <ul class="list-group list-group-flush">
             {% for person in people %}
-                <li class="list-group-item" style="cursor: pointer;" onclick="window.location='{% url 'people_management:view_person' pk=person.id %}'">
-                    <div class="row align-items-center">
-                        <div class="col-md-2">
-                            <strong>{{ person.first_name }} {{ person.last_name }}</strong>
-                        </div>
-                        <div class="col-md-2">
-                            <small>Phone:</small> {{ person.phone_number }}
-                        </div>
-                        <div class="col-md-4">
-                            <small>Date of Birth:</small> {{ person.date_of_birth }}
-                        </div>
-                        <div class="col-md-2">
-                            <small>Status:</small> 
+                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                    <div>
+                        <strong class="fs-6">{{ person.first_name }} {{ person.last_name }}</strong>
+                        <span class="text-muted small"> - {{ person.phone_number }}</span>
+                        <span class="text-muted small"> | DOB: {{ person.date_of_birth }}</span>
+                        <span class="text-muted small"> | 
                             {% if person.active %}
                                 <span class="badge bg-success">Active</span>
                             {% else %}
                                 <span class="badge bg-secondary">Inactive</span>
                             {% endif %}
-                        </div>
-                        <div class="col-md-2 text-end">
-                            <!-- Action Links: Stop event propagation so row click doesn't trigger -->
-                            <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-primary btn-sm" onclick="event.stopPropagation()">Edit</a>
-                            <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-danger btn-sm" onclick="event.stopPropagation()">Delete</a>
-                        </div>
+                        </span>
+                    </div>
+
+                    <!-- Button Group for Spacing -->
+                    <div class="d-flex">
+                        <a href="{% url 'people_management:view_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                            View
+                        </a>
+                        <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                            Edit
+                        </a>
+                        <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
+                            Delete
+                        </a>
                     </div>
                 </li>
             {% empty %}
-                <li class="list-group-item text-muted text-center">No employees available.</li>
+                <li class="list-group-item text-muted text-center py-3">No employees available.</li>
             {% endfor %}
         </ul>
     </div>
 
-    <a href="{% url 'people_management:create_person' %}" class="btn btn-success mt-3">Add New Employee</a>
+    <!-- "Add New Employee" button, styled to match -->
+    <div class="mt-4 text-end">
+        <a href="{% url 'people_management:create_person' %}" class="btn btn-outline-dark">
+            Add New Employee
+        </a>
+    </div>
 </div>
 {% endblock %}
