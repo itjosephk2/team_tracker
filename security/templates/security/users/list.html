@@ -9,8 +9,8 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
                         <strong>{{ user.username }}</strong>
-                        {% if user.employee %}
-                            - Linked to: {{ user.employee.first_name }} {{ user.employee.last_name }}
+                        {% if user.person %}
+                            - Linked to: {{ user.person.first_name }} {{ user.person.last_name }}
                         {% else %}
                             - Not Linked
                         {% endif %}
