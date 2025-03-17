@@ -38,7 +38,8 @@
                 </div>
 
                 <!-- Security Section -->
-                {% if request.user.is_authenticated %}
+                {% if request.user.is_authenticated and "Admin" in request.user.groups.all.values_list.0 %}
+
                 <div class="sb-sidenav-menu-heading">Security</div>
                 <!-- Users -->
                 <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
