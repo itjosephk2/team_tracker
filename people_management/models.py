@@ -43,7 +43,7 @@ class Person(models.Model):
 
     user = models.OneToOneField(
         "auth.User",  
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name="person",
         null=True,
         blank=True,

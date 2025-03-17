@@ -8,12 +8,13 @@ from people_management.models import Person
 
 class CustomUserCreationForm(UserCreationForm):
     """
-    Admin-only form to create a new user linked to a Person.
-    - Auto-generates a secure password.
-    - Emails the user their login details.
-    - Pulls first name, last name, and email from the Person model.
-    - Optionally assigns a group.
+    Form for admin to create a new user linked to a Person.
+    - Only allows selecting employees (Persons) who are not already linked to a user.
+    - Optionally assigns the user to a group.
+    - Generates a secure password and emails the user.
     """
+    password1 = forms.CharField(widget=forms.HiddenInput(), required=False, label='')
+    password2 = forms.CharField(widget=forms.HiddenInput(), required=False, label='')
     person = forms.ModelChoiceField(
         queryset=Person.objects.filter(user__isnull=True),  # Only show unlinked persons
         required=True,
@@ -23,7 +24,7 @@ class CustomUserCreationForm(UserCreationForm):
     group = forms.ModelChoiceField(
         queryset=Group.objects.all(),
         required=False,
-        label="Assign Group",
+        label="Assign Permissions Group",
         widget=forms.Select(attrs={"class": "form-control"}),
     )
 
@@ -36,96 +37,88 @@ class CustomUserCreationForm(UserCreationForm):
         help_texts = {"username": ""}
 
     def clean_username(self):
+        """Ensure the username is unique."""
         username = self.cleaned_data.get("username")
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("This username is already taken. Please choose another.")
         return username
 
     def clean_person(self):
+        """Ensure the selected person is not already linked to a user."""
         person = self.cleaned_data.get("person")
         if person and person.user:
             raise forms.ValidationError("This person is already linked to another user.")
         return person
 
     def save(self, commit=True):
+        """
+        Create a new user and link it to the selected Person.
+        Generates a secure password and sends login credentials via email.
+        """
         user = super().save(commit=False)
         person = self.cleaned_data.get("person")
-
-        # Pull details from the Person model
         user.first_name = person.first_name
         user.last_name = person.last_name
         user.email = person.email
 
-        # Generate a secure random password
         random_password = secrets.token_urlsafe(12)
         user.set_password(random_password)
 
         if commit:
             user.save()
-            # Link the Person to the User
             person.user = user
             person.save()
 
-            # Assign group if one was selected
             group = self.cleaned_data.get("group")
             if group:
                 user.groups.add(group)
 
-            # Send email with login credentials
             send_mail(
                 "Your New Account Credentials",
-                f"Hello {user.first_name},\n\n"
-                f"Your account has been created.\n"
-                f"Username: {user.username}\n"
-                f"Password: {random_password}\n\n"
-                "Please log in and change your password.",
-                "admin@yourdomain.com",  # Replace with your actual sender email
+                f"Hello {user.first_name},\n\nYour account has been created.\nUsername: {user.username}\nPassword: {random_password}\n\nPlease log in and change your password.",
+                "admin@yourdomain.com",
                 [user.email],
-                fail_silently=True,
+                fail_silently=False,
             )
-
+            print(f"Generated Password for {user.username}: {random_password}")
         return user
 
 
 class CustomLoginForm(AuthenticationForm):
-    """
-    Custom login form.
-    Currently, it simply extends Django's built-in AuthenticationForm,
-    but can be customized further if needed.
-    """
+    """Custom login form extending Django's default authentication form."""
     pass
 
 
-class UserForm(forms.ModelForm):
+class PersonForm(forms.ModelForm):
     """
-    A form for updating a user's details and linking them to a Person.
-    This can be used for editing existing users.
+    Form for linking a Person to a User.
+    Only displays Users who are not already linked to a Person.
     """
-    person = forms.ModelChoiceField(
-        queryset=Person.objects.all(),
-        required=True,
-        label="Link Employee",
-        widget=forms.Select(attrs={"class": "form-control"}),
+    user = forms.ModelChoiceField(
+        queryset=User.objects.filter(person__isnull=True),  # Exclude already linked users
+        required=False
     )
 
     class Meta:
+        model = Person
+        fields = ["user"]
+
+
+class UserForm(forms.ModelForm):
+    """Form for updating basic User details (excluding email)."""
+    class Meta:
         model = User
-        fields = ["username", "email", "person"]
+        fields = ["username", "is_active"]
         widgets = {
             "username": forms.TextInput(attrs={"class": "form-control"}),
-            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "is_active": forms.Select(attrs={"class": "form-select"}),
         }
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if commit:
-            user.save()
-        return user
-    
-    
+
 class GroupForm(forms.ModelForm):
-    """Form for creating and editing groups with permissions."""
-    
+    """
+    Form for creating and editing Groups with selectable permissions.
+    """
     permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects.all(),
         widget=forms.CheckboxSelectMultiple,

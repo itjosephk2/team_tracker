@@ -61,12 +61,19 @@ class ViewUserDetails(LoginRequiredMixin, DetailView):
 class CreateNewUser(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Allows HR Admin to create a new user."""
     model = User
-    form_class = UserForm
+    form_class = CustomUserCreationForm
     template_name = "security/users/form.html"
     success_url = reverse_lazy("security:user_list")
 
     def test_func(self):
         return is_hr_admin(self.request.user)
+    
+    def form_valid(self, form):
+        """Ensures user is properly linked and password is auto-generated."""
+        user = form.save(commit=False)
+        user.is_staff = True  # Optional: If you want new users to be staff
+        user.save()
+        return super().form_valid(form)
 
 
 class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
