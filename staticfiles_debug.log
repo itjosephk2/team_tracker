@@ -973,3 +973,96 @@ Traceback (most recent call last):
     raise self.error(token, msg)
 django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 5: 'block'. Looking for one of: endblock.
 "GET /security/users/delete/8/ HTTP/1.1" 500 162089
+Internal Server Error: /security/login/
+Traceback (most recent call last):
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/decorators/debug.py", line 92, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/decorators/cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/views.py", line 90, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/views.py", line 109, in form_valid
+    auth_login(self.request, form.get_user())
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/__init__.py", line 118, in login
+    request.session.cycle_key()
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/sessions/backends/base.py", line 304, in cycle_key
+    self.create()
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/sessions/backends/db.py", line 54, in create
+    self.save(must_create=True)
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/sessions/backends/db.py", line 82, in save
+    obj = self.create_model_instance(data)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/sessions/backends/db.py", line 70, in create_model_instance
+    expire_date=self.get_expiry_date(),
+                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/sessions/backends/base.py", line 248, in get_expiry_date
+    return modification + timedelta(seconds=expiry)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported type for timedelta seconds component: NoneType
+"POST /security/login/?next=/ HTTP/1.1" 500 139380
+Internal Server Error: /security/users/edit/8/
+Traceback (most recent call last):
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/mixins.py", line 135, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 208, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 135, in form_valid
+    self.object = form.save()
+                  ^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/security/forms.py", line 163, in save
+    user.person.save()
+    ^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/db/models/fields/related_descriptors.py", line 492, in __get__
+    raise self.RelatedObjectDoesNotExist(
+django.contrib.auth.models.User.person.RelatedObjectDoesNotExist: User has no person.
+"POST /security/users/edit/8/ HTTP/1.1" 500 103176

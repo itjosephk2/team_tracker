@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django import forms
-from .forms import CustomUserCreationForm, CustomLoginForm, UserForm
+from .forms import CustomUserCreationForm, CustomLoginForm, CustomUserUpdateForm
 from django.contrib.auth.views import LoginView, LogoutView
 
 
@@ -79,7 +79,7 @@ class CreateNewUser(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """Allows HR Admin to update user information."""
     model = User
-    form_class = UserForm
+    form_class = CustomUserUpdateForm
     template_name = "security/users/form.html"
     success_url = reverse_lazy("security:user_list")
 
