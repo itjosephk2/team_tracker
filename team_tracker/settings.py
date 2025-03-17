@@ -19,6 +19,12 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
 # Ensure CSRF_TRUSTED_ORIGINS is properly formatted
 CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://127.0.0.1").split(",")
 
+# Auto logout users after 30 minutes of inactivity
+SESSION_COOKIE_AGE = 1800  # Time in seconds (30 minutes)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Logs out when browser closes
+SESSION_SAVE_EVERY_REQUEST = True  # Refreshes session timeout on activity
+
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
