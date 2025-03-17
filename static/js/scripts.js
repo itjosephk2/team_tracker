@@ -1,26 +1,19 @@
-/*!
-    * Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)
-    * Copyright 2013-2023 Start Bootstrap
-    * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
-    */
-    // 
-// Scripts
-// 
+document.addEventListener("DOMContentLoaded", function() {
+    let sidebar = document.getElementById("layoutSidenav_nav");
+    let sidebarToggle = document.getElementById("sidebarToggle");
+    let closeSidebar = document.getElementById("closeSidebar");
 
-window.addEventListener('DOMContentLoaded', event => {
+    sidebarToggle.addEventListener("click", function() {
+        sidebar.classList.toggle("open");
+    });
 
-    // Toggle the side navigation
-    const sidebarToggle = document.body.querySelector('#sidebarToggle');
-    if (sidebarToggle) {
-        // Uncomment Below to persist sidebar toggle between refreshes
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
-        sidebarToggle.addEventListener('click', event => {
-            event.preventDefault();
-            document.body.classList.toggle('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-        });
-    }
+    closeSidebar.addEventListener("click", function() {
+        sidebar.classList.remove("open");
+    });
 
+    document.addEventListener("click", function(event) {
+        if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+            sidebar.classList.remove("open");
+        }
+    });
 });

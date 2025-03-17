@@ -47,7 +47,32 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 
         {% comment %} Local Scripts {% endcomment %}
-        {% block extra_scripts %}{% endblock %}
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                console.log('Listening')
+                let sidebar = document.getElementById("layoutSidenav_nav");
+                let sidebarToggle = document.getElementById("sidebarToggle");
+                let closeSidebar = document.getElementById("closeSidebar");
+            
+                sidebarToggle.addEventListener("click", function() {
+                    console.log('Open')
+                    sidebar.classList.toggle("open");
+                });
+            
+                closeSidebar.addEventListener("click", function() {
+                    sidebar.classList.remove("open");
+                });
+            
+                document.addEventListener("click", function(event) {
+                    if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                        sidebar.classList.remove("open");
+                    }
+                });
+            });
+            </script>
+
+
         
     </body>
 </html>

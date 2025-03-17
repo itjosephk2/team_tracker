@@ -41,25 +41,18 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         person = getattr(user, 'person', None)
         context['person'] = person
 
-        # Debugging: Print user role info
-        if person:
-            print(f"User: {user.username}, Role: {person.role}, Manager: {person.manager}")
-
         # Role-based filtering
         if person:
             if person.role == "hr_admin":
                 # HR Admins see all employees
                 context['people'] = Person.objects.all()
-                print("HR Admin - showing all employees")
 
             elif person.role == "manager":
                 # Managers see only their assigned team members
                 context['people'] = Person.objects.filter(manager=person)
-                print(f"Manager - showing team members for {person.first_name} {person.last_name}")
 
             else:
                 # Employees only see their own details, no people list
                 context['people'] = None
-                print("Employee - no team data shown")
 
         return context
