@@ -124,7 +124,7 @@ Ensure you have the following installed:
 4. **Run Migrations:**
 
    ```bash
-   python manage.py makemigrations security people_management
+   python manage.py makemigrations
    python manage.py migrate
    ```
 
