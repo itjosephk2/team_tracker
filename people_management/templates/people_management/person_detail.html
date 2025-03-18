@@ -1,5 +1,10 @@
 {% extends 'dashboard/base.html' %}
-
+{% if user.is_authenticated %}
+  <!-- Authenticated content here -->
+{% else %}
+  <!-- Optionally, show a message or a link to the login page -->
+  <p>You must be logged in to view this content. <a href="{% url 'security:login' %}">Login here</a>.</p>
+{% endif %}
 {% block content %}
     <div class="container mt-5">
         <h2 class="text-center mb-4">Person Details</h2>
@@ -31,11 +36,17 @@
                 </li>
             </ul>
 
-            <div class="mt-3 text-end pe-3">
-                <div class="btn-group gap-2" role="group">
-                    <a href="{% url 'people_management:people' %}" class="btn btn-dark rounded">Cancel</a>
-                    <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-primary rounded">Update</a>
-                    <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-danger rounded">Delete</a>
+            <div class="mt-3 pe-3">
+                <div class="d-flex justify-content-end">
+                    <a href="{% url 'people_management:people' %}" class="btn btn-m btn-outline-secondary mx-1">
+                        View
+                    </a>
+                    <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-m btn-outline-secondary mx-1">
+                        Edit
+                    </a>
+                    <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-m btn-outline-secondary mx-1 text-danger">
+                        Delete
+                    </a>
                 </div>
             </div>
         </div>

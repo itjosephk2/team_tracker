@@ -56,49 +56,142 @@
     <div class="card mb-4">
         <div class="card-header bg-dark text-white d-flex justify-content-between">
             <div>
-                <i class="fas fa-users me-1"></i> All Employees
+                <i class="fas fa-users me-1"></i> Employees
             </div>
-            <a href="{% url 'people_management:create_person' %}" class="btn btn-success">Add New Person</a>
+            <a href="{% url 'people_management:create_contract' %}" class="btn btn-outline-light">
+                Add New
+            </a>
         </div>
-        <div class="card-body">
-            <table id="datatablesSimple" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>DOB</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for person in people %}
-                        <tr>
-                            <td>{{ person.first_name }} {{ person.last_name }}</td>
-                            <td>{{ person.email }}</td>
-                            <td>{{ person.phone_number }}</td>
-                            <td>{{ person.date_of_birth }}</td>
-                            <td>{% if person.active %}Active{% else %}Inactive{% endif %}</td>
-                            <td>
-                                <a href="{% url 'people_management:update_person' person.pk %}" class="btn btn-dark btn-sm mx-1">
-                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+        <div class="card shadow-sm p-3 rounded">
+            <ul class="list-group list-group-flush">
+                <!-- Header Row -->
+                <li class="list-group-item bg-secondary text-white py-3">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Name
+                        </div>
+                        <div class="col-md-2">
+                            Phone Number
+                        </div>
+                        <div class="col-md-2">
+                            DOB
+                        </div>
+                        <div class="col-md-2">
+                            Status
+                        </div>
+                    </div>
+                </li>
+                {% for person in people %}
+                    <li class="list-group-item py-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong class="fs-6">{{ person.first_name }} {{ person.last_name }}</strong>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="text-muted small">{{ person.phone_number }}</span>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="text-muted small">{{ person.date_of_birth }}</span>
+                            </div>
+                            <div class="col-md-2">
+                                {% if person.active %}
+                                    <span class="badge bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Inactive</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- Button Group -->
+                        <div class="row mt-2">
+                            <div class="col text-end">
+                                <a href="{% url 'people_management:view_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                                    View
                                 </a>
-                                <a href="{% url 'people_management:delete_person' person.pk %}" class="btn btn-dark btn-sm mx-1">
-                                    <i class="fa-solid fa-trash"></i> Delete
+                                <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                                    Edit
                                 </a>
-                            </td>    
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                                <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted text-center py-3">No employees available.</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
+    
     {% endif %}
-</div>
 
-{% endblock %}
-
-{% block extra_scripts %}
-<script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+    {% if contracts %}
+    <div class="card mb-4">
+        <div class="card-header bg-light text-black d-flex justify-content-between">
+            <div>
+                <i class="fas fa-users me-1"></i> Contracts
+            </div>
+            <a href="{% url 'people_management:create_contract' %}" class="btn btn-outline-dark">
+                Add New
+            </a>
+        </div>
+        <div class="card shadow-sm p-3 rounded">
+            <ul class="list-group list-group-flush">
+                <!-- Header Row -->
+                <li class="list-group-item bg-secondary text-white py-3">
+                    <div class="row">
+                        <div class="col-md-2">
+                            Person
+                        </div>
+                        <div class="col-md-2">
+                            Job Title
+                        </div>
+                        <div class="col-md-2">
+                            Hourly Rate
+                        </div>
+                        <div class="col-md-2">
+                            Contracted Hours
+                        </div>
+                    </div>
+                </li>
+                {% for contract in contracts %}
+                    <li class="list-group-item py-3">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <strong class="fs-6">{{ contract.person }}</strong>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="text-muted small">{{ contract.job_title }}</span>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="text-muted small">{{ contract.hourly_rate }}</span>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="text-muted small">{{ contract.contracted_hours }}</span>
+                            </div>
+                        </div>
+                        <!-- Button Group -->
+                        <div class="row mt-2">
+                            <div class="col text-end">
+                                <a href="{% url 'people_management:view_contract' pk=contract.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                                    View
+                                </a>
+                                <a href="{% url 'people_management:update_contract' pk=contract.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                                    Edit
+                                </a>
+                                <a href="{% url 'people_management:delete_contract' pk=contract.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted text-center py-3">No contracts available.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    {% endif %}
+</div> 
 {% endblock %}

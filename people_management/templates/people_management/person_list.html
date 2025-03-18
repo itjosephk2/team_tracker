@@ -22,32 +22,56 @@
 
     <div class="card shadow-sm p-3 rounded">
         <ul class="list-group list-group-flush">
+            <!-- Header Row -->
+            <li class="list-group-item bg-secondary text-white py-3">
+                <div class="row">
+                    <div class="col-md-3">
+                        Name
+                    </div>
+                    <div class="col-md-2">
+                        Phone Number
+                    </div>
+                    <div class="col-md-2">
+                        DOB
+                    </div>
+                    <div class="col-md-2">
+                        Status
+                    </div>
+                </div>
+            </li>
             {% for person in people %}
-                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
-                    <div>
-                        <strong class="fs-6">{{ person.first_name }} {{ person.last_name }}</strong>
-                        <span class="text-muted small"> - {{ person.phone_number }}</span>
-                        <span class="text-muted small"> | DOB: {{ person.date_of_birth }}</span>
-                        <span class="text-muted small"> | 
+                <li class="list-group-item py-3">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong class="fs-6">{{ person.first_name }} {{ person.last_name }}</strong>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="text-muted small">{{ person.phone_number }}</span>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="text-muted small">{{ person.date_of_birth }}</span>
+                        </div>
+                        <div class="col-md-2">
                             {% if person.active %}
                                 <span class="badge bg-success">Active</span>
                             {% else %}
                                 <span class="badge bg-secondary">Inactive</span>
                             {% endif %}
-                        </span>
+                        </div>
                     </div>
-
-                    <!-- Button Group-->
-                    <div class="d-flex">
-                        <a href="{% url 'people_management:view_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
-                            View
-                        </a>
-                        <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
-                            Edit
-                        </a>
-                        <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
-                            Delete
-                        </a>
+                    <!-- Button Group -->
+                    <div class="row mt-2">
+                        <div class="col text-end">
+                            <a href="{% url 'people_management:view_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                                View
+                            </a>
+                            <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                                Edit
+                            </a>
+                            <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
+                                Delete
+                            </a>
+                        </div>
                     </div>
                 </li>
             {% empty %}

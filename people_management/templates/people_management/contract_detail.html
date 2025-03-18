@@ -26,13 +26,20 @@
                 </li>
             </ul>
 
-            <div class="mt-3 text-end pe-3">
-                <div class="btn-group gap-2" role="group">
-                    <a href="{% url 'people_management:contracts' %}" class="btn btn-dark rounded">Cancel</a>
-                    <a href="{% url 'people_management:update_contract' pk=contract.id %}" class="btn btn-primary rounded">Update</a>
-                    <a href="{% url 'people_management:delete_contract' pk=contract.id %}" class="btn btn-danger rounded">Delete</a>
+            <div class="mt-3 pe-3">
+                <div class="d-flex justify-content-end">
+                    <a href="{% url 'people_management:contracts'%}" class="btn btn-m btn-outline-secondary mx-1">
+                        Back
+                    </a>
+                    <a href="{% url 'people_management:update_contract' pk=contract.id %}" class="btn btn-m btn-outline-secondary mx-1">
+                        Edit
+                    </a>
+                    <a href="{% url 'people_management:delete_contract' pk=contract.id %}" class="btn btn-m btn-outline-secondary mx-1 text-danger">
+                        Delete
+                    </a>
                 </div>
             </div>
         </div>
+        
     </div>
 {% endblock %}
