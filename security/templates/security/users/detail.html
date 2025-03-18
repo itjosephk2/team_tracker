@@ -30,15 +30,18 @@
                 </li>
             </ul>
 
-            <div class="d-flex justify-content-between mt-3">
-                <!-- Cancel button to go back to the user list -->
-                <a href="{% url 'security:user_list' %}" class="btn btn-dark">Cancel</a>
-                
-                <!-- Button to navigate to the update user page -->
-                <a href="{% url 'security:user_edit' pk=user.id %}" class="btn btn-primary">Update</a>
-                
-                <!-- Button to navigate to the delete user page -->
-                <a href="{% url 'security:user_delete' pk=user.id %}" class="btn btn-danger">Delete</a>
+            <div class="mt-3 pe-3">
+                <div class="d-flex justify-content-end">
+                    <a href="{% url 'security:user_list' %}" class="btn btn-m btn-outline-secondary mx-1">
+                        View
+                    </a>
+                    <a href="{% url 'security:user_delete' pk=user.id %}" class="btn btn-m btn-outline-secondary mx-1">
+                        Edit
+                    </a>
+                    <a href="{% url 'security:user_delete' pk=user.id %}" class="btn btn-m btn-outline-secondary mx-1 text-danger">
+                        Delete
+                    </a>
+                </div>
             </div>
         </div>
     </div>

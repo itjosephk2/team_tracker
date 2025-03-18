@@ -15,7 +15,18 @@
         </ul>
     </div>
     
-    <a href="{% url 'security:group_edit' pk=group.id %}" class="btn btn-primary mt-3">Edit</a>
-    <a href="{% url 'security:group_list' %}" class="btn btn-secondary mt-3">Back to Groups</a>
+    <div class="mt-3 pe-3">
+        <div class="d-flex justify-content-end">
+            <a href="{% url 'security:group_list' %}" class="btn btn-m btn-outline-secondary mx-1">
+                View
+            </a>
+            <a href="{% url 'security:group_delete' pk=group.id %}" class="btn btn-m btn-outline-secondary mx-1">
+                Edit
+            </a>
+            <a href="{% url 'security:group_delete' pk=group.id %}" class="btn btn-m btn-outline-secondary mx-1 text-danger">
+                Delete
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}
