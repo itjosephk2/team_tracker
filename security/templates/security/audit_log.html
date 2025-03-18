@@ -1,31 +1,47 @@
 {% extends 'dashboard/base.html' %}
-{% block content %}
-<h1>Audit Log</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Date/Time</th>
-            <th>User</th>
-            <th>Model</th>
-            <th>Action</th>
-            <th>Object</th>
-        </tr>
-    </thead>
-    <tbody>
+{% block content %}      
+<div class="container mt-5">
+    <h1 class="mb-4">Audit Log</h1>
+
+    <ul class="list-group list-group-flush">
+        <!-- Header Row -->
+        <li class="list-group-item bg-secondary text-white py-3">
+            <div class="row">
+                <div class="col-md-3">Date</div>
+                <div class="col-md-3">User</div>
+                <div class="col-md-3">Model</div>
+                <div class="col-md-3">Action</div>
+            </div>
+        </li>
         {% for entry in audit_entries %}
-            <tr>
-                <td>{{ entry.history_date }}</td>
-                <td>{{ entry.history_user|default:"System/Unknown" }}</td>
-                <td>{{ entry.instance_type }}</td>
-                <td>{{ entry.get_history_type_display }}</td>
-                <td>{{ entry }}</td>
-            </tr>
+            <li class="list-group-item py-3">
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong class="fs-6">{{ entry.history_date|date:"Y-m-d H:i" }}</strong>
+                    </div>
+                    <div class="col-md-3">
+                        {{ entry.history_user|default:"System/Unknown" }}
+                    </div>
+                    <div class="col-md-3">
+                        <span class="text-muted small">{{ entry.instance_type }}</span>
+                    </div>
+                    <div class="col-md-3">
+                        {% if entry.history_type == "+" %}
+                            <span class="badge bg-success">Created</span>
+                        {% elif entry.history_type == "~" %}
+                            <span class="badge bg-warning">Updated</span>
+                        {% else %}
+                            <span class="badge bg-danger">Deleted</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
         {% empty %}
-            <tr>
-                <td colspan="5">No audit entries found.</td>
-            </tr>
+            <li class="list-group-item py-3 text-center text-muted">
+                No audit log entries available.
+            </li>
         {% endfor %}
-    </tbody>
-</table>
+    </ul>
+</div>
 {% endblock %}
