@@ -37,7 +37,7 @@
                         </span>
                     </div>
 
-                    <!-- Button Group for Spacing -->
+                    <!-- Button Group-->
                     <div class="d-flex">
                         <a href="{% url 'people_management:view_person' pk=person.id %}" class="btn btn-sm btn-outline-secondary mx-1">
                             View
@@ -56,10 +56,10 @@
         </ul>
     </div>
 
-    <!-- "Add New Employee" button, styled to match -->
-    <div class="mt-4 text-end">
+    <!-- Add New Button -->
+    <div class="mt-4 mb-4 text-end">
         <a href="{% url 'people_management:create_person' %}" class="btn btn-outline-dark">
-            Add New Employee
+            Add New
         </a>
     </div>
 </div>

@@ -3,17 +3,23 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Groups</h2>
-    <div class="card shadow-lg p-3 rounded">
+    <div class="card shadow-sm p-3 rounded">
         <ul class="list-group list-group-flush">
             {% for group in groups %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
                         <strong>{{ group.name }}</strong>
                     </div>
-                    <div>
-                        <a href="{% url 'security:group_detail' pk=group.id %}" class="btn btn-info btn-sm text-white">View</a>
-                        <a href="{% url 'security:group_edit' pk=group.id %}" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="{% url 'security:group_delete' pk=group.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    <div class="d-flex">
+                        <a href="{% url 'security:group_detail' pk=group.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                            View
+                        </a>
+                        <a href="{% url 'security:group_edit' pk=group.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                            Edit
+                        </a>
+                        <a href="{% url 'security:group_delete' pk=group.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
+                            Delete
+                        </a>
                     </div>
                 </li>
             {% empty %}
@@ -22,6 +28,11 @@
         </ul>
     </div>
 
-    <a href="{% url 'security:group_add' %}" class="btn btn-success mt-3">Add New</a>
+    <!-- Add New Button -->
+    <div class="mt-4 mb-4 text-end">
+        <a href="{% url 'people_management:create_contract' %}" class="btn btn-outline-dark">
+            Add New
+        </a>
+    </div>
 </div>
 {% endblock %}

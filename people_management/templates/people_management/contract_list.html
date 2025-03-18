@@ -7,13 +7,9 @@
     <!-- Filter Form -->
     <form method="get" class="mb-4">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 {{ filter.form.person.label_tag }}
                 {{ filter.form.person }}
-            </div>
-            <div class="col-md-2">
-                {{ filter.form.job_title.label_tag }}
-                {{ filter.form.job_title }}
             </div>
             <div class="col-md-2 d-flex align-items-end">
                 <button type="submit" class="btn btn-outline-dark">Filter</button>
@@ -40,11 +36,15 @@
                             <span class="text-muted small ms-2">Hours: {{ contract.contracted_hours }}</span>
                         </div>
                     </div>
-                    <div class="btn-group">
-                        <a href="{% url 'people_management:update_contract' pk=contract.id %}" class="btn btn-sm btn-outline-secondary">
+                    <!-- Button Group -->
+                    <div class="d-flex">
+                        <a href="{% url 'people_management:view_contract' pk=contract.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                            View
+                        </a>
+                        <a href="{% url 'people_management:update_contract' pk=contract.id %}" class="btn btn-sm btn-outline-secondary mx-1">
                             Edit
                         </a>
-                        <a href="{% url 'people_management:delete_contract' pk=contract.id %}" class="btn btn-sm btn-outline-secondary text-danger">
+                        <a href="{% url 'people_management:delete_contract' pk=contract.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
                             Delete
                         </a>
                     </div>
@@ -57,10 +57,10 @@
         </ul>
     </div>
 
-    <!-- "Add New Contract" Button -->
+    <!-- Add New Button -->
     <div class="mt-4 mb-4 text-end">
         <a href="{% url 'people_management:create_contract' %}" class="btn btn-outline-dark">
-            Add New Contract
+            Add New
         </a>
     </div>
 </div>
