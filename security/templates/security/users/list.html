@@ -5,28 +5,50 @@
     <h2 class="mb-3">Users</h2>
     <div class="card shadow-sm p-3 rounded">
         <ul class="list-group list-group-flush">
-            {% for user in users %}
-                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
-                    <div>
-                        <strong class="fs-6">{{ user.username }}</strong>  
-                        {% if user.person %}
-                            <span class="text-muted small"> - {{ user.person.first_name }} {{ user.person.last_name }}</span>
-                        {% else %}
-                            <span class="text-muted small"> - Not Linked</span>
-                        {% endif %}
+            <!-- Header Row -->
+            <li class="list-group-item bg-secondary text-white py-3">
+                <div class="row">
+                    <div class="col-md-2">
+                        Username
                     </div>
-                    
-                    <!-- Spaced out buttons with neutral styling -->
-                    <div class="d-flex">
-                        <a href="{% url 'security:user_detail' pk=user.id %}" class="btn btn-sm btn-outline-secondary mx-1">
-                            View
-                        </a>
-                        <a href="{% url 'security:user_edit' pk=user.id %}" class="btn btn-sm btn-outline-secondary mx-1">
-                            Edit
-                        </a>
-                        <a href="{% url 'security:user_delete' pk=user.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
-                            Delete
-                        </a>
+                    <div class="col-md-2">
+                        Linked Person
+                    </div>
+                    <div class="col-md-3">
+                        Email
+                    </div>
+                </div>
+            </li>
+            {% for user in users %}
+                <li class="list-group-item py-3">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <strong class="fs-6">{{ user.username }}</strong>
+                        </div>
+                        <div class="col-md-2">
+                            {% if user.person %}
+                                <span class="text-muted small">{{ user.person.first_name }} {{ user.person.last_name }}</span>
+                            {% else %}
+                                <span class="text-muted small">Not Linked</span>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-3">
+                            <span class="text-muted small">{{ user.person.email }}</span>
+                        </div>
+                    </div>
+                    <!-- Button Group -->
+                    <div class="row mt-2">
+                        <div class="col text-end">
+                            <a href="{% url 'security:user_detail' pk=user.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                                View
+                            </a>
+                            <a href="{% url 'security:user_edit' pk=user.id %}" class="btn btn-sm btn-outline-secondary mx-1">
+                                Edit
+                            </a>
+                            <a href="{% url 'security:user_delete' pk=user.id %}" class="btn btn-sm btn-outline-secondary mx-1 text-danger">
+                                Delete
+                            </a>
+                        </div>
                     </div>
                 </li>
             {% empty %}
