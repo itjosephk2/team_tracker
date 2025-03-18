@@ -6,6 +6,9 @@ from django.urls import reverse_lazy
 from django import forms
 from .forms import CustomUserCreationForm, CustomLoginForm, CustomUserUpdateForm
 from django.contrib.auth.views import LoginView, LogoutView
+from simple_history.models import HistoricalRecords
+from people_management.models import Person, Contract
+from itertools import chain
 
 
 def is_hr_admin(user):
@@ -152,3 +155,30 @@ class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "security/groups/confirm_delete.html"
     success_url = reverse_lazy("security:group_list")
     permission_required = "auth.delete_group"
+
+class AuditLogListView(LoginRequiredMixin, ListView):
+    template_name = 'security/audit_log.html'
+    context_object_name = 'audit_entries'
+
+    def get_queryset(self):
+        # Get history querysets for each model
+        person_history = Person.history.all()
+        contract_history = Contract.history.all()
+
+        # Combine both querysets
+        combined_history = sorted(
+            chain(person_history, contract_history),
+            key=lambda entry: entry.history_date,
+            reverse=True
+        )
+
+        # Return combined queryset
+        return combined_history[:100]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Already combined in get_queryset(), just pass along:
+        context['audit_entries'] = self.get_queryset()
+        
+        return context

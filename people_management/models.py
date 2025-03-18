@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from datetime import date
+from simple_history.models import HistoricalRecords
+
 
 
 class Person(models.Model):
@@ -48,7 +50,9 @@ class Person(models.Model):
         null=True,
         blank=True,
         help_text="The associated Django user account."
-    )
+    )   
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} (ID: {self.id})"
@@ -84,6 +88,8 @@ class Contract(models.Model):
     contract_end = models.DateField(null=True, blank=True, help_text="Contract end date (if applicable).")
     hourly_rate = models.FloatField(default=12.45, help_text="Hourly pay rate for this contract.")
     contracted_hours = models.FloatField(default=40, help_text="Number of contracted hours per week.")
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"{self.person} - {self.job_title}"

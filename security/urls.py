@@ -5,7 +5,7 @@ from django.contrib.auth.views import (
 from .views import (
     LoginInterface, LogoutInterface, SignupView,
     ListUsers, ViewUserDetails, UpdateUser, DeleteUser, CreateNewUser,
-    ListGroups, GroupDetailView, CreateGroup, UpdateGroup, DeleteGroup
+    ListGroups, GroupDetailView, CreateGroup, UpdateGroup, DeleteGroup, AuditLogListView
 )
 
 app_name = "security"
@@ -35,4 +35,7 @@ urlpatterns = [
     path("groups/add/", CreateGroup.as_view(), name="group_add"),
     path("groups/edit/<int:pk>/", UpdateGroup.as_view(), name="group_edit"),
     path("groups/delete/<int:pk>/", DeleteGroup.as_view(), name="group_delete"),
+
+    # Audit Logs
+    path('audit_log/', AuditLogListView.as_view(), name='audit_log'),
 ]

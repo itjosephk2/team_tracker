@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'django_filters',
+    'simple_history',
 
     # Custom apps
     'dashboard',
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'team_tracker.urls'

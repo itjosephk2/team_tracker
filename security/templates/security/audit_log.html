@@ -1,0 +1,31 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<h1>Audit Log</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date/Time</th>
+            <th>User</th>
+            <th>Model</th>
+            <th>Action</th>
+            <th>Object</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in audit_entries %}
+            <tr>
+                <td>{{ entry.history_date }}</td>
+                <td>{{ entry.history_user|default:"System/Unknown" }}</td>
+                <td>{{ entry.instance_type }}</td>
+                <td>{{ entry.get_history_type_display }}</td>
+                <td>{{ entry }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">No audit entries found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

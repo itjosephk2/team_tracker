@@ -63,6 +63,12 @@
                             <a class="nav-link" href="{% url 'security:group_add' %}">Create Group</a>
                         </nav>
                     </div>
+                    <!-- Audit Log -->
+                    <a class="nav-link" href="{% url 'security:audit_log' %}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-file-lines"></i></div>
+                        Audit Log
+                    </a>
+
                 {% endif %}
 
             </div>
