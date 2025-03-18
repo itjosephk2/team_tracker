@@ -7,8 +7,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     """
     View for the main dashboard, displaying relevant data based on user roles.
 
-    - Employees: See only their own details and contracts.
-    - Managers: See their assigned team members and their contracts.
+    - Employees: See only their own details (and no contracts).
+    - Managers: See their assigned team members and contracts for their team.
     - HR/Admins: See all employees and all contracts.
 
     Access Control:
@@ -33,7 +33,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         - contracts: A list of contracts visible to the user:
             - HR/Admin: All contracts.
             - Manager: Contracts for employees in the manager's team.
-            - Employee: Only the contracts associated with the user.
+            - Employee: None (employees do not see any contracts).
 
         Returns:
             dict: A dictionary with keys 'person', 'people', and 'contracts' for the template.
@@ -45,8 +45,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         person = getattr(user, 'person', None)
         context['person'] = person
 
-        # Role-based filtering for people
         if person:
+            # Role-based filtering for people
             if person.role == "hr_admin":
                 # HR Admins see all employees
                 context['people'] = Person.objects.all()
@@ -54,7 +54,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
                 # Managers see only their assigned team members
                 context['people'] = Person.objects.filter(manager=person)
             else:
-                # Employees only see their own details, no people list
+                # Employees only see their own details (no people list)
                 context['people'] = None
 
             # Role-based filtering for contracts
@@ -65,10 +65,10 @@ class DashboardView(LoginRequiredMixin, TemplateView):
                 # Managers see contracts for their team members (assuming Contract has a ForeignKey to Person)
                 context['contracts'] = Contract.objects.filter(person__manager=person)
             else:
-                # Employees see only their own contracts
-                context['contracts'] = Contract.objects.filter(person=person)
+                # Employees do not get any contract context
+                context['contracts'] = None
         else:
-            # Fallback: if person is None, no contracts should be shown
+            context['people'] = None
             context['contracts'] = None
 
         return context
