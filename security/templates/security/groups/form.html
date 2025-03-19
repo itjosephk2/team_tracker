@@ -1,43 +1,96 @@
 {% extends "dashboard/base.html" %}
 
 {% block content %}
+<style>
+    /* Custom toggle switch to match the btn-outline-secondary color scheme */
+    .form-check.form-switch .form-check-input {
+      width: 3rem;
+      height: 1.8rem;
+      background-color: #fff;
+      border: 1px solid #6c757d; /* secondary color */
+      border-radius: 50px; /* increased rounding */
+      position: relative;
+      -webkit-appearance: none;
+      appearance: none;
+      outline: none;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    /* Override focus style for the entire input with a mid-dark gray shadow */
+    .form-check.form-switch .form-check-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba(105, 105, 105, 0.5); /* mid-dark gray */
+    }
+    /* Override the knob's focus highlight when NOT checked */
+    .form-check.form-switch .form-check-input:not(:checked):focus::before {
+      box-shadow: 0 0 0 0.2rem rgba(105, 105, 105, 0.5);
+    }
+    /* When checked, use the secondary color */
+    .form-check.form-switch .form-check-input:checked {
+      background-color: #6c757d;
+      border-color: #6c757d;
+    }
+    /* Hover for off state */
+    .form-check.form-switch .form-check-input:not(:checked):hover {
+        border-color: #5a6268;
+    }
+    /* Hover for on state */
+    .form-check.form-switch .form-check-input:checked:hover {
+      background-color: #5a6268;
+      border-color: #5a6268;
+    }
+    /* The sliding knob */
+    .form-check.form-switch .form-check-input::before {
+        content: "";
+        position: absolute;
+        top: 0.1rem;
+        left: 0.1rem;
+        width: 1.6rem;
+        height: 1.6rem;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 0 2px rgba(128, 128, 128, 0.4);
+    }
+    .form-check.form-switch .form-check-input:checked::before {
+      transform: translateX(1.2rem);
+    }
+</style>
+
 <div class="container mt-5">
-    <h2>{% if form.instance.pk %}Edit Group{% else %}Create Group{% endif %}</h2>
-    <div class="card shadow-lg p-3 rounded">
-        <div class="card-body">
-            <h4 class="card-title">Group Name</h4>
-            <div class="mb-3">
-                {{ form.name }}
-            </div>
+  <h2>{% if form.instance.pk %}Edit Group{% else %}Create Group{% endif %}</h2>
+  <div class="card shadow-lg p-3 rounded mb-5">
+    <div class="card-body">
+      <h4 class="card-title">Group Name</h4>
+      <div class="mb-3">
+        {{ form.name }}
+      </div>
 
-            <h5 class="mt-3">Assigned Permissions:</h5>
-            <ul class="list-group">
-                {% for permission in form.permissions.field.queryset %}
-                    <li class="list-group-item d-flex align-items-center">
-                        <div class="flex-grow-1">
-                            <strong>{{ permission.name }}</strong>
-                            <br>
-                            <small class="text-muted">{{ permission.content_type.app_label }} | {{ permission.codename }}</small>
-                        </div>
-                        <div class="form-check ms-3">
-                            <input type="checkbox" name="permissions" value="{{ permission.id }}"
-                                {% if permission in form.instance.permissions.all %}checked{% endif %}
-                                class="form-check-input" id="perm-{{ permission.id }}">
-                            <label class="form-check-label" for="perm-{{ permission.id }}"></label>
-                        </div>
-                    </li>
-                {% empty %}
-                    <li class="list-group-item text-muted">No permissions available.</li>
-                {% endfor %}
-            </ul>
-
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary">
-                    {% if form.instance.pk %}Update{% else %}Create{% endif %}
-                </button>
-                <a href="{% url 'security:group_list' %}" class="btn btn-secondary">Cancel</a>
+      <h5 class="mt-3">Assigned Permissions:</h5>
+      <ul class="list-group">
+        {% for permission in form.permissions.field.queryset %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ permission.name }}</strong><br>
+              <small class="text-muted">{{ permission.content_type.app_label }} | {{ permission.codename }}</small>
             </div>
-        </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="perm-{{ permission.id }}"
+                     name="permissions" value="{{ permission.id }}"
+                     {% if permission in form.instance.permissions.all %}checked{% endif %}>
+            </div>
+          </li>
+        {% empty %}
+          <li class="list-group-item text-muted">No permissions available.</li>
+        {% endfor %}
+      </ul>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary">
+          {% if form.instance.pk %}Update{% else %}Create{% endif %}
+        </button>
+        <a href="{% url 'security:group_list' %}" class="btn btn-secondary">Cancel</a>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

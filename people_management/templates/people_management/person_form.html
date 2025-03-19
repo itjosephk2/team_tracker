@@ -4,7 +4,7 @@
 <div class="container mt-5">
     <h2>{% if form.instance.pk %}Edit{% else %}New{% endif %} Person</h2>
     
-    <form method="POST" class="p-4 shadow-lg rounded bg-light">
+    <form method="POST" class="p-4 shadow-lg rounded bg-light mb-5">
         {% csrf_token %}
         
         {{ form.non_field_errors }}
