@@ -168,9 +168,9 @@ class AuditLogListView(LoginRequiredMixin, ListView):
 
         # Add model name to each historical record dynamically
         for entry in person_history:
-            entry.model_name = entry.instance.__class__.__name__  # Dynamically get model name
+            entry.model_name = entry.instance.__class__.__name__
         for entry in contract_history:
-            entry.model_name = entry.instance.__class__.__name__  # Dynamically get model name
+            entry.model_name = entry.instance.__class__.__name__ 
 
         # Combine both querysets
         combined_history = sorted(
