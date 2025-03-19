@@ -166,6 +166,12 @@ class AuditLogListView(LoginRequiredMixin, ListView):
         person_history = Person.history.all()
         contract_history = Contract.history.all()
 
+        # Add model name to each historical record dynamically
+        for entry in person_history:
+            entry.model_name = entry.instance.__class__.__name__  # Dynamically get model name
+        for entry in contract_history:
+            entry.model_name = entry.instance.__class__.__name__  # Dynamically get model name
+
         # Combine both querysets
         combined_history = sorted(
             chain(person_history, contract_history),
@@ -175,11 +181,3 @@ class AuditLogListView(LoginRequiredMixin, ListView):
 
         # Return combined queryset
         return combined_history[:100]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
-        # Already combined in get_queryset(), just pass along:
-        context['audit_entries'] = self.get_queryset()
-        
-        return context

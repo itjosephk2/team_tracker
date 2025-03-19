@@ -24,11 +24,7 @@
                         {{ entry.history_user|default:"System/Unknown" }}
                     </div>
                     <div class="col-md-3">
-                        {% if entry.instance_type and entry.instance_type.person %}
-                            <span class="text-muted small">{{ entry.instance_type }}</span>
-                        {% else %}
-                            <span class="text-muted small text-danger">Unknown Type</span>
-                        {% endif %}
+                        <span class="text-muted small">{{ entry.model_name }}</span>
                     </div>
                     <div class="col-md-3">
                         {% if entry.history_type == "+" %}
