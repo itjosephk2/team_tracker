@@ -1,11 +1,11 @@
 from django.urls import path
 from django.contrib.auth.views import (
-    PasswordResetView, PasswordResetDoneView, 
-    PasswordResetConfirmView, PasswordResetCompleteView)
+    PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView)
 from .views import (
     LoginInterface, LogoutInterface, SignupView,
     ListUsers, ViewUserDetails, UpdateUser, DeleteUser, CreateNewUser,
-    ListGroups, GroupDetailView, CreateGroup, UpdateGroup, DeleteGroup, AuditLogListView
+    ListGroups, GroupDetailView, CreateGroup, UpdateGroup, DeleteGroup, AuditLogListView, 
+    CustomPasswordResetView, CustomPasswordResetDoneView
 )
 
 app_name = "security"
@@ -17,8 +17,8 @@ urlpatterns = [
     path('signup/', SignupView.as_view(), name='signup'),
 
     # Password Reset
-    path('password_reset/', PasswordResetView.as_view(), name='password_reset'),
-    path('password_reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('password-reset/', CustomPasswordResetView.as_view(), name='password_reset'),
+    path('password-reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
