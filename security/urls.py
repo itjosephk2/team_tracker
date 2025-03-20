@@ -5,7 +5,8 @@ from .views import (
     LoginInterface, LogoutInterface, SignupView,
     ListUsers, ViewUserDetails, UpdateUser, DeleteUser, CreateNewUser,
     ListGroups, GroupDetailView, CreateGroup, UpdateGroup, DeleteGroup, AuditLogListView, 
-    CustomPasswordResetView, CustomPasswordResetDoneView
+    CustomPasswordResetView, CustomPasswordResetDoneView, CustomPasswordResetConfirmView,
+    CustomPasswordResetCompleteView
 )
 
 app_name = "security"
@@ -19,8 +20,8 @@ urlpatterns = [
     # Password Reset
     path('password-reset/', CustomPasswordResetView.as_view(), name='password_reset'),
     path('password-reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('reset/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     # User Management
     path("users/", ListUsers.as_view(), name="user_list"),

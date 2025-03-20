@@ -9,12 +9,18 @@ from django.contrib.auth.views import LoginView, LogoutView
 from simple_history.models import HistoricalRecords
 from people_management.models import Person, Contract
 from itertools import chain
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 
 def is_hr_admin(user):
     """Check if a user belongs to the HR Admin group."""
     return user.groups.filter(name="Admin").exists()
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'security/auth/password_reset_complete.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'security/auth/password_reset_confirm.html'
 
 class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = 'security/auth/password_reset_done.html'
