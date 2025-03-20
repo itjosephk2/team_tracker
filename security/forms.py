@@ -44,6 +44,12 @@ class CustomUserCreationForm(UserCreationForm):
         }
         help_texts = {"username": ""}
 
+    def __init__(self, *args, **kwargs):
+        """Dynamically set the person queryset to include the currently linked person."""
+        super().__init__(*args, **kwargs)
+        self.fields.pop('password1', None)
+        self.fields.pop('password2', None)
+
     def clean_username(self):
         """Ensure the username is unique."""
         username = self.cleaned_data.get("username")
