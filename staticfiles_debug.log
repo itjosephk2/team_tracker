@@ -4190,3 +4190,316 @@ Traceback (most recent call last):
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'contract_detail' not found. 'contract_detail' is not a valid view function or pattern name.
 "GET /people_management/people/13/ HTTP/1.1" 500 166965
+Internal Server Error: /security/users/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'user_add' not found. 'user_add' is not a valid view function or pattern name.
+"GET /security/users/ HTTP/1.1" 500 160528
+Internal Server Error: /security/users/add/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 135, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 184, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\views.py", line 76, in form_valid
+    user = form.save(commit=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\forms.py", line 72, in save
+    user = super().save(commit=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\forms.py", line 151, in save
+    user.set_password(self.cleaned_data["password1"])
+                      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'password1'
+"POST /security/users/add/ HTTP/1.1" 500 107183
+Internal Server Error: /security/users/add/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 135, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 184, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\views.py", line 79, in form_valid
+    return super().form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 135, in form_valid
+    self.object = form.save()
+                  ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\forms.py", line 95, in save
+    send_mail(
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\__init__.py", line 87, in send_mail
+    return mail.send()
+           ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\message.py", line 299, in send
+    return self.get_connection(fail_silently).send_messages([self])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 127, in send_messages
+    new_conn_created = self.open()
+                       ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 94, in open
+    self.connection.login(self.username, self.password)
+  File "C:\Python312\Lib\smtplib.py", line 750, in login
+    raise last_exception
+  File "C:\Python312\Lib\smtplib.py", line 739, in login
+    (code, resp) = self.auth(
+                   ^^^^^^^^^^
+  File "C:\Python312\Lib\smtplib.py", line 662, in auth
+    raise SMTPAuthenticationError(code, resp)
+smtplib.SMTPAuthenticationError: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-395c83b6a27sm24309692f8f.31 - gsmtp')
+"POST /security/users/add/ HTTP/1.1" 500 143522
+Internal Server Error: /security/users/add/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 135, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 184, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\views.py", line 79, in form_valid
+    return super().form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 135, in form_valid
+    self.object = form.save()
+                  ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\forms.py", line 95, in save
+    send_mail(
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\__init__.py", line 87, in send_mail
+    return mail.send()
+           ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\message.py", line 299, in send
+    return self.get_connection(fail_silently).send_messages([self])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 127, in send_messages
+    new_conn_created = self.open()
+                       ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 94, in open
+    self.connection.login(self.username, self.password)
+  File "C:\Python312\Lib\smtplib.py", line 750, in login
+    raise last_exception
+  File "C:\Python312\Lib\smtplib.py", line 739, in login
+    (code, resp) = self.auth(
+                   ^^^^^^^^^^
+  File "C:\Python312\Lib\smtplib.py", line 662, in auth
+    raise SMTPAuthenticationError(code, resp)
+smtplib.SMTPAuthenticationError: (534, b'5.7.9 Application-specific password required. For more information, go to\n5.7.9  https://support.google.com/mail/?p=InvalidSecondFactor ffacd0b85a97d-395c888152dsm23725986f8f.48 - gsmtp')
+"POST /security/users/add/ HTTP/1.1" 500 143585
+Internal Server Error: /security/users/add/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 135, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 184, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\views.py", line 79, in form_valid
+    return super().form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 135, in form_valid
+    self.object = form.save()
+                  ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\forms.py", line 95, in save
+    send_mail(
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\__init__.py", line 87, in send_mail
+    return mail.send()
+           ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\message.py", line 299, in send
+    return self.get_connection(fail_silently).send_messages([self])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 127, in send_messages
+    new_conn_created = self.open()
+                       ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 94, in open
+    self.connection.login(self.username, self.password)
+  File "C:\Python312\Lib\smtplib.py", line 750, in login
+    raise last_exception
+  File "C:\Python312\Lib\smtplib.py", line 739, in login
+    (code, resp) = self.auth(
+                   ^^^^^^^^^^
+  File "C:\Python312\Lib\smtplib.py", line 662, in auth
+    raise SMTPAuthenticationError(code, resp)
+smtplib.SMTPAuthenticationError: (534, b'5.7.9 Application-specific password required. For more information, go to\n5.7.9  https://support.google.com/mail/?p=InvalidSecondFactor 5b1f17b1804b1-43d43d7c6a5sm52357605e9.0 - gsmtp')
+"POST /security/users/add/ HTTP/1.1" 500 143571
+Internal Server Error: /security/users/add/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 135, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 184, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\views.py", line 79, in form_valid
+    return super().form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 135, in form_valid
+    self.object = form.save()
+                  ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\forms.py", line 95, in save
+    send_mail(
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\__init__.py", line 87, in send_mail
+    return mail.send()
+           ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\message.py", line 299, in send
+    return self.get_connection(fail_silently).send_messages([self])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 127, in send_messages
+    new_conn_created = self.open()
+                       ^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 94, in open
+    self.connection.login(self.username, self.password)
+  File "C:\Python312\Lib\smtplib.py", line 750, in login
+    raise last_exception
+  File "C:\Python312\Lib\smtplib.py", line 739, in login
+    (code, resp) = self.auth(
+                   ^^^^^^^^^^
+  File "C:\Python312\Lib\smtplib.py", line 662, in auth
+    raise SMTPAuthenticationError(code, resp)
+smtplib.SMTPAuthenticationError: (534, b'5.7.9 Application-specific password required. For more information, go to\n5.7.9  https://support.google.com/mail/?p=InvalidSecondFactor ffacd0b85a97d-395c8975bdfsm23754049f8f.49 - gsmtp')
+"POST /security/users/add/ HTTP/1.1" 500 143585

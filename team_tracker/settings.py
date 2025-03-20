@@ -2,6 +2,15 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
+from decouple import config
+
+# Email setup
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 # Load environment variables from .env file
 load_dotenv()
@@ -116,9 +125,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authentication
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/security/login/'
-
-# Email (Using Console for now)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Logging to capture errors when DEBUG=False
 import logging

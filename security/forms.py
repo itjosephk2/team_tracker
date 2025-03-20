@@ -69,7 +69,7 @@ class CustomUserCreationForm(UserCreationForm):
         Creates a new user, links them to the selected Person, 
         assigns a group (if selected), and sends login credentials via email.
         """
-        user = super().save(commit=False)
+        user = forms.ModelForm.save(self, commit=False)
         person = self.cleaned_data.get("person")
 
         # Copy personal details from Person to User
@@ -101,7 +101,6 @@ class CustomUserCreationForm(UserCreationForm):
                 [user.email],
                 fail_silently=False,
             )
-            print(f"Generated Password for {user.username}: {random_password}")
 
         return user
 
