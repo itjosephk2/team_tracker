@@ -7,9 +7,11 @@
     <!-- Left Column: Login Form -->
     <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
       <div class="w-75" style="max-width: 400px;">
-        <div class="mb-4 text-center">
-          <h2>Team Tracker</h2>
-          <h4>Welcome Back</h4>
+        <div class="mb-4 text-left">
+          <h2 class="text-uppercase">Team Tracker</h2>
+          <h4 class="fw-light text-muted fs-5">Welcome Back</h4>
+
+
         </div>
 
         <form method="POST">
@@ -61,17 +63,41 @@
 
           <!-- Forgot Password -->
           <div class="text-center mt-3">
-            <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+            <p class="text-start"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Right Column: Image/Illustration -->
-    <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center bg-light">
-      <!-- Replace with your own illustration or image -->
-      <img src="https://via.placeholder.com/400x400" alt="Illustration" class="img-fluid">
+    <div class="col-md-6 d-none d-md-flex illustration-section align-items-center justify-content-center">
+        <div class="text-center text-white p-5">
+            <h2>HR Management</h2>
+            <p>Let the software manage your data for you</p>
+        </div>
     </div>
+    <style>
+        .illustration-section {
+            position: relative;
+            /* Example gradient background */
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            overflow: hidden; /* Ensures pseudo-element doesn’t overflow */
+            }
+
+            /* Create a wavy shape using a pseudo-element */
+            .illustration-section::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -10%;
+            width: 120%;
+            height: 50%;
+            background: #fff;
+            border-radius: 50% 50% 0 0;
+            transform: scale(1.5);
+            opacity: 0.2;
+        }
+    </style>
   </div>
 </div>
 {% endblock %}
