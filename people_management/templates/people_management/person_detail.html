@@ -34,6 +34,17 @@
                         <span class="badge bg-danger">Inactive</span>
                     {% endif %}
                 </li>
+                <ul>
+                    {% for contract in person.contracts.all %}
+                      <li>
+                        <a href="{% url 'people_management:view_contract' contract.pk %}">
+                          Contract from {{ contract.contract_start }} to {{ contract.contract_end }}
+                        </a>
+                      </li>
+                    {% empty %}
+                      <li>No contracts found.</li>
+                    {% endfor %}
+                  </ul>
             </ul>
 
             <div class="mt-3 pe-3">

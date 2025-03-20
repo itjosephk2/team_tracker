@@ -117,7 +117,7 @@ class CustomUserUpdateForm(forms.ModelForm):
     )
 
     person = forms.ModelChoiceField(
-        queryset=Person.objects.filter(user__isnull=True),  # Show only unlinked persons
+        queryset=Person.objects.filter(user__isnull=True), 
         required=False,
         label="Link to Employee",
         widget=forms.Select(attrs={"class": "form-control"}),
@@ -137,9 +137,12 @@ class CustomUserUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         """Dynamically set the person queryset to include the currently linked person."""
         super().__init__(*args, **kwargs)
+        self.fields.pop('password1', None)
+        self.fields.pop('password2', None)
+
 
         if self.instance and hasattr(self.instance, "person"):
-            linked_person = self.instance.person  # Get the currently linked person (if any)
+            linked_person = self.instance.person 
 
             if linked_person:
                 self.fields["person"].queryset = Person.objects.filter(
@@ -163,18 +166,18 @@ class CustomUserUpdateForm(forms.ModelForm):
         selected_person = self.cleaned_data.get("person")
         group = self.cleaned_data.get("group")
 
-        # ✅ Check if the user is already linked to a Person
+        # Check if the user is already linked to a Person
         try:
             current_person = user.person  # Get the currently linked person
         except Person.DoesNotExist:
             current_person = None
 
-        # ✅ Handle unlinking (if dropdown is blank)
+        # Handle unlinking (if dropdown is blank)
         if current_person and not selected_person:
             current_person.user = None
             current_person.save()
 
-        # ✅ Handle linking or switching to a different person
+        # Handle linking or switching to a different person
         elif selected_person and selected_person != current_person:
             # Ensure the new person is not already linked to another user
             if selected_person.user and selected_person.user != user:
@@ -189,7 +192,7 @@ class CustomUserUpdateForm(forms.ModelForm):
             selected_person.user = user
             selected_person.save()
 
-        # ✅ Assign or update group
+        # Assign or update group
         if group:
             user.groups.set([group])  # Replace existing groups with the selected group
 

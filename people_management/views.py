@@ -22,7 +22,7 @@ class ListPeople(ListView):
         """
         Overrides the default queryset to filter by the 'status' GET parameter.
         """
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().prefetch_related('contracts')
         status = self.request.GET.get('status')
         if status:
             if status.lower() == 'active':

@@ -63,10 +63,15 @@ class Person(models.Model):
 
         The person is considered active if they have at least one contract 
         where the current date falls within the contract period.
+        Otherwise, they are set to inactive.
         """
         today = date.today()
-        self.active = self.contracts.filter(contract_start__lte=today).exclude(contract_end__lt=today).exists()
+        if self.contracts.filter(contract_start__lte=today, contract_end__gte=today).exists():
+            self.active = True
+        else:
+            self.active = False
         self.save()
+
 
 
 class Contract(models.Model):
@@ -90,6 +95,15 @@ class Contract(models.Model):
     contracted_hours = models.FloatField(default=40, help_text="Number of contracted hours per week.")
 
     history = HistoricalRecords(table_name='contract_history')
+
+    def save(self, *args, **kwargs):
+        if self.contract_end < date.today():
+            self.person.update_active_status()
+            self.person.save()
+            print(self.person.active)
+        # Call the original save method
+        super().save(*args, **kwargs)
+            
 
     def __str__(self):
         return f"{self.person} - {self.job_title}"
