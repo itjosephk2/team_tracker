@@ -13,7 +13,21 @@
     <link href="{% static 'css/auth.css' %}" rel="stylesheet">
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
-
+    {% if messages %}
+           <div class="messages-container">
+             {% for message in messages %}
+               <div class="alert alert-{{ message.tags }} alert-dismissible fade show position-relative p-3" role="alert" style="overflow: hidden; width: 300px;">
+                 <div class="d-flex justify-content-between align-items-start">
+                   <div class="w-80">{{ message }}</div>
+                   <button type="button" class="btn-close ms-2 w-20" data-bs-dismiss="alert" aria-label="Close"></button>
+                 </div>
+                 <div class="progress progress-timer position-absolute bottom-0 start-0 w-100" style="height: 12%;">
+                   <div class="progress-bar bg-{{ message.tags }}" role="progressbar"></div>
+                 </div>
+               </div>
+             {% endfor %}
+           </div>
+         {% endif %} 
     <div class="container ">
         <div class="row justify-content-center">
             <div class="" >

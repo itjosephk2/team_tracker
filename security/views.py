@@ -10,41 +10,26 @@ from simple_history.models import HistoricalRecords
 from people_management.models import Person, Contract
 from itertools import chain
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from people_management.mixins import RoleRequiredMixin
+from django.contrib import messages
 
 
-def is_hr_admin(user):
-    """Check if a user belongs to the HR Admin group."""
-    return user.groups.filter(name="Admin").exists()
-
-class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+class CustomPasswordResetCompleteView(RoleRequiredMixin, PasswordResetCompleteView):
     template_name = 'security/auth/password_reset_complete.html'
+    allowed_roles = ['hr_admin']
+    
 
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+class CustomPasswordResetConfirmView(RoleRequiredMixin, PasswordResetConfirmView):
     template_name = 'security/auth/password_reset_confirm.html'
+    allowed_roles = ['hr_admin']
 
-class CustomPasswordResetDoneView(PasswordResetDoneView):
+class CustomPasswordResetDoneView(RoleRequiredMixin, PasswordResetDoneView):
     template_name = 'security/auth/password_reset_done.html'
+    allowed_roles = ['hr_admin']
 
-class CustomPasswordResetView(PasswordResetView):
+class CustomPasswordResetView(RoleRequiredMixin, PasswordResetView):
     template_name = 'security/auth/password_reset.html'
-
-# Authentication Views
-class SignupView(CreateView):
-    """Handles user registration."""
-    form_class = CustomUserCreationForm
-    template_name = "security/auth/register.html"
-    success_url = reverse_lazy("security:login")
-
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        user.is_staff = form.cleaned_data.get("is_staff")
-        user.save()
-        return super().form_valid(form)
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect(reverse_lazy("dashboard:dashboard"))
-        return super().dispatch(request, *args, **kwargs)
+    allowed_roles = ['hr_admin']
 
 
 class LoginInterface(LoginView):
@@ -52,69 +37,74 @@ class LoginInterface(LoginView):
     form_class = CustomLoginForm
     template_name = "security/auth/login.html"
 
+    def form_valid(self, form):
+        messages.info(self.request, "You have logged in Succesfully!")
+        return super().form_valid(form)
+
 
 class LogoutInterface(LogoutView):
     """Handles user logout."""
     next_page = reverse_lazy("security:login")
 
+    def form_valid(self, form):
+        messages.info(self.request, "You have logged out!")
+        return super().form_valid(form)
+
 
 # User Management Views
-class ListUsers(LoginRequiredMixin, ListView):
+class ListUsers(RoleRequiredMixin, LoginRequiredMixin, ListView):
     """Displays a list of users."""
+    allowed_roles = ['hr_admin']
     model = User
     context_object_name = "users"
     template_name = "security/users/list.html"
 
 
-class ViewUserDetails(LoginRequiredMixin, DetailView):
+class ViewUserDetails(RoleRequiredMixin, LoginRequiredMixin, DetailView):
     """Displays details of a user."""
+    allowed_roles = ['hr_admin']
     model = User
     context_object_name = "user"
     template_name = "security/users/detail.html"
 
 
-class CreateNewUser(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class CreateNewUser(RoleRequiredMixin, UserPassesTestMixin, CreateView):
     """Allows HR Admin to create a new user."""
+    allowed_roles = ['hr_admin']
     model = User
     form_class = CustomUserCreationForm
     template_name = "security/users/form.html"
     success_url = reverse_lazy("security:user_list")
-
-    def test_func(self):
-        return is_hr_admin(self.request.user)
     
     def form_valid(self, form):
         """Ensures user is properly linked and password is auto-generated."""
         user = form.save(commit=False)
-        user.is_staff = True  # Optional: If you want new users to be staff
+        user.is_staff = True
         user.save()
         return super().form_valid(form)
 
 
-class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UpdateUser(RoleRequiredMixin, UserPassesTestMixin, UpdateView):
     """Allows HR Admin to update user information."""
+    allowed_roles = ['hr_admin']
     model = User
     form_class = CustomUserUpdateForm
     template_name = "security/users/form.html"
     success_url = reverse_lazy("security:user_list")
 
-    def test_func(self):
-        return is_hr_admin(self.request.user)
 
-
-class DeleteUser(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class DeleteUser(RoleRequiredMixin, UserPassesTestMixin, DeleteView):
     """Allows HR Admin to delete a user."""
+    allowed_roles = ['hr_admin']
     model = User
     template_name = "security/users/confirm_delete.html"
     success_url = reverse_lazy("security:user_list")
 
-    def test_func(self):
-        return is_hr_admin(self.request.user)
-
 
 # Group Management Forms
-class GroupForm(forms.ModelForm):
+class GroupForm(RoleRequiredMixin, forms.ModelForm):
     """Form for creating and editing groups with permissions."""
+    allowed_roles = ['hr_admin']
     permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects.all(),
         widget=forms.CheckboxSelectMultiple,
@@ -127,24 +117,27 @@ class GroupForm(forms.ModelForm):
 
 
 # Group Management Views
-class ListGroups(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class ListGroups(RoleRequiredMixin, PermissionRequiredMixin, ListView):
     """Displays a list of groups."""
+    allowed_roles = ['hr_admin']
     model = Group
     context_object_name = "groups"
     template_name = "security/groups/list.html"
     permission_required = "auth.view_group"
 
 
-class GroupDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class GroupDetailView(RoleRequiredMixin, PermissionRequiredMixin, DetailView):
     """Displays details of a group."""
+    allowed_roles = ['hr_admin']
     model = Group
     template_name = "security/groups/detail.html"
     context_object_name = "group"
     permission_required = "auth.view_group"
 
 
-class CreateGroup(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class CreateGroup(RoleRequiredMixin, PermissionRequiredMixin, CreateView):
     """Allows authorized users to create a new group."""
+    allowed_roles = ['hr_admin']
     model = Group
     form_class = GroupForm
     template_name = "security/groups/form.html"
@@ -152,8 +145,9 @@ class CreateGroup(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = "auth.add_group"
 
 
-class UpdateGroup(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class UpdateGroup(RoleRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Allows authorized users to edit an existing group."""
+    allowed_roles = ['hr_admin']
     model = Group
     form_class = GroupForm
     template_name = "security/groups/form.html"
@@ -161,15 +155,16 @@ class UpdateGroup(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = "auth.change_group"
 
 
-class DeleteGroup(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class DeleteGroup(RoleRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Allows authorized users to delete a group."""
+    allowed_roles = ['hr_admin']
     model = Group
     template_name = "security/groups/confirm_delete.html"
     success_url = reverse_lazy("security:group_list")
     permission_required = "auth.delete_group"
 
 
-class AuditLogListView(LoginRequiredMixin, ListView):
+class AuditLogListView(RoleRequiredMixin, ListView):
     template_name = 'security/audit_log.html'
     context_object_name = 'audit_entries'
 

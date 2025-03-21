@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth.views import (
     PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView)
 from .views import (
-    LoginInterface, LogoutInterface, SignupView,
+    LoginInterface, LogoutInterface,
     ListUsers, ViewUserDetails, UpdateUser, DeleteUser, CreateNewUser,
     ListGroups, GroupDetailView, CreateGroup, UpdateGroup, DeleteGroup, AuditLogListView, 
     CustomPasswordResetView, CustomPasswordResetDoneView, CustomPasswordResetConfirmView,
@@ -15,7 +15,6 @@ urlpatterns = [
     # Authentication URLs
     path('login/', LoginInterface.as_view(), name='login'),
     path('logout/', LogoutInterface.as_view(), name='logout'),
-    path('signup/', SignupView.as_view(), name='signup'),
 
     # Password Reset
     path('password-reset/', CustomPasswordResetView.as_view(), name='password_reset'),

@@ -20,7 +20,25 @@
     </head>
     
     <body class="sb-nav-fixed">
+        
         {% include 'dashboard/partials/navigation.html' %}
+
+           {% if messages %}
+           <div class="messages-container">
+             {% for message in messages %}
+               <div class="alert alert-{{ message.tags }} alert-dismissible fade show position-relative p-3" role="alert" style="overflow: hidden; width: 300px;">
+                 <div class="d-flex justify-content-between align-items-start">
+                   <div class="w-80">{{ message }}</div>
+                   <button type="button" class="btn-close ms-2 w-20" data-bs-dismiss="alert" aria-label="Close"></button>
+                 </div>
+                 <div class="progress progress-timer position-absolute bottom-0 start-0 w-100" style="height: 12%;">
+                   <div class="progress-bar bg-{{ message.tags }}" role="progressbar"></div>
+                 </div>
+               </div>
+             {% endfor %}
+           </div>
+         {% endif %}         
+         
         <div id="layoutSidenav">
             {% include 'dashboard/partials/sidebar.html' %}
             
@@ -48,31 +66,8 @@
 
         {% comment %} Local Scripts {% endcomment %}
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                console.log('Listening')
-                let sidebar = document.getElementById("layoutSidenav_nav");
-                let sidebarToggle = document.getElementById("sidebarToggle");
-                let closeSidebar = document.getElementById("closeSidebar");
-            
-                sidebarToggle.addEventListener("click", function() {
-                    console.log('Open')
-                    sidebar.classList.toggle("open");
-                });
-            
-                closeSidebar.addEventListener("click", function() {
-                    sidebar.classList.remove("open");
-                });
-            
-                document.addEventListener("click", function(event) {
-                    if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-                        sidebar.classList.remove("open");
-                    }
-                });
-            });
-            </script>
+        <!-- Your custom scripts -->
+        <script src="{% static 'js/scripts.js' %}"></script>
 
-
-        
     </body>
 </html>

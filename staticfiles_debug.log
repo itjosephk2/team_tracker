@@ -6027,3 +6027,146 @@ Traceback (most recent call last):
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'sign_in' not found. 'sign_in' is not a valid view function or pattern name.
 "GET /security/password-reset/ HTTP/1.1" 500 153457
+Internal Server Error: /people_management/people/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\people_management\mixins.py", line 8, in dispatch
+    return HttpResponseForbidden("You are not authorized to view this page")
+           ^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'HttpResponseForbidden' is not defined
+"GET /people_management/people/ HTTP/1.1" 500 76919
+Internal Server Error: /people_management/people/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\people_management\mixins.py", line 8, in dispatch
+    return HttpResponseForbidden("You are not authorized to view this page")
+           ^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'HttpResponseForbidden' is not defined
+"GET /people_management/people/ HTTP/1.1" 500 76919
+Internal Server Error: /people_management/people/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\people_management\mixins.py", line 8, in dispatch
+    return redirect(reverse('dashboard'))
+           ^^^^^^^^
+NameError: name 'redirect' is not defined
+"GET /people_management/people/ HTTP/1.1" 500 77258
+Internal Server Error: /people_management/people/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\people_management\mixins.py", line 10, in dispatch
+    return redirect(reverse('dashboard'))
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashboard' is not a valid view function or pattern name.
+"GET /people_management/people/ HTTP/1.1" 500 87786
+Internal Server Error: /people_management/people/create_new_person/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\people_management\mixins.py", line 12, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 184, in post
+    return super().post(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\people_management\views.py", line 57, in form_valid
+    messages.success(self.request, "Person created successfully!")
+    ^^^^^^^^
+NameError: name 'messages' is not defined
+"POST /people_management/people/create_new_person/ HTTP/1.1" 500 100614
+Internal Server Error: /security/login/
+Traceback (most recent call last):
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\decorators\debug.py", line 92, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\contrib\auth\views.py", line 90, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\venv\Lib\site-packages\django\views\generic\edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Joe.Keane\Documents\team_tracker\security\views.py", line 40, in form_valid
+    messages.success(self.request, "You have logged in Succesfully!")
+    ^^^^^^^^
+NameError: name 'messages' is not defined
+"POST /security/login/ HTTP/1.1" 500 120319
