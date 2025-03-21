@@ -50,14 +50,16 @@
             <div class="mt-3 pe-3">
                 <div class="d-flex justify-content-end">
                     <a href="{% url 'people_management:people' %}" class="btn btn-m btn-outline-secondary mx-1">
-                        View
+                        Cancel
                     </a>
-                    <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-m btn-outline-secondary mx-1">
-                        Edit
-                    </a>
-                    <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-m btn-outline-secondary mx-1 text-danger">
-                        Delete
-                    </a>
+                    {% if request.user.person.role == "hr_admin" or request.user.person.role == "manager"%}
+                        <a href="{% url 'people_management:update_person' pk=person.id %}" class="btn btn-m btn-outline-secondary mx-1">
+                            Edit
+                        </a>
+                        <a href="{% url 'people_management:delete_person' pk=person.id %}" class="btn btn-m btn-outline-secondary mx-1 text-danger">
+                            Delete
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

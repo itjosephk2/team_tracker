@@ -6,6 +6,7 @@ app_name = 'people_management'
 urlpatterns = [
     path('people/', views.ListPeople.as_view(), name='people'), 
     path('people/<int:pk>/', views.ViewPersonDetails.as_view(), name='view_person'),
+    path('me/', views.ViewOwnPerson.as_view(), name='view_own_person'),
     path('people/<int:pk>/update_person/', views.UpdatePerson.as_view(), name='update_person'),
     path('people/<int:pk>/delete_person/', views.DeletePerson.as_view(), name='delete_person'),
     path('people/create_new_person/', views.CreateNewPerson.as_view(), name='create_person'),  

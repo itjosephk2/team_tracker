@@ -7,6 +7,7 @@ from .forms import PersonForm, ContractForm
 from people_management.models import Person, Contract
 from people_management.filters import ContractFilter
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 
 # Person Views
@@ -42,6 +43,15 @@ class ViewPersonDetails(RoleRequiredMixin, DetailView):
     model = Person
     context_object_name = 'person'
     allowed_roles = ['manager', 'hr_admin']
+
+
+class ViewOwnPerson(LoginRequiredMixin, DetailView):
+    model = Person
+    template_name = 'people_management/person_detail.html'
+    context_object_name = 'person'
+
+    def get_object(self):
+        return get_object_or_404(Person, user=self.request.user)
 
 
 class CreateNewPerson(RoleRequiredMixin, CreateView):

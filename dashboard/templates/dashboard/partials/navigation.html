@@ -16,7 +16,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li>
                     {% if person %}
-                        <a class="dropdown-item" href="{% url 'people_management:view_person' pk=person.id %}">Settings</a>
+                        <a class="dropdown-item" href="{% url 'people_management:view_own_person' %}">Settings</a>
                     {% endif %}
                 </li>
                 <li><a class="dropdown-item" href="{% url 'security:audit_log' %}">Activity Log</a></li>
