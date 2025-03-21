@@ -9,7 +9,6 @@ from people_management.filters import ContractFilter
 from django.contrib import messages
 
 
-
 # Person Views
 class ListPeople(RoleRequiredMixin, ListView):
     """

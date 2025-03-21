@@ -165,6 +165,7 @@ class DeleteGroup(RoleRequiredMixin, PermissionRequiredMixin, DeleteView):
 
 
 class AuditLogListView(RoleRequiredMixin, ListView):
+    allowed_roles = ['hr_admin']
     template_name = 'security/audit_log.html'
     context_object_name = 'audit_entries'
 
