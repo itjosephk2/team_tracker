@@ -19,7 +19,11 @@
                         <a class="dropdown-item" href="{% url 'people_management:view_own_person' %}">Settings</a>
                     {% endif %}
                 </li>
-                <li><a class="dropdown-item" href="{% url 'security:audit_log' %}">Activity Log</a></li>
+                <li>
+                    {% if request.user.person.role == "hr_admin" %}
+                    <a class="dropdown-item" href="{% url 'security:audit_log' %}">Activity Log</a>
+                    {% endif %}
+                </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href="{% url 'security:logout' %}">Logout</a></li>
             </ul>

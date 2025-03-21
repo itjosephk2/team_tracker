@@ -46,9 +46,9 @@ class LogoutInterface(LogoutView):
     """Handles user logout."""
     next_page = reverse_lazy("security:login")
 
-    def form_valid(self, form):
-        messages.info(self.request, "You have logged out!")
-        return super().form_valid(form)
+    def dispatch(self, request, *args, **kwargs):
+        messages.info(request, "You have been logged out.")
+        return super().dispatch(request, *args, **kwargs)
 
 
 # User Management Views
