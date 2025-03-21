@@ -52,7 +52,7 @@ class LogoutInterface(LogoutView):
 
 
 # User Management Views
-class ListUsers(RoleRequiredMixin, LoginRequiredMixin, ListView):
+class ListUsers(RoleRequiredMixin, ListView):
     """Displays a list of users."""
     allowed_roles = ['hr_admin']
     model = User
@@ -60,7 +60,7 @@ class ListUsers(RoleRequiredMixin, LoginRequiredMixin, ListView):
     template_name = "security/users/list.html"
 
 
-class ViewUserDetails(RoleRequiredMixin, LoginRequiredMixin, DetailView):
+class ViewUserDetails(RoleRequiredMixin, DetailView):
     """Displays details of a user."""
     allowed_roles = ['hr_admin']
     model = User
@@ -68,7 +68,7 @@ class ViewUserDetails(RoleRequiredMixin, LoginRequiredMixin, DetailView):
     template_name = "security/users/detail.html"
 
 
-class CreateNewUser(RoleRequiredMixin, UserPassesTestMixin, CreateView):
+class CreateNewUser(RoleRequiredMixin, CreateView):
     """Allows HR Admin to create a new user."""
     allowed_roles = ['hr_admin']
     model = User
@@ -84,7 +84,7 @@ class CreateNewUser(RoleRequiredMixin, UserPassesTestMixin, CreateView):
         return super().form_valid(form)
 
 
-class UpdateUser(RoleRequiredMixin, UserPassesTestMixin, UpdateView):
+class UpdateUser(RoleRequiredMixin, UpdateView):
     """Allows HR Admin to update user information."""
     allowed_roles = ['hr_admin']
     model = User
@@ -93,7 +93,7 @@ class UpdateUser(RoleRequiredMixin, UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy("security:user_list")
 
 
-class DeleteUser(RoleRequiredMixin, UserPassesTestMixin, DeleteView):
+class DeleteUser(RoleRequiredMixin, DeleteView):
     """Allows HR Admin to delete a user."""
     allowed_roles = ['hr_admin']
     model = User

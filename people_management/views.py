@@ -66,6 +66,10 @@ class CreateNewPerson(RoleRequiredMixin, CreateView):
     def form_valid(self, form):
         messages.success(self.request, "Person created successfully!")
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Invalid submission error!")
+        return super().form_invalid(form)
     
 
 class UpdatePerson(RoleRequiredMixin, UpdateView):
@@ -78,8 +82,12 @@ class UpdatePerson(RoleRequiredMixin, UpdateView):
     success_url = reverse_lazy('people_management:people')
 
     def form_valid(self, form):
-        messages.success(self.request, "Person created Updated!")
+        messages.success(self.request, "Person Updated Succesfully!")
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Invalid submission error!")
+        return super().form_invalid(form)
     
 
 class DeletePerson(RoleRequiredMixin, DeleteView):
@@ -91,7 +99,7 @@ class DeletePerson(RoleRequiredMixin, DeleteView):
     success_url = reverse_lazy('people_management:people')
 
     def form_valid(self, form):
-        messages.success(self.request, "Person created Deleted!")
+        messages.success(self.request, "Person succesfully Deleted!")
         return super().form_valid(form)
     
 
@@ -125,9 +133,11 @@ class CreateNewContract(RoleRequiredMixin, CreateView):
     allowed_roles = ['manager', 'hr_admin']
     success_url = reverse_lazy('people_management:contracts')
 
+    def form_valid(self, form):
+        messages.success(self.request, "Contract created successfully!")
+        return super().form_valid(form)
+
     
-
-
 class UpdateContract(RoleRequiredMixin, UpdateView):
     """
     Provides a form to update an existing Contract and redirects to the list view on success.
@@ -138,7 +148,7 @@ class UpdateContract(RoleRequiredMixin, UpdateView):
     success_url = reverse_lazy('people_management:contracts')
 
     def form_valid(self, form):
-        messages.success(self.request, "Person updated successfully!")
+        messages.success(self.request, "Contract successfully updated!")
         return super().form_valid(form)
 
 
@@ -149,3 +159,7 @@ class DeleteContract(RoleRequiredMixin, DeleteView):
     model = Contract
     allowed_roles = ['manager', 'hr_admin']
     success_url = reverse_lazy('people_management:contracts')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Contract succesfully Deleted!")
+        return super().form_valid(form)

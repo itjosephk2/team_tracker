@@ -97,7 +97,7 @@ class Contract(models.Model):
     history = HistoricalRecords(table_name='contract_history')
 
     def save(self, *args, **kwargs):
-        if self.contract_end < date.today():
+        if self.contract_end and self.contract_end < date.today():
             self.person.update_active_status()
             self.person.save()
             print(self.person.active)
