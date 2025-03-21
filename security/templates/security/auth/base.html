@@ -9,8 +9,32 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom Styles (Optional) -->
-    <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+    {% comment %} Local Styles {% endcomment %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+
+    <style>
+      .illustration-section {
+  position: relative;
+  /* Example gradient background */
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  overflow: hidden; /* Ensures pseudo-element doesn’t overflow */
+}
+
+  /* Create a wavy shape using a pseudo-element */
+.illustration-section::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 50%;
+  background: #fff;
+  border-radius: 50% 50% 0 0;
+  transform: scale(1.5);
+  opacity: 0.2;
+}
+    </style>
+
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
     {% if messages %}
@@ -41,5 +65,8 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Your custom scripts -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+
 </body>
 </html>
