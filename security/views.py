@@ -81,7 +81,12 @@ class CreateNewUser(RoleRequiredMixin, CreateView):
         user = form.save(commit=False)
         user.is_staff = True
         user.save()
-        return super().form_valid(form)
+        messages.success(self.request, "User successfully Created!")
+        return super().form_valid(form)    
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Invalid submission error!")
+        return super().form_invalid(form)
 
 
 class UpdateUser(RoleRequiredMixin, UpdateView):
@@ -91,6 +96,14 @@ class UpdateUser(RoleRequiredMixin, UpdateView):
     form_class = CustomUserUpdateForm
     template_name = "security/users/form.html"
     success_url = reverse_lazy("security:user_list")
+
+    def form_valid(self, form):
+        messages.success(self.request, "User successfully Created!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Invalid submission error!")
+        return super().form_invalid(form)
 
 
 class DeleteUser(RoleRequiredMixin, DeleteView):
@@ -144,6 +157,10 @@ class CreateGroup(RoleRequiredMixin, PermissionRequiredMixin, CreateView):
     success_url = reverse_lazy("security:group_list")
     permission_required = "auth.add_group"
 
+    def form_valid(self, form):
+        messages.success(self.request, "Group successfully Created!")
+        return super().form_valid(form)
+
 
 class UpdateGroup(RoleRequiredMixin, PermissionRequiredMixin, UpdateView):
     """Allows authorized users to edit an existing group."""
@@ -154,6 +171,10 @@ class UpdateGroup(RoleRequiredMixin, PermissionRequiredMixin, UpdateView):
     success_url = reverse_lazy("security:group_list")
     permission_required = "auth.change_group"
 
+    def form_valid(self, form):
+        messages.success(self.request, "Group successfully Updated!")
+        return super().form_valid(form)
+
 
 class DeleteGroup(RoleRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Allows authorized users to delete a group."""
@@ -162,6 +183,10 @@ class DeleteGroup(RoleRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "security/groups/confirm_delete.html"
     success_url = reverse_lazy("security:group_list")
     permission_required = "auth.delete_group"
+
+    def form_valid(self, form):
+        messages.warning(self.request, "Deleting Groups might break usability!")
+        return super().form_valid(form)
 
 
 class AuditLogListView(RoleRequiredMixin, ListView):

@@ -137,6 +137,10 @@ class CreateNewContract(RoleRequiredMixin, CreateView):
         messages.success(self.request, "Contract created successfully!")
         return super().form_valid(form)
 
+    def form_invalid(self, form):
+        messages.error(self.request, "Invalid submission error!")
+        return super().form_invalid(form)
+
     
 class UpdateContract(RoleRequiredMixin, UpdateView):
     """
@@ -150,6 +154,10 @@ class UpdateContract(RoleRequiredMixin, UpdateView):
     def form_valid(self, form):
         messages.success(self.request, "Contract successfully updated!")
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Invalid submission error!")
+        return super().form_invalid(form)
 
 
 class DeleteContract(RoleRequiredMixin, DeleteView):

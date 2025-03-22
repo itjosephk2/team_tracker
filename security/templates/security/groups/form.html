@@ -58,6 +58,8 @@
 
 <div class="container mt-5">
   <h2>{% if form.instance.pk %}Edit Group{% else %}Create Group{% endif %}</h2>
+  <form method="POST" novalidate>
+    {% csrf_token %}
   <div class="card shadow-lg p-3 rounded mb-5">
     <div class="card-body">
       <h4 class="card-title">Group Name</h4>
@@ -92,5 +94,6 @@
       </div>
     </div>
   </div>
+  </form>
 </div>
 {% endblock %}

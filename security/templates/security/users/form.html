@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2>{% if form.instance.pk %}Edit{% else %}New{% endif %} User</h2>
-    <form method="POST" action="{% if form.instance.pk %}{% url 'security:user_edit' form.instance.pk %}{% endif %}" class="p-4 shadow-lg rounded bg-light">
+    <form method="POST" action="{% if form.instance.pk %}{% url 'security:user_edit' form.instance.pk %}{% endif %}" class="p-4 shadow-lg rounded bg-light" novalidate>
         {% csrf_token %}
         {{ form.non_field_errors }}
         
