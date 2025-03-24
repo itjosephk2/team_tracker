@@ -1,8 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .mixins import RoleRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .forms import PersonForm, ContractForm
 from people_management.models import Person, Contract
 from people_management.filters import ContractFilter
@@ -11,21 +10,12 @@ from django.shortcuts import get_object_or_404
 
 
 # Person Views
-class ListPeople(RoleRequiredMixin, ListView):
-    """
-    Displays a list of Person objects with an optional filter for active/inactive status.
-
-    If a 'status' GET parameter is provided ('active' or 'inactive'),
-    the queryset is filtered accordingly.
-    """
+class ListPeople(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Person
     context_object_name = 'people'
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.view_person'
 
     def get_queryset(self):
-        """
-        Overrides the default queryset to filter by the 'status' GET parameter.
-        """
         queryset = super().get_queryset().prefetch_related('contracts')
         status = self.request.GET.get('status')
         if status:
@@ -36,13 +26,10 @@ class ListPeople(RoleRequiredMixin, ListView):
         return queryset
 
 
-class ViewPersonDetails(RoleRequiredMixin, DetailView):
-    """
-    Displays detailed information for a single Person.
-    """
+class ViewPersonDetails(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Person
     context_object_name = 'person'
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.view_person'
 
 
 class ViewOwnPerson(LoginRequiredMixin, DetailView):
@@ -54,13 +41,10 @@ class ViewOwnPerson(LoginRequiredMixin, DetailView):
         return get_object_or_404(Person, user=self.request.user)
 
 
-class CreateNewPerson(RoleRequiredMixin, CreateView):
-    """
-    Provides a form to create a new Person and redirects to the list view on success.
-    """
+class CreateNewPerson(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Person
     form_class = PersonForm
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.add_person'
     success_url = reverse_lazy('people_management:people')
 
     def form_valid(self, form):
@@ -70,67 +54,52 @@ class CreateNewPerson(RoleRequiredMixin, CreateView):
     def form_invalid(self, form):
         messages.error(self.request, "Invalid submission error!")
         return super().form_invalid(form)
-    
 
-class UpdatePerson(RoleRequiredMixin, UpdateView):
-    """
-    Provides a form to update an existing Person and redirects to the list view on success.
-    """
+
+class UpdatePerson(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Person
     form_class = PersonForm
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.change_person'
     success_url = reverse_lazy('people_management:people')
 
     def form_valid(self, form):
-        messages.success(self.request, "Person Updated Succesfully!")
+        messages.success(self.request, "Person Updated Successfully!")
         return super().form_valid(form)
 
     def form_invalid(self, form):
         messages.error(self.request, "Invalid submission error!")
         return super().form_invalid(form)
-    
 
-class DeletePerson(RoleRequiredMixin, DeleteView):
-    """
-    Provides confirmation for deleting a Person and redirects to the list view on success.
-    """
+
+class DeletePerson(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Person
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.delete_person'
     success_url = reverse_lazy('people_management:people')
 
     def form_valid(self, form):
-        messages.success(self.request, "Person succesfully Deleted!")
+        messages.success(self.request, "Person successfully Deleted!")
         return super().form_valid(form)
-    
+
 
 # Contract Views
-class FilteredContractListView(RoleRequiredMixin, FilterView):
-    """
-    Displays a list of Contract objects with filtering capabilities using django-filters.
-    """
+class FilteredContractListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
     model = Contract
     filterset_class = ContractFilter
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.view_contract'
     template_name = 'people_management/contract_list.html'
     context_object_name = 'contracts'
 
 
-class ViewContractDetails(RoleRequiredMixin, DetailView):
-    """
-    Displays detailed information for a single Contract.
-    """
+class ViewContractDetails(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Contract
     context_object_name = 'contract'
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.view_contract'
 
 
-class CreateNewContract(RoleRequiredMixin, CreateView):
-    """
-    Provides a form to create a new Contract and redirects to the list view on success.
-    """
+class CreateNewContract(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Contract
     form_class = ContractForm
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.add_contract'
     success_url = reverse_lazy('people_management:contracts')
 
     def form_valid(self, form):
@@ -141,14 +110,11 @@ class CreateNewContract(RoleRequiredMixin, CreateView):
         messages.error(self.request, "Invalid submission error!")
         return super().form_invalid(form)
 
-    
-class UpdateContract(RoleRequiredMixin, UpdateView):
-    """
-    Provides a form to update an existing Contract and redirects to the list view on success.
-    """
+
+class UpdateContract(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Contract
     form_class = ContractForm
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.change_contract'
     success_url = reverse_lazy('people_management:contracts')
 
     def form_valid(self, form):
@@ -160,14 +126,11 @@ class UpdateContract(RoleRequiredMixin, UpdateView):
         return super().form_invalid(form)
 
 
-class DeleteContract(RoleRequiredMixin, DeleteView):
-    """
-    Provides confirmation for deleting a Contract and redirects to the list view on success.
-    """
+class DeleteContract(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Contract
-    allowed_roles = ['manager', 'hr_admin']
+    permission_required = 'people_management.delete_contract'
     success_url = reverse_lazy('people_management:contracts')
 
     def form_valid(self, form):
-        messages.success(self.request, "Contract succesfully Deleted!")
+        messages.success(self.request, "Contract successfully Deleted!")
         return super().form_valid(form)

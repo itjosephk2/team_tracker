@@ -11366,3 +11366,15 @@ div.table-header-flex-box {
   transform: scale(1.5);
   opacity: 0.2;
 }
+/* Start here  */
+.sidebar-overlay.open {
+  left: 225px !important;
+  width: 100vw !important;
+}
+.sidebar-overlay.collapse {
+  left: 0 !important;
+  width: 0px !important;
+}
+.expand {
+  padding-left: 0!important;
+}
