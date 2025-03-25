@@ -5,10 +5,7 @@
 Team Tracker is a full-stack web application designed to manage employee records, roles, and permissions efficiently. It provides **role-based access control (RBAC)**, enabling HR admins to manage employees while allowing managers and employees access to relevant data.
 
 ## Table of Contents
-<<<<<<< HEAD
 
-=======
->>>>>>> e41c06eb210d01c6db77c84f44206eeade2af679
 1. [Data Models](#data-models)
 2. [User Experience (UX)](#user-experience-ux)
 3. [Agile Methodology](#agile-methodology)
@@ -26,7 +23,7 @@ Team Tracker is a full-stack web application designed to manage employee records
 ## Data Models
 
 ### **Person**
-<<<<<<< HEAD
+
 
 | Field Name    | Type                    | Notes                                                         |
 | ------------- | ----------------------- | ------------------------------------------------------------- |
