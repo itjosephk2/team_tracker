@@ -78,10 +78,12 @@ Team Tracker was developed using Agile methodology. The project followed iterati
 ### **User Stories**
 
 1. As an HR Admin, I want to add employees so I can manage the workforce.
-2. As an HR Admin, I want to assign roles so employees have correct access.
-3. As a Manager, I want to view my team members so I can track their details.
-4. As an Employee, I want to view my personal details so I can check my contract status.
-5. As an HR Admin, I want to restrict permissions so sensitive data is protected.
+2. As an Hr Admin, I want to add contracts and attach them to employees.
+3. As an HR Admin, I want to assign permissions to users so they can access the software.
+4. As a Manager, I want to view my team members so I can track their details.
+5. As a Manager, I want to add contracts and attach them to employees who are in my team.
+6. As a Manager, I want to add contracts to the employee that I can manage the workforce.
+7. As an Employee, I want to view my personal details so I can check my contract status.
 
 ### **Task Tracking**
 
@@ -89,6 +91,7 @@ Team Tracker was developed using Agile methodology. The project followed iterati
 -    Features were divided into milestones with clear goals.
 -    User stories and sprint progress were documented within GitHub Projects.
 -    Pull requests followed structured code reviews before merging.
+-    Epics were brken downinto user stories
 
 ---
 
