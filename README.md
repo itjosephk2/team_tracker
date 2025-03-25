@@ -69,6 +69,10 @@ Team Tracker is a full-stack web application designed to manage employee records
 | Manager  | View and manage team members.          |
 | Employee | View personal details and contracts.   |
 
+User Roles have been replaced to use djangos in built permission system. There is base of HR Admin, Manager, Employee for permissions but custom groups are creatable. 
+
+![Permissions](./assets/groups/assign_permission.png)
+
 ---
 
 ## Agile Methodology
