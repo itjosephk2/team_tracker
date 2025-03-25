@@ -77,10 +77,11 @@ User Roles have been replaced to use djangos in built permission system. There i
 
 ## Agile Methodology
 
-Team Tracker was developed using Agile methodology. The project followed iterative development cycles with continuous feedback and improvements.
+Team Tracker was developed using Agile methodology. The project followed iterative development cycles with continuous feedback and improvements. This can be seen in the project section of the repository where epics, user stories, priorities and assignment etc can be seen to be used in the process. 
 
 ### **User Stories**
 
+Here is some example of user stories. The full list of user stories can be seen in the projects attached to this repository. 
 1. As an HR Admin, I want to add employees so I can manage the workforce.
 2. As an Hr Admin, I want to add contracts and attach them to employees.
 3. As an HR Admin, I want to assign permissions to users so they can access the software.
