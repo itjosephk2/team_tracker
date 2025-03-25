@@ -51,7 +51,7 @@ Team Tracker is a full-stack web application designed to manage employee records
 | hourly_rate      | FloatField           | Defaults to €12.45                                      |
 | contracted_hours | FloatField           | Defaults to 40 hours/week                               |
 | history          | HistoricalRecords    | Tracks historical changes to each contract              |
-=======
+
 | Field Name    | Type                    | Notes                                                                 |
 |---------------|-------------------------|-----------------------------------------------------------------------|
 | id            | AutoField               | Primary Key (automatically added by Django)                          |
@@ -79,8 +79,6 @@ Team Tracker is a full-stack web application designed to manage employee records
 | contracted_hours | FloatField          | Defaults to 40 hours/week                                     |
 | history          | HistoricalRecords   | Tracks historical changes to each contract                    |
 
-
->>>>>>> e41c06eb210d01c6db77c84f44206eeade2af679
 
 ## User Experience (UX)
 
