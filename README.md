@@ -1,32 +1,64 @@
-
 # Team Tracker
+
 **Live Application:** [Team Tracker](https://team-tracker-d6988ecc9291.herokuapp.com/)
 
 Team Tracker is a full-stack web application designed to manage employee records, roles, and permissions efficiently. It provides **role-based access control (RBAC)**, enabling HR admins to manage employees while allowing managers and employees access to relevant data.
 
 ## Table of Contents
 
-1. [User Experience (UX)](#user-experience-ux)
-2. [Agile Methodology](#agile-methodology)
-3. [Features](#features)
-4. [Technologies Used](#technologies-used)
-5. [Installation & Setup](#installation-setup)
-6. [Testing](#testing)
-7. [Troubleshooting Common Errors](#troubleshooting-common-errors)
-8. [Deployment](#deployment)
-9. [Known Issues & Future Improvements](#known-issues--future-improvements)
-10. [Acknowledgments](#acknowledgments)
+1. [Data Models](#data-models)
+2. [User Experience (UX)](#user-experience-ux)
+3. [Agile Methodology](#agile-methodology)
+4. [Features](#features)
+5. [Technologies Used](#technologies-used)
+6. [Installation & Setup](#installation--setup)
+7. [Testing](#testing)
+8. [Troubleshooting Common Errors](#troubleshooting-common-errors)
+9. [Deployment](#deployment)
+10. [Known Issues & Future Improvements](#known-issues--future-improvements)
+11. [Acknowledgments](#acknowledgments)
 
 ---
+
+## Data Models
+
+### **Person**
+
+| Field Name    | Type                    | Notes                                                         |
+| ------------- | ----------------------- | ------------------------------------------------------------- |
+| id            | AutoField               | Primary Key (automatically added by Django)                   |
+| first_name    | CharField(50)           | Employee’s first name                                         |
+| last_name     | CharField(50)           | Employee’s last name                                          |
+| email         | EmailField(unique=True) | Must be unique                                                |
+| phone_number  | CharField(15)           | Optional contact number                                       |
+| date_of_birth | DateField               | Required                                                      |
+| active        | BooleanField            | Defaults to `False`; updated based on contract status         |
+| manager       | ForeignKey('self')      | Nullable; represents the employee’s direct manager            |
+| role          | CharField(choices)      | 'employee', 'manager', or 'hr_admin'                          |
+| user          | OneToOneField(User)     | Nullable link to Django `User` for authentication             |
+| history       | HistoricalRecords       | Enables tracking of model changes (via django-simple-history) |
+
+### **Contract**
+
+| Field Name       | Type                 | Notes                                                   |
+| ---------------- | -------------------- | ------------------------------------------------------- |
+| id               | AutoField            | Primary Key                                             |
+| person           | ForeignKey(Person)   | Required; cascades on delete                            |
+| job_title        | CharField(255)       | The title for the position associated with the contract |
+| contract_start   | DateField            | Start date of the contract                              |
+| contract_end     | DateField (nullable) | Can be left blank for ongoing contracts                 |
+| hourly_rate      | FloatField           | Defaults to €12.45                                      |
+| contracted_hours | FloatField           | Defaults to 40 hours/week                               |
+| history          | HistoricalRecords    | Tracks historical changes to each contract              |
 
 ## User Experience (UX)
 
 ### **Project Goals**
 
-- **Efficient Employee Management:** Maintain accurate records of employees, contracts, and roles.
-- **Role-Based Permissions:** Ensure users only access relevant information.
-- **Secure Authentication:** Enforce login protection and access control.
-- **Responsive & User-Friendly Interface:** Accessible across different devices.
+-    **Efficient Employee Management:** Maintain accurate records of employees, contracts, and roles.
+-    **Role-Based Permissions:** Ensure users only access relevant information.
+-    **Secure Authentication:** Enforce login protection and access control.
+-    **Responsive & User-Friendly Interface:** Accessible across different devices.
 
 ### **User Roles & Goals**
 
@@ -43,6 +75,7 @@ Team Tracker is a full-stack web application designed to manage employee records
 Team Tracker was developed using Agile methodology. The project followed iterative development cycles with continuous feedback and improvements.
 
 ### **User Stories**
+
 1. As an HR Admin, I want to add employees so I can manage the workforce.
 2. As an HR Admin, I want to assign roles so employees have correct access.
 3. As a Manager, I want to view my team members so I can track their details.
@@ -50,30 +83,31 @@ Team Tracker was developed using Agile methodology. The project followed iterati
 5. As an HR Admin, I want to restrict permissions so sensitive data is protected.
 
 ### **Task Tracking**
-- **GitHub Projects was used for task tracking** ([View Here](https://github.com/itjosephk2/team_tracker/projects?query=is%3Aopen)).
-- Features were divided into milestones with clear goals.
-- User stories and sprint progress were documented within GitHub Projects.
-- Pull requests followed structured code reviews before merging.
+
+-    **GitHub Projects was used for task tracking** ([View Here](https://github.com/itjosephk2/team_tracker/projects?query=is%3Aopen)).
+-    Features were divided into milestones with clear goals.
+-    User stories and sprint progress were documented within GitHub Projects.
+-    Pull requests followed structured code reviews before merging.
 
 ---
 
 ## Features
 
-- **User Authentication & Authorization**
-  - Secure login and logout functionality.
-  - Role-based permissions to control access.
-- **Employee Management**
-  - Create, update, and delete employee records.
-  - Assign managers to employees.
-- **Contract Management**
-  - Add employment contracts with job titles, start/end dates, and salary information.
-- **Role-Based Access Control (RBAC)**
-  - Assign permissions based on roles.
-  - Prevent unauthorized access to sensitive data.
-- **Dashboard Overview**
-  - Summary of employees and active contracts.
-- **Search & Filtering**
-  - Easily locate employees and contracts.
+-    **User Authentication & Authorization**
+     -    Secure login and logout functionality.
+     -    Role-based permissions to control access.
+-    **Employee Management**
+     -    Create, update, and delete employee records.
+     -    Assign managers to employees.
+-    **Contract Management**
+     -    Add employment contracts with job titles, start/end dates, and salary information.
+-    **Role-Based Access Control (RBAC)**
+     -    Assign permissions based on roles.
+     -    Prevent unauthorized access to sensitive data.
+-    **Dashboard Overview**
+     -    Summary of employees and active contracts.
+-    **Search & Filtering**
+     -    Easily locate employees and contracts.
 
 ---
 
@@ -81,11 +115,11 @@ Team Tracker was developed using Agile methodology. The project followed iterati
 
 ### **Languages & Frameworks**
 
-- **Backend:** Django (Python)
-- **Frontend:** Django Templates, HTML, CSS
-- **Database:** SQLite (for development), PostgreSQL (for production)
-- **Version Control:** Git & GitHub
-- **Deployment:** (To be added - Heroku, Railway, or other cloud platforms)
+-    **Backend:** Django (Python)
+-    **Frontend:** Django Templates, HTML, CSS
+-    **Database:** SQLite (for development), PostgreSQL (for production)
+-    **Version Control:** Git & GitHub
+-    **Deployment:** (To be added - Heroku, Railway, or other cloud platforms)
 
 ---
 
@@ -95,93 +129,101 @@ Team Tracker was developed using Agile methodology. The project followed iterati
 
 Ensure you have the following installed:
 
-- Python 3.9+
-- pip
-- virtualenv
+-    Python 3.9+
+-    pip
+-    virtualenv
 
 ### **Setup Steps**
 
 1. **Clone the Repository:**
 
-   ```bash
-   git clone https://github.com/itjosephk2/team_tracker.git
-   cd team_tracker
-   ```
+     ```bash
+     git clone https://github.com/itjosephk2/team_tracker.git
+     cd team_tracker
+     ```
 
 2. **Create a Virtual Environment:**
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use: venv\Scripts\activate
-   ```
+     ```bash
+     python -m venv venv
+     source venv/bin/activate  # On Windows use: venv\Scripts\activate
+     ```
 
 3. **Install Dependencies:**
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+     ```bash
+     pip install -r requirements.txt
+     ```
 
 4. **Run Migrations:**
 
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
+     ```bash
+     python manage.py makemigrations
+     python manage.py migrate
+     ```
 
 5. **Create a Superuser (Admin Account):**
 
-   ```bash
-   python manage.py createsuperuser
-   ```
+     ```bash
+     python manage.py createsuperuser
+     ```
 
 6. **Run the Server:**
 
-   ```bash
-   python manage.py runserver
-   ```
+     ```bash
+     python manage.py runserver
+     ```
 
-   Access the application at `http://127.0.0.1:8000/`
+     Access the application at `http://127.0.0.1:8000/`
 
 ---
 
 ## Testing
 
-- **Unit Tests:** Located in `tests.py` files within each app.
-- **Run Tests:**
-  ```bash
-  python manage.py test
-  ```
-- **Example Test Case:**
-  ```python
-  from django.test import TestCase
-  from people_management.models import Person
+-    **Unit Tests:** Located in `tests.py` files within each app.
+-    **Run Tests:**
+     ```bash
+     python manage.py test
+     ```
+-    **Example Test Case:**
 
-  class PersonModelTest(TestCase):
-      def test_create_person(self):
-          person = Person.objects.create(first_name="John", last_name="Doe")
-          self.assertEqual(person.first_name, "John")
-  ```
-- **Manual Testing:**
-  - Verify login, role-based access, CRUD functionality.
-  - Test edge cases (invalid logins, unauthorized access attempts).
+     ```python
+     from django.test import TestCase
+     from people_management.models import Person
+
+     class PersonModelTest(TestCase):
+         def test_create_person(self):
+             person = Person.objects.create(first_name="John", last_name="Doe")
+             self.assertEqual(person.first_name, "John")
+     ```
+
+-    **Manual Testing:**
+     -    Verify login, role-based access, CRUD functionality.
+     -    Test edge cases (invalid logins, unauthorized access attempts).
 
 ---
 
 ## Troubleshooting Common Errors
 
 ### **Database Errors During Testing**
+
 **Error:** `django.db.utils.ProgrammingError: relation "security_permissiondefinition" does not exist`
 
 **Solution:** Ensure migrations are properly applied before running tests:
+
 ```bash
 python manage.py makemigrations security people_management
 python manage.py migrate
 ```
+
 If the error persists, try resetting the test database:
+
 ```bash
 python manage.py flush
 ```
+
 Then, rerun:
+
 ```bash
 python manage.py test
 ```
@@ -194,24 +236,24 @@ python manage.py test
 
 ### **Deployment Steps**
 
-- Deploy the application using **Heroku/Railway**.
-- Set up environment variables for security (`DEBUG=False`).
-- Configure database settings for PostgreSQL.
+-    Deploy the application using **Heroku/Railway**.
+-    Set up environment variables for security (`DEBUG=False`).
+-    Configure database settings for PostgreSQL.
 
 ---
 
 ## Known Issues & Future Improvements
 
-- **Add Automated Testing:** Improve test coverage.
-- **Enhance Frontend UI:** Make forms and dashboard more user-friendly.
-- **Implement Email Notifications:** Notify users about contract updates.
+-    **Add Automated Testing:** Improve test coverage.
+-    **Enhance Frontend UI:** Make forms and dashboard more user-friendly.
+-    **Implement Email Notifications:** Notify users about contract updates.
 
 ---
 
 ## Acknowledgments
 
-- Special thanks to **Django documentation** and **Stack Overflow** for troubleshooting support.
-- Project inspired by modern HR management tools.
+-    Special thanks to **Django documentation** and **Stack Overflow** for troubleshooting support.
+-    Project inspired by modern HR management tools.
 
 ---
 
