@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from people_management.models import Person, Contract
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class DashboardView(TemplateView):
     """
     View for the main dashboard, displaying relevant data based on user roles.
 

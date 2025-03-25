@@ -5,7 +5,10 @@
 Team Tracker is a full-stack web application designed to manage employee records, roles, and permissions efficiently. It provides **role-based access control (RBAC)**, enabling HR admins to manage employees while allowing managers and employees access to relevant data.
 
 ## Table of Contents
+<<<<<<< HEAD
 
+=======
+>>>>>>> e41c06eb210d01c6db77c84f44206eeade2af679
 1. [Data Models](#data-models)
 2. [User Experience (UX)](#user-experience-ux)
 3. [Agile Methodology](#agile-methodology)
@@ -23,6 +26,7 @@ Team Tracker is a full-stack web application designed to manage employee records
 ## Data Models
 
 ### **Person**
+<<<<<<< HEAD
 
 | Field Name    | Type                    | Notes                                                         |
 | ------------- | ----------------------- | ------------------------------------------------------------- |
@@ -50,6 +54,36 @@ Team Tracker is a full-stack web application designed to manage employee records
 | hourly_rate      | FloatField           | Defaults to €12.45                                      |
 | contracted_hours | FloatField           | Defaults to 40 hours/week                               |
 | history          | HistoricalRecords    | Tracks historical changes to each contract              |
+=======
+| Field Name    | Type                    | Notes                                                                 |
+|---------------|-------------------------|-----------------------------------------------------------------------|
+| id            | AutoField               | Primary Key (automatically added by Django)                          |
+| first_name    | CharField(50)           | Employee’s first name                                                |
+| last_name     | CharField(50)           | Employee’s last name                                                 |
+| email         | EmailField(unique=True) | Must be unique                                                       |
+| phone_number  | CharField(15)           | Optional contact number                                              |
+| date_of_birth | DateField               | Required                                                             |
+| active        | BooleanField            | Defaults to `False`; updated based on contract status                |
+| manager       | ForeignKey('self')      | Nullable; represents the employee’s direct manager                   |
+| role          | CharField(choices)      | 'employee', 'manager', or 'hr_admin'                                 |
+| user          | OneToOneField(User)     | Nullable link to Django `User` for authentication                    |
+| history       | HistoricalRecords       | Enables tracking of model changes (via django-simple-history)        |
+
+
+### **Contract**
+| Field Name       | Type                | Notes                                                         |
+|------------------|---------------------|---------------------------------------------------------------|
+| id               | AutoField           | Primary Key                                                   |
+| person           | ForeignKey(Person)  | Required; cascades on delete                                  |
+| job_title        | CharField(255)      | The title for the position associated with the contract       |
+| contract_start   | DateField           | Start date of the contract                                    |
+| contract_end     | DateField (nullable)| Can be left blank for ongoing contracts                       |
+| hourly_rate      | FloatField          | Defaults to €12.45                                            |
+| contracted_hours | FloatField          | Defaults to 40 hours/week                                     |
+| history          | HistoricalRecords   | Tracks historical changes to each contract                    |
+
+
+>>>>>>> e41c06eb210d01c6db77c84f44206eeade2af679
 
 ## User Experience (UX)
 
