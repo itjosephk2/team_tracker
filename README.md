@@ -1,4 +1,5 @@
 # Team Tracker
+![Dashboard](./assets/dashboard.png)
 
 **Live Application:** [Team Tracker](https://team-tracker-d6988ecc9291.herokuapp.com/)
 
