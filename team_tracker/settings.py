@@ -19,8 +19,8 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY SETTINGS
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-secret-key")  # Use env variable, fallback for safety
-DEBUG = os.getenv("DEBUG", "False") == "True"  # Convert string to boolean
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-secret-key")
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # ALLOWED HOSTS (split comma-separated string into a list)
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
@@ -30,9 +30,9 @@ CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://127.0.0.1").sp
 
 # Enforce session expiration on browser close
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 1800  # 30 minutes (30 * 60 seconds)
-SESSION_COOKIE_SECURE = True  # Ensure session cookie is only sent over HTTPS (recommended)
-SESSION_SAVE_EVERY_REQUEST = False  # Prevents session extension on each request
+SESSION_COOKIE_AGE = 1800
+SESSION_COOKIE_SECURE = True
+SESSION_SAVE_EVERY_REQUEST = False
 
 
 
@@ -80,7 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # your custom one
+                # custom apps
                 'people_management.context_processors.inject_person',
             ],
         },
@@ -114,9 +114,9 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Ensure STATICFILES_DIRS is empty in production (DEBUG=False)
 if DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / "static"]  # Only for development
+    STATICFILES_DIRS = [BASE_DIR / "static"]
 else:
-    STATICFILES_DIRS = []  # Heroku uses STATIC_ROOT
+    STATICFILES_DIRS = []
 
 # Use Whitenoise to serve static files in production
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
@@ -127,9 +127,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authentication
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/security/login/'
-
-# Logging to capture errors when DEBUG=False
-import logging
 
 LOGGING = {
     "version": 1,

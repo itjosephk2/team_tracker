@@ -1,14 +1,12 @@
 # Team Tracker
+![Dashboard](./assets/dashboard/admin_dashboard.png)
 
 **Live Application:** [Team Tracker](https://team-tracker-d6988ecc9291.herokuapp.com/)
 
 Team Tracker is a full-stack web application designed to manage employee records, roles, and permissions efficiently. It provides **role-based access control (RBAC)**, enabling HR admins to manage employees while allowing managers and employees access to relevant data.
 
 ## Table of Contents
-<<<<<<< HEAD
 
-=======
->>>>>>> e41c06eb210d01c6db77c84f44206eeade2af679
 1. [Data Models](#data-models)
 2. [User Experience (UX)](#user-experience-ux)
 3. [Agile Methodology](#agile-methodology)
@@ -26,7 +24,6 @@ Team Tracker is a full-stack web application designed to manage employee records
 ## Data Models
 
 ### **Person**
-<<<<<<< HEAD
 
 | Field Name    | Type                    | Notes                                                         |
 | ------------- | ----------------------- | ------------------------------------------------------------- |
@@ -54,36 +51,6 @@ Team Tracker is a full-stack web application designed to manage employee records
 | hourly_rate      | FloatField           | Defaults to €12.45                                      |
 | contracted_hours | FloatField           | Defaults to 40 hours/week                               |
 | history          | HistoricalRecords    | Tracks historical changes to each contract              |
-=======
-| Field Name    | Type                    | Notes                                                                 |
-|---------------|-------------------------|-----------------------------------------------------------------------|
-| id            | AutoField               | Primary Key (automatically added by Django)                          |
-| first_name    | CharField(50)           | Employee’s first name                                                |
-| last_name     | CharField(50)           | Employee’s last name                                                 |
-| email         | EmailField(unique=True) | Must be unique                                                       |
-| phone_number  | CharField(15)           | Optional contact number                                              |
-| date_of_birth | DateField               | Required                                                             |
-| active        | BooleanField            | Defaults to `False`; updated based on contract status                |
-| manager       | ForeignKey('self')      | Nullable; represents the employee’s direct manager                   |
-| role          | CharField(choices)      | 'employee', 'manager', or 'hr_admin'                                 |
-| user          | OneToOneField(User)     | Nullable link to Django `User` for authentication                    |
-| history       | HistoricalRecords       | Enables tracking of model changes (via django-simple-history)        |
-
-
-### **Contract**
-| Field Name       | Type                | Notes                                                         |
-|------------------|---------------------|---------------------------------------------------------------|
-| id               | AutoField           | Primary Key                                                   |
-| person           | ForeignKey(Person)  | Required; cascades on delete                                  |
-| job_title        | CharField(255)      | The title for the position associated with the contract       |
-| contract_start   | DateField           | Start date of the contract                                    |
-| contract_end     | DateField (nullable)| Can be left blank for ongoing contracts                       |
-| hourly_rate      | FloatField          | Defaults to €12.45                                            |
-| contracted_hours | FloatField          | Defaults to 40 hours/week                                     |
-| history          | HistoricalRecords   | Tracks historical changes to each contract                    |
-
-
->>>>>>> e41c06eb210d01c6db77c84f44206eeade2af679
 
 ## User Experience (UX)
 
@@ -102,19 +69,26 @@ Team Tracker is a full-stack web application designed to manage employee records
 | Manager  | View and manage team members.          |
 | Employee | View personal details and contracts.   |
 
+User Roles have been replaced to use djangos in built permission system. There is base of HR Admin, Manager, Employee for permissions but custom groups are creatable. Permissions are checked for as mixins with the class based views. If the user has a group with the required permiission they can access the functionality. Roled are used to restrict the sidenav of the dashboard.
+
+![Permissions](./assets/groups/assign_permission.png)
+
 ---
 
 ## Agile Methodology
 
-Team Tracker was developed using Agile methodology. The project followed iterative development cycles with continuous feedback and improvements.
+Team Tracker was developed using Agile methodology. The project followed iterative development cycles with continuous feedback and improvements. This can be seen in the project section of the repository where epics, user stories, priorities and assignment etc can be seen to be used in the process. 
 
 ### **User Stories**
 
+Here is some example of user stories. The full list of user stories can be seen in the projects attached to this repository. 
 1. As an HR Admin, I want to add employees so I can manage the workforce.
-2. As an HR Admin, I want to assign roles so employees have correct access.
-3. As a Manager, I want to view my team members so I can track their details.
-4. As an Employee, I want to view my personal details so I can check my contract status.
-5. As an HR Admin, I want to restrict permissions so sensitive data is protected.
+2. As an Hr Admin, I want to add contracts and attach them to employees.
+3. As an HR Admin, I want to assign permissions to users so they can access the software.
+4. As a Manager, I want to view my team members so I can track their details.
+5. As a Manager, I want to add contracts and attach them to employees who are in my team.
+6. As a Manager, I want to add contracts to the employee that I can manage the workforce.
+7. As an Employee, I want to view my personal details so I can check my contract status.
 
 ### **Task Tracking**
 
@@ -122,6 +96,7 @@ Team Tracker was developed using Agile methodology. The project followed iterati
 -    Features were divided into milestones with clear goals.
 -    User stories and sprint progress were documented within GitHub Projects.
 -    Pull requests followed structured code reviews before merging.
+-    Epics were brken downinto user stories
 
 ---
 
