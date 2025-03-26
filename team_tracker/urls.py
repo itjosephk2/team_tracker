@@ -23,5 +23,4 @@ urlpatterns = [
     path('', include('dashboard.urls')),
     path('people_management/', include('people_management.urls')),
     path('security/', include('security.urls')),
-    path('security/auth/', include('security.urls')),
 ]
