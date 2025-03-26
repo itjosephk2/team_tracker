@@ -31,9 +31,8 @@ CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://127.0.0.1").sp
 # Enforce session expiration on browser close
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 1800
-SESSION_COOKIE_SECURE = True
-SESSION_SAVE_EVERY_REQUEST = False
-
+SESSION_COOKIE_SECURE = True 
+SESSION_SAVE_EVERY_REQUEST = False 
 
 
 # Application definition
@@ -80,7 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # custom apps
+                # Custom
                 'people_management.context_processors.inject_person',
             ],
         },
@@ -126,7 +125,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Authentication
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/auth/login/'
+LOGIN_URL = '/security/login/'
 
 LOGGING = {
     "version": 1,
