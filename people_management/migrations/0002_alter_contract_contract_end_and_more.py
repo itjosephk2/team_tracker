@@ -9,78 +9,116 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('people_management', '0001_initial'),
+        ("people_management", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contract',
-            name='contract_end',
-            field=models.DateField(blank=True, help_text='Contract end date (if applicable).', null=True),
+            model_name="contract",
+            name="contract_end",
+            field=models.DateField(
+                blank=True, help_text="Contract end date (if applicable).", null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='contract',
-            name='contract_start',
-            field=models.DateField(help_text='Contract start date.'),
+            model_name="contract",
+            name="contract_start",
+            field=models.DateField(help_text="Contract start date."),
         ),
         migrations.AlterField(
-            model_name='contract',
-            name='contracted_hours',
-            field=models.FloatField(default=40, help_text='Number of contracted hours per week.'),
+            model_name="contract",
+            name="contracted_hours",
+            field=models.FloatField(
+                default=40, help_text="Number of contracted hours per week."
+            ),
         ),
         migrations.AlterField(
-            model_name='contract',
-            name='hourly_rate',
-            field=models.FloatField(default=12.45, help_text='Hourly pay rate for this contract.'),
+            model_name="contract",
+            name="hourly_rate",
+            field=models.FloatField(
+                default=12.45, help_text="Hourly pay rate for this contract."
+            ),
         ),
         migrations.AlterField(
-            model_name='contract',
-            name='job_title',
-            field=models.CharField(help_text='Job title associated with this contract.', max_length=255),
+            model_name="contract",
+            name="job_title",
+            field=models.CharField(
+                help_text="Job title associated with this contract.", max_length=255
+            ),
         ),
         migrations.AlterField(
-            model_name='contract',
-            name='person',
-            field=models.ForeignKey(help_text='The person this contract belongs to.', on_delete=django.db.models.deletion.CASCADE, related_name='contracts', to='people_management.person'),
+            model_name="contract",
+            name="person",
+            field=models.ForeignKey(
+                help_text="The person this contract belongs to.",
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="contracts",
+                to="people_management.person",
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='active',
-            field=models.BooleanField(default=False, help_text='Indicates if the person is currently employed.'),
+            model_name="person",
+            name="active",
+            field=models.BooleanField(
+                default=False,
+                help_text="Indicates if the person is currently employed.",
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='date_of_birth',
+            model_name="person",
+            name="date_of_birth",
             field=models.DateField(help_text="Employee's date of birth."),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='email',
-            field=models.EmailField(help_text="The employee's email address.", max_length=255, unique=True),
+            model_name="person",
+            name="email",
+            field=models.EmailField(
+                help_text="The employee's email address.", max_length=255, unique=True
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='first_name',
-            field=models.CharField(help_text="The employee's first name.", max_length=50),
+            model_name="person",
+            name="first_name",
+            field=models.CharField(
+                help_text="The employee's first name.", max_length=50
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='last_name',
-            field=models.CharField(help_text="The employee's last name.", max_length=50),
+            model_name="person",
+            name="last_name",
+            field=models.CharField(
+                help_text="The employee's last name.", max_length=50
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='manager',
-            field=models.ForeignKey(blank=True, help_text='Manager supervising this employee.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='team_members', to='people_management.person'),
+            model_name="person",
+            name="manager",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Manager supervising this employee.",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="team_members",
+                to="people_management.person",
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='phone_number',
-            field=models.CharField(blank=True, help_text='Contact number of the employee.', max_length=15),
+            model_name="person",
+            name="phone_number",
+            field=models.CharField(
+                blank=True, help_text="Contact number of the employee.", max_length=15
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='user',
-            field=models.OneToOneField(blank=True, help_text='The associated Django user account.', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person', to=settings.AUTH_USER_MODEL),
+            model_name="person",
+            name="user",
+            field=models.OneToOneField(
+                blank=True,
+                help_text="The associated Django user account.",
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="person",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

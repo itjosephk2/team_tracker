@@ -12,34 +12,75 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('security', '0001_initial'),
+        ("security", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Person',
+            name="Person",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=50)),
-                ('last_name', models.CharField(max_length=50)),
-                ('email', models.EmailField(max_length=255)),
-                ('phone_number', models.CharField(max_length=15)),
-                ('date_of_birth', models.DateField()),
-                ('active', models.BooleanField(default=False)),
-                ('manager', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='team_members', to='people_management.person')),
-                ('user', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='employee', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("first_name", models.CharField(max_length=50)),
+                ("last_name", models.CharField(max_length=50)),
+                ("email", models.EmailField(max_length=255)),
+                ("phone_number", models.CharField(max_length=15)),
+                ("date_of_birth", models.DateField()),
+                ("active", models.BooleanField(default=False)),
+                (
+                    "manager",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="team_members",
+                        to="people_management.person",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="employee",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Contract',
+            name="Contract",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('job_title', models.CharField(max_length=255)),
-                ('contract_start', models.DateField()),
-                ('contract_end', models.DateField(blank=True, null=True)),
-                ('hourly_rate', models.FloatField(default=12.45)),
-                ('contracted_hours', models.FloatField(default=40)),
-                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='contracts', to='people_management.person')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("job_title", models.CharField(max_length=255)),
+                ("contract_start", models.DateField()),
+                ("contract_end", models.DateField(blank=True, null=True)),
+                ("hourly_rate", models.FloatField(default=12.45)),
+                ("contracted_hours", models.FloatField(default=40)),
+                (
+                    "person",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="contracts",
+                        to="people_management.person",
+                    ),
+                ),
             ],
         ),
     ]

@@ -10,58 +10,197 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('people_management', '0004_alter_person_user'),
+        ("people_management", "0004_alter_person_user"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='HistoricalPerson',
+            name="HistoricalPerson",
             fields=[
-                ('id', models.BigIntegerField(auto_created=True, blank=True, db_index=True, verbose_name='ID')),
-                ('first_name', models.CharField(help_text="The employee's first name.", max_length=50)),
-                ('last_name', models.CharField(help_text="The employee's last name.", max_length=50)),
-                ('email', models.EmailField(db_index=True, help_text="The employee's email address.", max_length=255)),
-                ('phone_number', models.CharField(blank=True, help_text='Contact number of the employee.', max_length=15)),
-                ('date_of_birth', models.DateField(help_text="Employee's date of birth.")),
-                ('active', models.BooleanField(default=False, help_text='Indicates if the person is currently employed.')),
-                ('role', models.CharField(choices=[('employee', 'Employee'), ('manager', 'Manager'), ('hr_admin', 'HR Admin')], default='employee', help_text='The role of the person in the company.', max_length=10)),
-                ('history_id', models.AutoField(primary_key=True, serialize=False)),
-                ('history_date', models.DateTimeField(db_index=True)),
-                ('history_change_reason', models.CharField(max_length=100, null=True)),
-                ('history_type', models.CharField(choices=[('+', 'Created'), ('~', 'Changed'), ('-', 'Deleted')], max_length=1)),
-                ('history_user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL)),
-                ('manager', models.ForeignKey(blank=True, db_constraint=False, help_text='Manager supervising this employee.', null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to='people_management.person')),
-                ('user', models.ForeignKey(blank=True, db_constraint=False, help_text='The associated Django user account.', null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigIntegerField(
+                        auto_created=True, blank=True, db_index=True, verbose_name="ID"
+                    ),
+                ),
+                (
+                    "first_name",
+                    models.CharField(
+                        help_text="The employee's first name.", max_length=50
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        help_text="The employee's last name.", max_length=50
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        db_index=True,
+                        help_text="The employee's email address.",
+                        max_length=255,
+                    ),
+                ),
+                (
+                    "phone_number",
+                    models.CharField(
+                        blank=True,
+                        help_text="Contact number of the employee.",
+                        max_length=15,
+                    ),
+                ),
+                (
+                    "date_of_birth",
+                    models.DateField(help_text="Employee's date of birth."),
+                ),
+                (
+                    "active",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Indicates if the person is currently employed.",
+                    ),
+                ),
+                (
+                    "role",
+                    models.CharField(
+                        choices=[
+                            ("employee", "Employee"),
+                            ("manager", "Manager"),
+                            ("hr_admin", "HR Admin"),
+                        ],
+                        default="employee",
+                        help_text="The role of the person in the company.",
+                        max_length=10,
+                    ),
+                ),
+                ("history_id", models.AutoField(primary_key=True, serialize=False)),
+                ("history_date", models.DateTimeField(db_index=True)),
+                ("history_change_reason", models.CharField(max_length=100, null=True)),
+                (
+                    "history_type",
+                    models.CharField(
+                        choices=[("+", "Created"), ("~", "Changed"), ("-", "Deleted")],
+                        max_length=1,
+                    ),
+                ),
+                (
+                    "history_user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "manager",
+                    models.ForeignKey(
+                        blank=True,
+                        db_constraint=False,
+                        help_text="Manager supervising this employee.",
+                        null=True,
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="+",
+                        to="people_management.person",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        blank=True,
+                        db_constraint=False,
+                        help_text="The associated Django user account.",
+                        null=True,
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="+",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'historical person',
-                'verbose_name_plural': 'historical persons',
-                'ordering': ('-history_date', '-history_id'),
-                'get_latest_by': ('history_date', 'history_id'),
+                "verbose_name": "historical person",
+                "verbose_name_plural": "historical persons",
+                "ordering": ("-history_date", "-history_id"),
+                "get_latest_by": ("history_date", "history_id"),
             },
             bases=(simple_history.models.HistoricalChanges, models.Model),
         ),
         migrations.CreateModel(
-            name='HistoricalContract',
+            name="HistoricalContract",
             fields=[
-                ('id', models.BigIntegerField(auto_created=True, blank=True, db_index=True, verbose_name='ID')),
-                ('job_title', models.CharField(help_text='Job title associated with this contract.', max_length=255)),
-                ('contract_start', models.DateField(help_text='Contract start date.')),
-                ('contract_end', models.DateField(blank=True, help_text='Contract end date (if applicable).', null=True)),
-                ('hourly_rate', models.FloatField(default=12.45, help_text='Hourly pay rate for this contract.')),
-                ('contracted_hours', models.FloatField(default=40, help_text='Number of contracted hours per week.')),
-                ('history_id', models.AutoField(primary_key=True, serialize=False)),
-                ('history_date', models.DateTimeField(db_index=True)),
-                ('history_change_reason', models.CharField(max_length=100, null=True)),
-                ('history_type', models.CharField(choices=[('+', 'Created'), ('~', 'Changed'), ('-', 'Deleted')], max_length=1)),
-                ('history_user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL)),
-                ('person', models.ForeignKey(blank=True, db_constraint=False, help_text='The person this contract belongs to.', null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to='people_management.person')),
+                (
+                    "id",
+                    models.BigIntegerField(
+                        auto_created=True, blank=True, db_index=True, verbose_name="ID"
+                    ),
+                ),
+                (
+                    "job_title",
+                    models.CharField(
+                        help_text="Job title associated with this contract.",
+                        max_length=255,
+                    ),
+                ),
+                ("contract_start", models.DateField(help_text="Contract start date.")),
+                (
+                    "contract_end",
+                    models.DateField(
+                        blank=True,
+                        help_text="Contract end date (if applicable).",
+                        null=True,
+                    ),
+                ),
+                (
+                    "hourly_rate",
+                    models.FloatField(
+                        default=12.45, help_text="Hourly pay rate for this contract."
+                    ),
+                ),
+                (
+                    "contracted_hours",
+                    models.FloatField(
+                        default=40, help_text="Number of contracted hours per week."
+                    ),
+                ),
+                ("history_id", models.AutoField(primary_key=True, serialize=False)),
+                ("history_date", models.DateTimeField(db_index=True)),
+                ("history_change_reason", models.CharField(max_length=100, null=True)),
+                (
+                    "history_type",
+                    models.CharField(
+                        choices=[("+", "Created"), ("~", "Changed"), ("-", "Deleted")],
+                        max_length=1,
+                    ),
+                ),
+                (
+                    "history_user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "person",
+                    models.ForeignKey(
+                        blank=True,
+                        db_constraint=False,
+                        help_text="The person this contract belongs to.",
+                        null=True,
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="+",
+                        to="people_management.person",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'historical contract',
-                'verbose_name_plural': 'historical contracts',
-                'ordering': ('-history_date', '-history_id'),
-                'get_latest_by': ('history_date', 'history_id'),
+                "verbose_name": "historical contract",
+                "verbose_name_plural": "historical contracts",
+                "ordering": ("-history_date", "-history_id"),
+                "get_latest_by": ("history_date", "history_id"),
             },
             bases=(simple_history.models.HistoricalChanges, models.Model),
         ),

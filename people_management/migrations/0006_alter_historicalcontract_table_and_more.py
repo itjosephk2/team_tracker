@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people_management', '0005_historicalperson_historicalcontract'),
+        ("people_management", "0005_historicalperson_historicalcontract"),
     ]
 
     operations = [
         migrations.AlterModelTable(
-            name='historicalcontract',
-            table='contract_history',
+            name="historicalcontract",
+            table="contract_history",
         ),
         migrations.AlterModelTable(
-            name='historicalperson',
-            table='person_history',
+            name="historicalperson",
+            table="person_history",
         ),
     ]

@@ -7,34 +7,65 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='PermissionDefinition',
+            name="PermissionDefinition",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('codename', models.CharField(max_length=100, unique=True)),
-                ('name', models.CharField(max_length=255)),
-                ('description', models.TextField(blank=True, null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("codename", models.CharField(max_length=100, unique=True)),
+                ("name", models.CharField(max_length=255)),
+                ("description", models.TextField(blank=True, null=True)),
             ],
             options={
-                'verbose_name': 'Permission',
-                'verbose_name_plural': 'Permissions',
+                "verbose_name": "Permission",
+                "verbose_name_plural": "Permissions",
             },
         ),
         migrations.CreateModel(
-            name='Role',
+            name="Role",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(choices=[('Employee', 'Employee'), ('Manager', 'Manager'), ('HR Admin', 'HR Admin')], max_length=50, unique=True)),
-                ('description', models.TextField(blank=True, null=True)),
-                ('permissions', models.ManyToManyField(blank=True, to='security.permissiondefinition')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        choices=[
+                            ("Employee", "Employee"),
+                            ("Manager", "Manager"),
+                            ("HR Admin", "HR Admin"),
+                        ],
+                        max_length=50,
+                        unique=True,
+                    ),
+                ),
+                ("description", models.TextField(blank=True, null=True)),
+                (
+                    "permissions",
+                    models.ManyToManyField(
+                        blank=True, to="security.permissiondefinition"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Role',
-                'verbose_name_plural': 'Roles',
+                "verbose_name": "Role",
+                "verbose_name_plural": "Roles",
             },
         ),
     ]

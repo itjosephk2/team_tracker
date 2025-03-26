@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from security.models import Role, PermissionDefinition
 
+
 class Command(BaseCommand):
     help = "Populates the database with default roles and permissions"
 
@@ -19,8 +20,7 @@ class Command(BaseCommand):
         # Create permissions
         for codename, name in permissions.items():
             perm, created = PermissionDefinition.objects.get_or_create(
-                codename=codename,
-                defaults={"name": name, "description": name}
+                codename=codename, defaults={"name": name, "description": name}
             )
             if created:
                 self.stdout.write(self.style.SUCCESS(f"Created permission: {codename}"))
@@ -28,15 +28,31 @@ class Command(BaseCommand):
         # Define default roles with their associated permissions
         roles = {
             "Employee": ["view_dashboard", "view_people_list", "view_person"],
-            "Manager": ["view_dashboard", "view_people_list", "view_person", "change_person"],
-            "HR Admin": ["view_dashboard", "view_people_list", "view_settings", "view_person", "change_person", "delete_person", "add_person"],
+            "Manager": [
+                "view_dashboard",
+                "view_people_list",
+                "view_person",
+                "change_person",
+            ],
+            "HR Admin": [
+                "view_dashboard",
+                "view_people_list",
+                "view_settings",
+                "view_person",
+                "change_person",
+                "delete_person",
+                "add_person",
+            ],
         }
 
         # Create roles
         for role_name, perms in roles.items():
             role, created = Role.objects.get_or_create(
                 name=role_name,
-                defaults={"description": f"System role: {role_name}", "is_default": True}
+                defaults={
+                    "description": f"System role: {role_name}",
+                    "is_default": True,
+                },
             )
 
             # Assign permissions
@@ -47,4 +63,6 @@ class Command(BaseCommand):
             if created:
                 self.stdout.write(self.style.SUCCESS(f"Created role: {role_name}"))
 
-        self.stdout.write(self.style.SUCCESS("Default roles and permissions populated successfully!"))
+        self.stdout.write(
+            self.style.SUCCESS("Default roles and permissions populated successfully!")
+        )

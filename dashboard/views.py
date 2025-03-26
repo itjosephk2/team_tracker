@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from people_management.models import Person, Contract
 
+
 class DashboardView(LoginRequiredMixin, TemplateView):
     """
     View for the main dashboard, displaying relevant data based on user roles.
@@ -16,14 +17,15 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     - Managers can only access their direct team.
     - Employees do not see the people management table.
     """
-    template_name = 'dashboard/dashboard.html'
+
+    template_name = "dashboard/dashboard.html"
 
     def get_context_data(self, **kwargs):
         """
         Get context data for the dashboard template.
 
         This method adds the following context variables based on the logged-in user's role:
-        
+
         - person: The logged-in user's personal details.
         - people: A list of employees visible to the user:
             - HR/Admin: All employees.
@@ -42,33 +44,33 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         user = self.request.user
 
         # Ensure the user is linked to a Person record
-        person = getattr(user, 'person', None)
-        context['person'] = person
+        person = getattr(user, "person", None)
+        context["person"] = person
 
         if person:
             # Role-based filtering for people
             if person.role == "hr_admin":
                 # HR Admins see all employees
-                context['people'] = Person.objects.all()
+                context["people"] = Person.objects.all()
             elif person.role == "manager":
                 # Managers see only their assigned team members
-                context['people'] = Person.objects.filter(manager=person)
+                context["people"] = Person.objects.filter(manager=person)
             else:
                 # Employees only see their own details (no people list)
-                context['people'] = None
+                context["people"] = None
 
             # Role-based filtering for contracts
             if person.role == "hr_admin":
                 # HR Admins see all contracts
-                context['contracts'] = Contract.objects.all()
+                context["contracts"] = Contract.objects.all()
             elif person.role == "manager":
                 # Managers see contracts for their team members (assuming Contract has a ForeignKey to Person)
-                context['contracts'] = Contract.objects.filter(person__manager=person)
+                context["contracts"] = Contract.objects.filter(person__manager=person)
             else:
                 # Employees do not get any contract context
-                context['contracts'] = None
+                context["contracts"] = None
         else:
-            context['people'] = None
-            context['contracts'] = None
+            context["people"] = None
+            context["contracts"] = None
 
         return context

@@ -6,13 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people_management', '0002_alter_contract_contract_end_and_more'),
+        ("people_management", "0002_alter_contract_contract_end_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='person',
-            name='role',
-            field=models.CharField(choices=[('employee', 'Employee'), ('manager', 'Manager'), ('hr_admin', 'HR Admin')], default='employee', help_text='The role of the person in the company.', max_length=10),
+            model_name="person",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("employee", "Employee"),
+                    ("manager", "Manager"),
+                    ("hr_admin", "HR Admin"),
+                ],
+                default="employee",
+                help_text="The role of the person in the company.",
+                max_length=10,
+            ),
         ),
     ]

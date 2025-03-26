@@ -7398,3 +7398,82 @@ Traceback (most recent call last):
     raise NoReverseMatch(msg)
 django.urls.exceptions.NoReverseMatch: Reverse for 'password_reset_confirm' not found. 'password_reset_confirm' is not a valid view function or pattern name.
 "POST /security/password-reset/ HTTP/1.1" 500 185505
+Internal Server Error: /security/password-reset/
+Traceback (most recent call last):
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/utils/decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/views.py", line 242, in dispatch
+    return super().dispatch(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/views/generic/edit.py", line 153, in post
+    return self.form_valid(form)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/views.py", line 255, in form_valid
+    form.save(**opts)
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/forms.py", line 383, in save
+    self.send_mail(
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/contrib/auth/forms.py", line 312, in send_mail
+    body = loader.render_to_string(email_template_name, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 52, in render
+    output = self.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/loader_tags.py", line 54, in render
+    result = self.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/test/Documents/Coding/code-institute/team_tracker-main/path/to/venv/lib/python3.12/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'password_reset_confirm' not found. 'password_reset_confirm' is not a valid view function or pattern name.
+"POST /security/password-reset/ HTTP/1.1" 500 185799

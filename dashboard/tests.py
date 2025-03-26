@@ -21,7 +21,7 @@ class CustomUserCreationFormTest(TestCase):
             "username": "testuser",
             "password1": "TestPassword123!",
             "password2": "TestPassword123!",
-            "is_staff": True
+            "is_staff": True,
         }
         form = CustomUserCreationForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -35,11 +35,7 @@ class CustomUserCreationFormTest(TestCase):
         Test that form submission fails when required fields (e.g., username)
         are missing or invalid.
         """
-        form_data = {
-            "username": "",
-            "password1": "password",
-            "password2": "password"
-        }
+        form_data = {"username": "", "password1": "password", "password2": "password"}
         form = CustomUserCreationForm(data=form_data)
         self.assertFalse(form.is_valid())
 
@@ -54,16 +50,15 @@ class CustomLoginFormTest(TestCase):
         """
         Create a test user for login form validation tests.
         """
-        self.user = User.objects.create_user(username="testuser", password="TestPassword123!")
+        self.user = User.objects.create_user(
+            username="testuser", password="TestPassword123!"
+        )
 
     def test_valid_login(self):
         """
         Test that the form is valid when correct credentials are entered.
         """
-        form_data = {
-            "username": "testuser",
-            "password": "TestPassword123!"
-        }
+        form_data = {"username": "testuser", "password": "TestPassword123!"}
         form = CustomLoginForm(data=form_data)
         self.assertTrue(form.is_valid())
 
@@ -71,10 +66,7 @@ class CustomLoginFormTest(TestCase):
         """
         Test that the form fails validation with incorrect credentials.
         """
-        form_data = {
-            "username": "wronguser",
-            "password": "wrongpassword"
-        }
+        form_data = {"username": "wronguser", "password": "wrongpassword"}
         form = CustomLoginForm(data=form_data)
         self.assertFalse(form.is_valid())
 
@@ -89,13 +81,15 @@ class DashboardViewTest(TestCase):
         """
         Set up a test user and corresponding Person record.
         """
-        self.user = User.objects.create_user(username="testuser", password="TestPassword123!")
+        self.user = User.objects.create_user(
+            username="testuser", password="TestPassword123!"
+        )
         self.person = Person.objects.create(
             first_name="Alice",
             last_name="Smith",
             email="alice.smith@example.com",
             date_of_birth=date(2024, 1, 1),
-            user=self.user
+            user=self.user,
         )
 
     def test_dashboard_requires_login(self):

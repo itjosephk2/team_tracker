@@ -9,13 +9,20 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('people_management', '0003_person_role'),
+        ("people_management", "0003_person_role"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='person',
-            name='user',
-            field=models.OneToOneField(blank=True, help_text='The associated Django user account.', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='person', to=settings.AUTH_USER_MODEL),
+            model_name="person",
+            name="user",
+            field=models.OneToOneField(
+                blank=True,
+                help_text="The associated Django user account.",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="person",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]
