@@ -126,7 +126,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Authentication
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/security/login/'
+LOGIN_URL = '/auth/login/'
 
 LOGGING = {
     "version": 1,

@@ -13,19 +13,19 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, 
 from django.contrib import messages
 
 
-class CustomPasswordResetCompleteView(LoginRequiredMixin, PasswordResetCompleteView):
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'security/auth/password_reset_complete.html'
     
 
-class CustomPasswordResetConfirmView(LoginRequiredMixin, PasswordResetConfirmView):
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = 'security/auth/password_reset_confirm.html'
 
 
-class CustomPasswordResetDoneView(LoginRequiredMixin, PasswordResetDoneView):
+class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = 'security/auth/password_reset_done.html'
 
 
-class CustomPasswordResetView(LoginRequiredMixin, PasswordResetView):
+class CustomPasswordResetView(PasswordResetView):
     template_name = 'security/auth/password_reset.html'
 
 
@@ -33,6 +33,8 @@ class LoginInterface(LoginView):
     """Handles user login."""
     form_class = CustomLoginForm
     template_name = "security/auth/login.html"
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('dashboard')
 
     def form_valid(self, form):
         messages.info(self.request, "You have logged in Succesfully!")

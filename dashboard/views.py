@@ -16,7 +16,6 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     - Managers can only access their direct team.
     - Employees do not see the people management table.
     """
-    login_url = reverse_lazy('security:login')
     template_name = 'dashboard/dashboard.html'
 
     def get_context_data(self, **kwargs):
@@ -38,6 +37,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         Returns:
             dict: A dictionary with keys 'person', 'people', and 'contracts' for the template.
         """
+        print("DASHBOARD VIEW HIT:", self.request.user.is_authenticated)
         context = super().get_context_data(**kwargs)
         user = self.request.user
 
