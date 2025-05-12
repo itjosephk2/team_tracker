@@ -237,44 +237,89 @@ Then, rerun:
 python manage.py test
 ```
 
+## Deployment (Heroku)
+
+1. **Create Heroku app:**
+
+   Create a new Heroku app using the following command. If you don't provide a name, Heroku will generate one for you.
+
+   ```bash
+   heroku create your-app-name
+   ```
+
+2. **Set environment variables:**
+
+   You'll need to set the environment variables required for your app, such as the secret key, debug mode, allowed hosts, and database URL. You can do this using the `heroku config:set` command:
+
+   ```bash
+   heroku config:set SECRET_KEY=your-secret-key
+   heroku config:set DEBUG=False
+   heroku config:set ALLOWED_HOSTS=your-app-name.herokuapp.com
+   heroku config:set DATABASE_URL=your-postgres-url
+   ```
+
+   * **SECRET\_KEY**: Generate a secret key using a random string. For example, run:
+
+     ```python
+     python -c "import random; print(''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)', k=50)))"
+     ```
+
+   * **DATABASE\_URL**: Heroku automatically sets this environment variable when you add the PostgreSQL add‑on. If you're using another database, set this URL manually.
+
+3. **Disable collectstatic (if not using static files):**
+
+   If your application does not serve static files (e.g., you're not using `django-storages` or another static‑files backend), disable Heroku’s automatic static file collection:
+
+   ```bash
+   heroku config:set DISABLE_COLLECTSTATIC=1
+   ```
+
+4. **Deploy to Heroku:**
+
+   Push your local code to Heroku via Git:
+
+   ```bash
+   git push heroku main
+   ```
+
+   > Ensure you're pushing the correct branch (`main`, `master`, etc.).
+
+5. **Run migrations:**
+
+   After deployment, apply database migrations:
+
+   ```bash
+   heroku run python manage.py migrate
+   ```
+
 ---
 
- ## Deployment (Heroku)
- 
- 1. Create Heroku app:
- 
-bash
- heroku create your-app-name
+### Additional Notes
 
- 
- 2. Set environment variables:
- 
-bash
- heroku config:set SECRET_KEY=your-secret-key
- heroku config:set DEBUG=False
- heroku config:set ALLOWED_HOSTS=your-app-name.herokuapp.com
- heroku config:set DATABASE_URL=your-postgres-url
+* **Collect Static Files**
+  If you *are* using static files, run:
 
- 
- 3. Disable collectstatic if not using static files:
- 
-bash
- heroku config:set DISABLE_COLLECTSTATIC=1
+  ```bash
+  heroku run python manage.py collectstatic
+  ```
 
- 
- 4. Deploy to Heroku:
- 
-bash
- git push heroku main
+  or add the [`django-heroku`](https://github.com/heroku/django-heroku) package to automate settings.
 
- 
- 5. Run migrations:
- 
-bash
- heroku run python manage.py migrate
+* **Scaling Dynos**
+  To scale your web dynos:
 
- 
- ---
+  ```bash
+  heroku ps:scale web=1
+  ```
+
+* **Logs**
+  View real‑time logs with:
+
+  ```bash
+  heroku logs --tail
+  ```
+
+---
 
 ## Known Issues & Future Improvements
 
