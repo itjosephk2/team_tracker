@@ -239,17 +239,42 @@ python manage.py test
 
 ---
 
-## Deployment
+ ## Deployment (Heroku)
+ 
+ 1. Create Heroku app:
+ 
+bash
+ heroku create your-app-name
 
-(Once deployment is complete, add specific details here.)
+ 
+ 2. Set environment variables:
+ 
+bash
+ heroku config:set SECRET_KEY=your-secret-key
+ heroku config:set DEBUG=False
+ heroku config:set ALLOWED_HOSTS=your-app-name.herokuapp.com
+ heroku config:set DATABASE_URL=your-postgres-url
 
-### **Deployment Steps**
+ 
+ 3. Disable collectstatic if not using static files:
+ 
+bash
+ heroku config:set DISABLE_COLLECTSTATIC=1
 
--    Deploy the application using **Heroku/Railway**.
--    Set up environment variables for security (`DEBUG=False`).
--    Configure database settings for PostgreSQL.
+ 
+ 4. Deploy to Heroku:
+ 
+bash
+ git push heroku main
 
----
+ 
+ 5. Run migrations:
+ 
+bash
+ heroku run python manage.py migrate
+
+ 
+ ---
 
 ## Known Issues & Future Improvements
 
