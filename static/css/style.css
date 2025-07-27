@@ -11378,3 +11378,21 @@ div.table-header-flex-box {
 .expand {
   padding-left: 0!important;
 }
+
+/* Sidebar behavior on toggle */
+#layoutSidenav_nav.collapse {
+    width: 60px; /* or 0 if you want hidden */
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+}
+
+#layoutSidenav_nav.open {
+    width: 250px;
+    transition: width 0.3s ease;
+}
+
+/* Adjust main content when sidebar collapses */
+#layoutSidenav_content.expand {
+    margin-left: 60px;
+    transition: margin-left 0.3s ease;
+}

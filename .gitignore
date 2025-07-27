@@ -1,12 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.env
+
+# Node modules
+node_modules/
+
+# VSCode / Editor / OS files (optional extras)
+*.swp
+.DS_Store
+
+# GitHub workflows or config (optional)
+.github/
+
+# External dependencies
 core.Microsoft*
 core.mongo*
 core.python*
-env.py
-__pycache__/
-*.py[cod]
-node_modules/
-.github/
+
+# Others
 cloudinary_python.txt
-venv
-.env
-README.md
+env.py
+
+# Ignore readme only if not needed, otherwise remove this
+# README.md
