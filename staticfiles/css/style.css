@@ -11346,3 +11346,53 @@ div.table-header-flex-box {
   background-color: #2c89d9 !important;
 }
 
+.illustration-section {
+  position: relative;
+  /* Example gradient background */
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  overflow: hidden; /* Ensures pseudo-element doesn’t overflow */
+}
+
+  /* Create a wavy shape using a pseudo-element */
+.illustration-section::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 120%;
+  height: 50%;
+  background: #fff;
+  border-radius: 50% 50% 0 0;
+  transform: scale(1.5);
+  opacity: 0.2;
+}
+/* Start here  */
+.sidebar-overlay.open {
+  left: 225px !important;
+  width: 100vw !important;
+}
+.sidebar-overlay.collapse {
+  left: 0 !important;
+  width: 0px !important;
+}
+.expand {
+  padding-left: 0!important;
+}
+
+/* Sidebar behavior on toggle */
+#layoutSidenav_nav.collapse {
+    width: 60px; /* or 0 if you want hidden */
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+}
+
+#layoutSidenav_nav.open {
+    width: 250px;
+    transition: width 0.3s ease;
+}
+
+/* Adjust main content when sidebar collapses */
+#layoutSidenav_content.expand {
+    margin-left: 60px;
+    transition: margin-left 0.3s ease;
+}
