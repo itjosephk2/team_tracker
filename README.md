@@ -1,9 +1,17 @@
 # Team Tracker
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge&logo=heroku)](https://team-tracker-d6988ecc9291.herokuapp.com/)
+
+> ⚠️ **Important:** The app is live but **login is restricted** to prevent tampering or data loss.  
+> If you’d like to explore the system, [please contact me](#-contact) for temporary access credentials.
+
+
 ![Dashboard](./assets/dashboard/admin_dashboard.png)
 
 **Live Application:** [Team Tracker](https://team-tracker-d6988ecc9291.herokuapp.com/)
 
-Team Tracker is a full-stack web application designed to manage employee records, roles, and permissions efficiently. It provides **role-based access control (RBAC)**, enabling HR admins to manage employees while allowing managers and employees access to relevant data.
+Team Tracker is a full-stack web application designed to manage employee records, contracts, roles, and permissions with clarity and control. Built using Django, it implements role-based access control (RBAC) and modular dashboards tailored to user roles (HR Admin, Manager, Employee). The app supports CRUD functionality across core data models, integrates automated testing, and is fully deployed on Heroku.
+
 
 ## Table of Contents
 
@@ -16,7 +24,7 @@ Team Tracker is a full-stack web application designed to manage employee records
 7. [Testing](#testing)
 8. [Troubleshooting Common Errors](#troubleshooting-common-errors)
 9. [Deployment](#deployment)
-10. [Known Issues & Future Improvements](#known-issues--future-improvements)
+10. [Future Improvements](#-future-improvements)
 11. [Acknowledgments](#acknowledgments)
 
 ---
@@ -54,7 +62,7 @@ Team Tracker is a full-stack web application designed to manage employee records
 
 ## User Experience (UX)
 
-The design philosophy for this system was centered on **simplicity**, **clarity**, and **role-based dashboards**. The goal was to offer each user a tailored experience based on their role — whether HR Admin, Manager, or Employee — while maintaining consistency and scalability.
+The design philosophy for this system was centered on **simplicity**, **clarity**, and **role-based dashboards**. The goal was to offer each user a tailored experience based on their role — whether epics were brken downinto user stories, Manager, or Employee — while maintaining consistency and scalability.
 
 ### 🧭 Design Goals
 
@@ -213,7 +221,7 @@ Team Tracker was developed using Agile methodology. The project followed iterati
 
 Here is some example of user stories. The full list of user stories can be seen in the projects attached to this repository. 
 1. As an HR Admin, I want to add employees so I can manage the workforce.
-2. As an Hr Admin, I want to add contracts and attach them to employees.
+2. As an HR Admin, I want to add contracts and attach them to employees.
 3. As an HR Admin, I want to assign permissions to users so they can access the software.
 4. As a Manager, I want to view my team members so I can track their details.
 5. As a Manager, I want to add contracts and attach them to employees who are in my team.
@@ -226,7 +234,7 @@ Here is some example of user stories. The full list of user stories can be seen 
 -    Features were divided into milestones with clear goals.
 -    User stories and sprint progress were documented within GitHub Projects.
 -    Pull requests followed structured code reviews before merging.
--    Epics were brken downinto user stories
+-    Epics were broken down into user stories
 
 ---
 
@@ -483,7 +491,7 @@ The **User Management** section allows administrators to manage authentication a
 - Go to **User > Create Contract**
 - Required fields:
   - **Username**: Create a Username for the employee.
-  - **Email Address**: Ensure Email Adress is the same as the persons Email will sync afterwards.
+  - **Email Address**: Ensure Email Address is the same as the persons Email will sync afterwards.
   - **Select Employee**: Dropdown appears to select an person from a list of people not yet synced with user accounts.
   - **Assign Permission Group**: Give the employee a permission group which will allow them to see an or action on crud functionality.
 
@@ -837,6 +845,7 @@ During development, all bugs were addressed immediately during feature implement
 
 ✅ The mobile navigation bar is now fully responsive and functions as expected across all devices.
 
+✅ All test cases passed successfully, and the system is stable for production deployment at the time of submission.
 
 ### 🚨 7. Known Issues
 
@@ -1012,19 +1021,82 @@ Ensure you have the following installed:
 
 ---
 
-## Known Issues & Future Improvements
+## 🚀 Future Improvements
 
--    **Add Automated Testing:** Improve test coverage.
--    **Enhance Frontend UI:** Make forms and dashboard more user-friendly.
--    **Implement Email Notifications:** Notify users about contract updates.
+This project serves as a foundational HR and contract management tool, designed for small businesses and modular enough to grow into a more comprehensive enterprise solution. The following outlines future development goals, feature expansion ideas, and architectural considerations for scaling the application.
+
+### Multi-Tenancy Support 
+  Implement tenant-based account isolation using packages like `django-tenants` or `django-tenant-schemas`. This would allow users to register under their own tenant and safely manage their data in isolation, making it easier to give access to prospective users without risk to other environments.
+
+
+### 🔄 Move to Django REST & React (API-first Architecture)
+
+- **Planned Transition:** Rebuild the backend using Django REST Framework and refactor the frontend in React.
+- **Why:** To expose secure API endpoints and token-based access for integration with third-party tools (e.g. recruitment, payroll).
+- **Goal:** Allow clients to connect directly via API for tasks like importing employee data or syncing contract updates.
+
+### ⏱ Workforce Management Module
+
+Introduce a new module to track and manage employee schedules, attendance, and leave:
+
+- Employee work hours and shift patterns  
+- Sick leave, annual leave, and other entitlements  
+- Manager approvals for leave requests  
+- Manager scheduling and rostering tools
+
+This will enable day-to-day operations tracking and improve visibility for managers.
+
+### 🤝 Enhanced Manager–Employee Interactivity
+
+- Approve or reject leave requests  
+- Create and assign schedules  
+- View team availability in a calendar-style UI  
+- Facilitate better communication through shared access and dashboards
+
+### 📑 Contract and Post Structure Enhancements
+
+Move beyond basic contract assignment by introducing:
+
+- **Template Contracts:** Define reusable role structures for standard positions  
+- **Posts as Entities:** Separate posts (roles) from individuals, allowing better clarity in HR planning  
+- **Contract Iterations:** Log each change to a contract, including salary changes, terms, and status updates  
+- **Contract History:** Expose all iterations for audit and transparency
+
+### 💸 Salary System Improvements
+
+- Support for different salary types: hourly, weekly, monthly  
+- Logged salary approval workflows  
+- Employee salary review requests, including justifications and meeting logs  
+- Admin-level approval and history tracking
+
+### ⚖️ Scale Pathways
+
+The system is currently ideal for **small businesses** (e.g. cafes, bars, trades) but built in a modular way that allows it to scale in two directions:
+
+1. **Enterprise-Level HR Platform**  
+   Expand dashboards, analytics, permission granularity, and integrations with third-party services.
+
+2. **Lean Role-Based SMB Tool**  
+   Simplify permission management down to roles like Owner, Manager, and Employee. Streamline the interface for non-technical users with focused business needs.
+
+> **TL;DR:** The goal is to evolve this project into a scalable HR and workforce management platform with API support, role-based interactivity, and modular architecture.
 
 ---
 
 ## Acknowledgments
 
--    Special thanks to **Django documentation** and **Stack Overflow** for troubleshooting support.
+-    Special thanks to the **Django documentation** and **Stack Overflow** communities for guidance and troubleshooting support.
 -    Project inspired by modern HR management tools.
 
 ---
 
-**Project Repository:** [GitHub](https://github.com/itjosephk2/team_tracker)
+## 📬 Contact
+
+If you're a recruiter, employer, or fellow developer and would like to test or explore the full functionality of the Team Tracker system, please feel free to reach out directly:
+
+- 📧 **Email:** josephkeane996@gmail.com  
+- 💼 **LinkedIn:** [linkedin.com/in/josephkeane96](https://www.linkedin.com/in/joseph-keane-237297241/)
+
+Access credentials are not shared publicly to prevent malicious or accidental tampering with the live data. Requests are handled promptly.
+
+---
