@@ -54,12 +54,103 @@ Team Tracker is a full-stack web application designed to manage employee records
 
 ## User Experience (UX)
 
-### **Project Goals**
+The design philosophy for this system was centered on **simplicity**, **clarity**, and **role-based dashboards**. The goal was to offer each user a tailored experience based on their role — whether HR Admin, Manager, or Employee — while maintaining consistency and scalability.
 
--    **Efficient Employee Management:** Maintain accurate records of employees, contracts, and roles.
--    **Role-Based Permissions:** Ensure users only access relevant information.
--    **Secure Authentication:** Enforce login protection and access control.
--    **Responsive & User-Friendly Interface:** Accessible across different devices.
+### 🧭 Design Goals
+
+- **Dashboard-Centric Interface:**  
+  The core navigation experience revolves around a dashboard with quick-access widgets. These widgets offer a snapshot of the most relevant data for the user’s role.
+
+- **Two Types of Views:**
+  1. **Dashboard Widgets** — white background with black outlines. Lightweight and dynamic.
+  2. **Form Pages** — grey background with shadow. More static, focused on data input and updates.
+
+This visual distinction supports intuitive navigation and helps users immediately understand the difference between overview vs. action.
+
+---
+
+### 👥 Role-Specific UX
+
+Each user type sees a version of the application designed specifically for their responsibilities:
+
+- **HR Admin:**
+  - Full access to all system data (People, Contracts, Users, Groups).
+  - Can manage users and assign permission groups.
+  - Sees all employees and contracts in the dashboard widgets.
+
+- **Manager:**
+  - Sees only employees assigned to them (via manager field).
+  - Can add and edit contracts for those employees.
+  - Cannot access security or group management areas.
+
+- **Employee:**
+  - Can only view their own personal data and contracts.
+  - Read-only interface. No management or admin access.
+
+---
+
+### 🔐 Permissions & Modular Access
+
+The app uses Django’s permission system and custom **Groups** to control feature access.
+
+- Each **Group** contains a set of permissions (e.g., `people.add_person`, `contracts.change_contract`).
+- When a **User** is assigned to a group, their interface updates automatically based on available views and actions.
+- This makes the system highly configurable and scalable — admins can create tailored permission sets for different organizational needs.
+
+---
+
+### 🔁 Data Flow Considerations
+
+- **User creation is linked to People:**  
+  You must create a `Person` record first before assigning a Django `User`. This ensures that each login account is tied to a known employee or manager.
+
+- **Contract logic drives employee status:**
+  - When a contract is added or ends, the system checks and updates the person’s `active` status.
+  - This avoids manual status toggling and reduces admin overhead.
+  - Multiple contracts can be assigned per person to support job transitions or multi-role staff.
+
+---
+
+### 📁 Sections Breakdown
+
+To support user flow, the system is divided into clear sections:
+
+| Section            | Purpose                                 | Role Required      |
+|--------------------|------------------------------------------|--------------------|
+| **Dashboard**       | View widgets with personal/team data     | All users          |
+| **People Management** | Manage employee records                 | Manager, HR Admin  |
+| **Contract Management** | Manage job contracts                 | Manager, HR Admin  |
+| **Security**        | Create users, assign groups/permissions  | HR Admin only      |
+
+---
+
+### 🧠 Implementation Reasoning
+
+- **Modularity:** Permissions and groups make it easy to expand or restrict functionality.
+- **Responsibility Delegation:** Managers can manage their own teams, reducing admin workload.
+- **Role Isolation:** Clear UX boundaries between what each role can see/do help prevent errors and improve user trust.
+- **Visual Cues:** The contrast between widgets and forms makes navigation feel intuitive without needing training.
+
+---
+
+### 🖼️ Wireframes & Mockups
+
+The following wireframes were created during the design process and influenced the implementation of both structure and visual hierarchy. You can see how they translate directly into the implemented dashboard, people list, forms, and navigation system.
+
+> 💡 To add images, use this Markdown template per image:
+
+```md
+**📌 [Wireframe Title]**  
+![Wireframe](./assets/wireframes/FILENAME.png)
+```
+
+> Example:
+
+```md
+**📌 Dashboard Wireframe**  
+![Wireframe](./assets/wireframes/dashboard_wireframe.png)
+```
+
 
 ### **User Roles & Goals**
 
@@ -102,21 +193,389 @@ Here is some example of user stories. The full list of user stories can be seen 
 
 ## Features
 
--    **User Authentication & Authorization**
-     -    Secure login and logout functionality.
-     -    Role-based permissions to control access.
--    **Employee Management**
-     -    Create, update, and delete employee records.
-     -    Assign managers to employees.
--    **Contract Management**
-     -    Add employment contracts with job titles, start/end dates, and salary information.
--    **Role-Based Access Control (RBAC)**
-     -    Assign permissions based on roles.
-     -    Prevent unauthorized access to sensitive data.
--    **Dashboard Overview**
-     -    Summary of employees and active contracts.
--    **Search & Filtering**
-     -    Easily locate employees and contracts.
+### 🔐 User Authentication
+
+The application uses Django's built-in authentication system to manage secure login. Users must sign in to access any functionality. 
+
+#### 🔑 Sign-In Page
+
+The sign-in page is simple and functional. Users log in with credentials provided via email when their account is created.
+
+![Screenshot: Login Page](./assets/auth/login_page.png)
+
+#### 🛠️ Feature Roadmap
+
+Currently, there is no "Forgot Password" feature implemented. A password recovery system is a feature I would add in future iterations to improve user experience.
+
+#### 🧠 Design Choice: No Public User Registration
+
+Public self-registration is intentionally **not** supported. This is a deliberate design choice because:
+
+- The system is intended to be used within organizations.
+- New users must be linked to a pre-existing Person object, which cannot be guaranteed via open registration.
+- Creating users manually ensures proper permissions and relationships (e.g., manager assignments).
+
+Users are created via the **Security → Users → Create User** interface.  
+👉 [See: Creating a User](#📩-creating-a-user-and-sending-login-credentials)
+
+#### 🏗️ Future Support: Multi-Tenancy
+
+A feature I would like to implement in the future is **multi-tenancy**, which would allow different clients to sign up and receive isolated environments (separate databases or schemas for each client). This would enable secure and scalable use of public sign-up without risking data overlap or security breaches.
+
+I've researched the [`django-tenants`](https://github.com/django-tenants/django-tenants) package, which supports schema-based tenant isolation for PostgreSQL. While I didn't have time to implement this during the current build, I understand the pattern and it is on the roadmap for scaling the application to support self-service client onboarding.
+
+---
+
+## 🧩 Dashboard
+
+The **Dashboard** serves as the homepage of the application and provides a quick overview tailored to the logged-in user’s role.
+
+### 👤 What the Dashboard Displays
+
+- **Your Details:** Basic information about the logged-in user.
+- **Your Contract Information:** If the user is linked to a contract, it will be displayed here.
+- **Employees & Contracts Widgets:**
+  - **Admin Users:** See all employees and contracts.
+  - **Manager Users:** See only employees assigned to them (i.e., where they are listed as the manager).
+  - **Employee Users:** Only see their own information.
+
+Each section of the dashboard links to relevant features like viewing, editing, or deleting records, using the same interface structure as the main “View” pages. These widgets are designed for quick access but mirror the full functionality of their respective views.
+
+**📸 Screenshot:**  
+![Dashboard](./assets/dashboard/admin_dashboard.png)
+
+---
+
+### 📱 Responsive Design & Navigation
+
+- The **sidebar** contains the main navigation and is **collapsible**.
+- The **top navigation bar** includes logout functionality and remains present on all pages.
+- On smaller screens, the sidebar is intended to collapse and be toggled via a menu icon.
+  > ⚠️ *Currently, on some smaller screens, the sidebar menu does not respond when toggled. This is a known issue and will be addressed in future updates.*
+
+---
+
+### 🔮 Future Plans
+
+- **Modular Dashboard Layout:**
+  - Admins will be able to configure which widgets appear for each user role.
+  - Users may eventually be able to personalize their own dashboard (e.g., show/hide certain widgets).
+- **More Widgets as Features Expand:**
+  - As features such as payroll, time tracking, and performance reviews are added, additional widgets will be introduced.
+- **Improved Visual Design:**
+  - Further emphasis will be placed on distinguishing between widgets and full-page forms through consistent use of styling (e.g., background color, borders, and layout positioning).
+
+## 👥 People Management Feature
+
+This section outlines how to manage people in the system. You will need the appropriate **people permissions** assigned to your user to access these features.
+
+### 📋 View All People
+
+- Navigate to **People Management > View People** in the sidebar.
+- You'll see a list of all people in the system, showing names, emails, roles, and contract status.
+- You can filter by:
+  - **Active** or **Inactive**
+  - **Role type** (if implemented in filtering)
+- Each row includes options to **view**, **edit**, or **delete** that person.
+
+**📸 Screenshot:**  
+![View All People](./assets/people_management/people/person_list.png)
+
+### 🔍 View Individual Person
+
+- Click **View** next to a person in the list.
+- Displays full details, including name, contact info, role, assigned manager, and any associated contracts.
+
+**📸 Screenshot:**  
+![View Individual Person](./assets/people_management/people/person_details.png)
+
+### ✏️ Edit Person
+
+- Click **Edit** next to a person.
+- Update fields such as:
+  - First name, last name
+  - Email
+  - Phone number
+  - Date of birth
+  - Assigned manager
+  - Role
+
+**📸 Screenshot:**  
+![Edit Person](./assets/people_management/people/person_update.png)
+
+### ➕ Create Person
+
+- Go to **People Management > Create Person**
+- Fill in the form with:
+  - Basic details (first name, last name, etc.)
+  - Select a manager (optional)
+  - Set the person’s role (Employee, Manager, or HR Admin)
+- Click **Save** to create the person record.
+
+**📸 Screenshot:**  
+![Create Person](./assets/people_management/people/person_create.png)
+
+### ❌ Delete Person
+
+- Click **Delete** next to a person entry.
+- Deleting a person may affect contracts to be void and user accounts may still work.
+- To offboard a person please end a contract then when they no longer need access to the system their account can be removed.
+
+**📸 Screenshot:**  
+![Delete Person](./assets/people_management/people/person_delete.png)
+
+---
+
+## 📄 Contracts Management Feature
+
+This section explains how to manage contracts in the system. You must have appropriate **contract permissions** to access these options.
+
+### 📋 View All Contracts
+
+- Navigate to **Contract Management > View Contracts**.
+- Displays a list of all contracts in the system.
+- Columns typically include:
+  - Person name
+  - Job title
+  - Start and end dates
+  - Hourly rate
+  - Contracted hours
+- You can **filter** contracts by the person they’re assigned to.
+
+**📸 Screenshot:**  
+![View All Contracts](./assets/people_management/contracts/contract_list.png)
+
+### 🔍 View Individual Contract
+
+- Click **View** next to a contract in the list.
+- Shows full details of the contract including:
+  - Person assigned
+  - Job title
+  - Start and end dates
+  - Hourly rate
+  - Contracted hours
+
+**📸 Screenshot:**  
+![View Individual Contract](./assets/people_management/contracts/contract_view.png)
+
+### ✏️ Edit Contract
+
+- Click **Edit** next to a contract in the list.
+- Fields that can be updated:
+  - Assigned person (dropdown of existing people)
+  - Job title (text input)
+  - Contract start and end dates
+  - Hourly rate (decimal)
+  - Contracted hours per week
+
+**📸 Screenshot:**  
+![Update Contract](./assets/people_management/contracts/contract_update.png)
+
+### ➕ Create Contract
+
+- Go to **Contract Management > Create Contract**
+- Required fields:
+  - **Person**: Dropdown of existing people (a person may have multiple contracts).
+  - **Job Title**: Free-text job title.
+  - **Contract Start Date**: Required. This activates the person if it’s their only contract.
+  - **Contract End Date**: Optional. When reached, it will deactivate the person if no active contracts remain.
+  - **Hourly Rate**: Decimal input (e.g. 12.45).
+  - **Contracted Hours**: Number of hours per week (e.g. 40.0).
+- Click **Save** to create the contract.
+
+**📸 Screenshot:**  
+![Create a Contract](./assets/people_management/contracts/contract_create.png)
+
+### ❌ Delete Contract
+
+- Click **Delete** next to a contract entry.
+- Deleting a contract may affect the employee's active status if it was their only active contract.
+
+**📸 Screenshot:**  
+![Delete a Contract](./assets/people_management/contracts/contract_delete.png)
+
+---
+
+## 🔐 User Management Feature
+
+The **User Management** section allows administrators to manage authentication accounts for people in the system. Access to this section requires the relevant **user permissions**.
+
+### 👁️ View Users
+
+- Navigate to **Security > Users**.
+- This page displays all registered Django users.
+- Each entry shows:
+  - **Username**
+  - **Linked Person** (the person profile it is associated with)
+  - **Email Address** (used for login and system emails)
+- You can also use the “Add New User” button at the bottom of the page.
+
+**📸 Screenshot:**  
+![View All Users](./assets/security/users/user_list.png)
+
+### 🔍 View Individual User
+
+- Click **View** next to a User in the list.
+- Shows full details of the User including:
+  - First Name
+  - Last Name
+  - Email
+  - User Name
+  - Active Status
+
+**📸 Screenshot:**  
+![View Individual Contract](./assets/security/users/user_view.png)
+
+### ✏️ Edit User
+
+- Click **Edit** beside a user entry.
+- You can update:
+  - **Username** (used to log in)
+  - **Email Address** (used for correspondence and login)
+  - **Permission Groups** (assign one or more permission groups such as Manager, HR Admin, or Employee)
+- Note: You cannot change the password from this screen.
+- Changing the assigned group will change the user's access levels throughout the application.
+
+**📸 Screenshot:**  
+![Edit User](./assets/security/users/user_edit.png)
+
+### ➕ Create User
+
+- Go to **User > Create Contract**
+- Required fields:
+  - **Username**: Create a Username for the employee.
+  - **Email Address**: Ensure Email Adress is the same as the persons Email will sync afterwards.
+  - **Select Employee**: Dropdown appears to select an person from a list of people not yet synced with user accounts.
+  - **Assign Permission Group**: Give the employee a permission group which will allow them to see an or action on crud functionality.
+
+- Click **Save** to create the user.
+
+**📸 Screenshot:**  
+![Create a User](./assets/security/users/user_create.png)
+
+### 🗑️ Delete User
+
+- Click **Delete** beside a user entry.
+- This will remove the user's account and revoke their system access.
+- The linked person profile will remain intact but will no longer be tied to a login.
+
+**📸 Screenshot:**  
+![Delete User](./assets/security/users/user_delete.png)
+
+---
+
+## 👥 Groups & Permissions Management
+
+The **Groups** section allows you to manage permission groupings that control what each user can see and do in the system. Users must belong to a group to access key functionality.
+
+### 👁️ View Groups
+
+- Navigate to **Security > Groups**.
+- This page lists all existing permission groups.
+- Each group shows its name and assigned permissions.
+- From this screen, you can:
+  - Click **Edit** to modify group permissions
+  - Click **Delete** to remove the group
+  - Click **Add New Group** to create a new one
+
+**📸 Screenshot:**  
+![View All Groups](./assets/security/groups/groups_view.png)
+
+### 🔍 View Individual Group
+
+- Click **View** next to a Group in the list.
+- Shows full details of the Group including:
+  - The name of the Group
+  - All permissions assigned to the group
+
+**📸 Screenshot:**  
+![View Individual Contract](./assets/security/users/user_view.png)
+
+### ✏️ Edit Group
+
+- Click **Edit** on any group to change its permissions.
+- Toggle on/off individual permissions to update what this group can do.
+- Save changes to apply them immediately to all users assigned to the group.
+
+**📸 Screenshot:**  
+![Edit Group](./assets/security/groups/group_update.png)
+
+### ➕ Create Group
+
+- Click **Create Group** from the sidebar or use the “Add New Group” button.
+- To create a group:
+  - Provide a **Group Name**
+  - Toggle on all the **permissions** you want the group to have
+- Once submitted, the group becomes selectable when creating or editing a user.
+
+**📸 Screenshot:**  
+![Create Group](./assets/security/groups/group_create.png)
+
+
+### 🗑️ Delete Group
+
+- Click **Delete** on any group to remove it from the system.
+- ⚠️ **Warning:** Deleting critical groups (e.g. Admin) can break access to the security section or dashboard functionality.
+- If an admin group is deleted and no one has security permissions, the system may require **manual intervention** to restore access.
+
+**📸 Screenshot:**  
+![Delete Group](./assets/security/groups/group_delete.png)
+
+### 💡 Notes on Group Usage
+
+- Each **user can currently be assigned only one group**.
+- If a user needs a combination of permissions from multiple groups, create a **custom group** containing the required permissions.
+- Groups serve as containers for permissions — they do not hold business logic but control view access and functional availability.
+
+### 🛠️ Future Improvements
+
+1. **Multiple Group Assignments:**  
+   Support assigning more than one group per user, allowing more flexible permission combinations.
+
+2. **Undeletable Groups:**  
+   Core groups like “Admin” could be made undeletable to prevent accidental lockout from security-critical functions.
+
+3. **Permission Search & Filters:**  
+   Add a **search bar** and **filter options** to the permission toggles list when creating/editing a group to improve usability.
+
+4. **Fail-Safe Admin Recovery:**  
+   Implement a built-in recovery flow or fallback user to regain admin access if all security permissions are lost.
+
+---
+
+### 📩 Creating a User and Sending Login Credentials
+
+The application allows HR Admins or users with the correct permission to create new employees and send them login credentials via email.
+
+### 🔐 Prerequisite:
+You must have the **`security.add_user`** permission (or be in a group that includes it) to access the “Users” section.
+
+### 👣 Steps to Create a User
+
+1. **Open the sidebar navigation.**
+2. Go to **People > Create Person**.
+3. Fill in the employee's details.
+   - Use a valid **email address**. This will be used to send login credentials.
+4. Submit the form.
+
+### 👥 Link a Django User Account
+
+1. In the sidebar, go to **Security > Users**.
+2. Click **Add User**.
+3. Fill in the following:
+   - **Username:** Any name you want.
+   - **Email:** Use the *same email* as the Person entry (for clarity — technically it will sync anyway).
+   - **Select Employee:** Only employees without a user account will appear here.
+   - **Assign Group(s):** Choose one or more permission groups (e.g., `hr_admin`, `manager`, `employee`, or any custom group).
+4. Click **Save**.
+
+### 📧 What Happens Next
+
+- An email is automatically sent to the user (SMTP is pre-configured).
+- The email includes:
+  - Their **username**
+  - Their **password**
+- The user can now log in at `/accounts/login/`.
 
 ---
 
@@ -129,6 +588,58 @@ Here is some example of user stories. The full list of user stories can be seen 
 -    **Database:** SQLite (for development), PostgreSQL (for production)
 -    **Version Control:** Git & GitHub
 -    **Deployment:** (To be added - Heroku, Railway, or other cloud platforms)
+
+---
+
+## Testing
+
+-    **Unit Tests:** Located in `tests.py` files within each app.
+-    **Run Tests:**
+     ```bash
+     python manage.py test
+     ```
+-    **Example Test Case:**
+
+     ```python
+     from django.test import TestCase
+     from people_management.models import Person
+
+     class PersonModelTest(TestCase):
+         def test_create_person(self):
+             person = Person.objects.create(first_name="John", last_name="Doe")
+             self.assertEqual(person.first_name, "John")
+     ```
+
+-    **Manual Testing:**
+     -    Verify login, role-based access, CRUD functionality.
+     -    Test edge cases (invalid logins, unauthorized access attempts).
+
+---
+
+## Troubleshooting Common Errors
+
+### **Database Errors During Testing**
+
+**Error:** `django.db.utils.ProgrammingError: relation "security_permissiondefinition" does not exist`
+
+**Solution:** Ensure migrations are properly applied before running tests:
+
+```bash
+python manage.py makemigrations security people_management
+python manage.py migrate
+```
+
+If the error persists, try resetting the test database:
+
+```bash
+python manage.py flush
+```
+
+Then, rerun:
+
+```bash
+python manage.py test
+```
 
 ---
 
@@ -187,55 +698,6 @@ Ensure you have the following installed:
 
 ---
 
-## Testing
-
--    **Unit Tests:** Located in `tests.py` files within each app.
--    **Run Tests:**
-     ```bash
-     python manage.py test
-     ```
--    **Example Test Case:**
-
-     ```python
-     from django.test import TestCase
-     from people_management.models import Person
-
-     class PersonModelTest(TestCase):
-         def test_create_person(self):
-             person = Person.objects.create(first_name="John", last_name="Doe")
-             self.assertEqual(person.first_name, "John")
-     ```
-
--    **Manual Testing:**
-     -    Verify login, role-based access, CRUD functionality.
-     -    Test edge cases (invalid logins, unauthorized access attempts).
-
----
-
-## Troubleshooting Common Errors
-
-### **Database Errors During Testing**
-
-**Error:** `django.db.utils.ProgrammingError: relation "security_permissiondefinition" does not exist`
-
-**Solution:** Ensure migrations are properly applied before running tests:
-
-```bash
-python manage.py makemigrations security people_management
-python manage.py migrate
-```
-
-If the error persists, try resetting the test database:
-
-```bash
-python manage.py flush
-```
-
-Then, rerun:
-
-```bash
-python manage.py test
-```
 
 ## Deployment (Heroku)
 
