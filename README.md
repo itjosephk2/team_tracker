@@ -621,66 +621,256 @@ You must have the **`security.add_user`** permission (or be in a group that incl
 ## Technologies Used
 
 ### **Languages & Frameworks**
+- **Backend:** Django (Python 3)
+- **Frontend:** Django Templates, HTML5, CSS3 (custom styling)
+- **Database:**  
+  - SQLite (development)  
+  - PostgreSQL with `psycopg2-binary` (production)
 
--    **Backend:** Django (Python)
--    **Frontend:** Django Templates, HTML, CSS
--    **Database:** SQLite (for development), PostgreSQL (for production)
--    **Version Control:** Git & GitHub
--    **Deployment:** (To be added - Heroku, Railway, or other cloud platforms)
+### **Key Packages & Libraries**
+- `django-filter` – Enables advanced filtering for list and detail views  
+- `django-simple-history` – Tracks model change history to support audit logging and traceability in line with enterprise data governance practices
+- `dj-database-url` – Parses database URLs for easy environment switching  
+- `python-decouple` & `python-dotenv` – Manage sensitive settings via environment variables  
+- `whitenoise` – Serves static files in production  
+- `gunicorn` – Production WSGI HTTP server  
+- `asgiref`, `sqlparse`, `typing_extensions`, `packaging`, `tzdata` – Required dependencies for Django and environment compatibility
 
----
+### **Development & Version Control**
+- **Version Control:** Git & GitHub  
+- **Environment Management:** `venv`, `.env` files using `python-decouple`  
+- **Testing:** Django’s built-in test framework (`TestCase`, `unittest`)
 
-## Testing
-
--    **Unit Tests:** Located in `tests.py` files within each app.
--    **Run Tests:**
-     ```bash
-     python manage.py test
-     ```
--    **Example Test Case:**
-
-     ```python
-     from django.test import TestCase
-     from people_management.models import Person
-
-     class PersonModelTest(TestCase):
-         def test_create_person(self):
-             person = Person.objects.create(first_name="John", last_name="Doe")
-             self.assertEqual(person.first_name, "John")
-     ```
-
--    **Manual Testing:**
-     -    Verify login, role-based access, CRUD functionality.
-     -    Test edge cases (invalid logins, unauthorized access attempts).
+### **Deployment**
+- **Platform:** Heroku  
+- **Production Setup:** `Procfile`, `requirements.txt`, `runtime.txt`, static file handling via `collectstatic`
 
 ---
 
-## Troubleshooting Common Errors
+## ✅ Testing
+
+This section documents all **automated** and **manual** testing carried out on the Team Tracker application, covering:
+
+- [x] Python backend functionality and data flows  
+- [x] Frontend responsiveness and usability  
+- [x] Validation of all HTML, CSS, and JavaScript  
+- [x] Role-based access, permissions, and CRUD functionality  
+- [x] Structured manual test cases across all features and edge cases
+
+### 🔁 1. Automated Python Testing (LO4.1)
+
+All unit tests are located in `tests.py` files within each app (`dashboard`, `people_management`, `security`).
+
+#### ✅ How to Run Tests
+
+```bash
+python manage.py test
+```
+
+#### ✅ Example Test Case
+
+```python
+from django.test import TestCase
+from people_management.models import Person
+
+class PersonModelTest(TestCase):
+    def test_create_person(self):
+        person = Person.objects.create(first_name="John", last_name="Doe")
+        self.assertEqual(person.first_name, "John")
+```
+
+#### ✅ Screenshot of Test Results
+
+> 📸 ![Test Results](./assets/testing/unit_testing.png)  
+> _23 tests were run across all apps with 100% pass rate. Security app tests (6) confirm group/user management integrity._
+
+#### ✅ JavaScript Manual Testing
+
+The JavaScript controlling the sidebar toggle was tested manually as part of responsive and role-based layout testing.
+
+- Script: `static/js/scripts.js`
+- Functionality: Toggles the sidebar class based on screen width when the toggle button is clicked
+- Verified behavior:
+  - Sidebar collapses/expands correctly on desktops
+  - Sidebar overlays/opens correctly on mobile devices
+- All interactions tested manually via browser dev tools and mobile simulation
+
+As this is purely DOM manipulation, unit testing was not appropriate — behavior was confirmed via end-to-end interface tests.
+
+### 🧪 2. Manual Testing (LO4.1 & LO4.2)
+
+Manual testing was conducted across all user roles, features, and edge cases using realistic test data and flows.
+
+| **Feature**               | **Expected**                                                | **Tested by**                        | **Result**     | **Fix (if needed)**        |
+|---------------------------|-------------------------------------------------------------|--------------------------------------|----------------|-----------------------------|
+| Login (valid creds)       | Redirect to dashboard                                       | Logging in as valid user             | ✅ Works        | —                           |
+| Login (invalid creds)     | Show error message                                          | Logging in with wrong password       | ✅ Works        | —                           |
+| HR → Add Person           | Person created and listed                                   | Filling add form with valid inputs   | ✅ Works        | —                           |
+| Manager view              | Sidebar shows limited options                               | Logged in as manager                 | ✅ Works        | —                           |
+| Group edit (invalid perm) | 403 Forbidden or redirect                                   | Logged in as employee                | ✅ Works        | —                           |
+| Contract: invalid rate    | Show validation error                                       | Entering hourly rate < €12.45        | ✅ Works        | —                           |
+| Expired contract          | Person status set to inactive                               | Deleted/expired contract manually    | ✅ Works        | —                           |
+| Mobile responsiveness     | Sidebar collapses, page adjusts correctly                   | Resizing browser, mobile simulation  | ✅ Works        | —                           |
+
+Additional manual tests included:
+
+- **User Creation & Email Flow**
+  - Created users and verified email content and group-based login access.
+- **Dashboard Widgets**
+  - Verified widget display and behavior by role (HR, Manager, Employee).
+- **CRUD Operations**
+  - Create, Read, Update, Delete tested for:
+    - People
+    - Contracts
+    - Users
+    - Groups & Permissions
+- **Permission Enforcement**
+  - Verified restricted views redirect or show 403.
+  - Sidebar dynamically adjusts for current user's permissions.
+- **Known Edge Cases**
+  - Deleting linked contracts
+  - Submitting empty fields
+  - Duplicate users
+  - No contracts present
+
+### 📱 3. Responsive Design Testing (LO4.2)
+
+Tested using [https://responsivedesignchecker.com](https://responsivedesignchecker.com) and browser dev tools.
+
+Devices tested:
+
+- iPhone SE  
+- iPhone 14  
+- iPad Air  
+- Galaxy S21  
+- Laptop / Desktop (1366px+)
+
+> 📸 ![Mobile View](./assets/dashboard/mobile_dashboard.png)
+
+✅ Sidebar collapses and toggles correctly  
+✅ Layout adjusts fluidly  
+✅ All forms remain accessible on small screens
+
+### 🎨 4. Code Validation (LO4.2)
+
+Validated using official tools:
+
+#### ✅ HTML Validation
+
+All HTML templates were validated using the [W3C Markup Validator](https://validator.w3.org/) with no errors or warnings present.
+
+> 📸 ![HTML Validation Pass](./assets/testing/html_validation.png)
+
+- Minor info notice regarding a trailing slash on a `<link>` tag:
+  - This is **non-breaking** and has **no functional effect**
+  - Accepted as valid and left intentionally
+
+#### ✅ CSS Validation
+
+All custom CSS was tested using the official [W3C CSS Validator](https://jigsaw.w3.org/css-validator/).
+
+> 📸 ![CSS Validation Pass](./assets/testing/css_validation.png)
+
+- No errors or warnings were reported
+- The CSS is fully valid as per CSS Level 3 + SVG standards
+
+#### ✅ JavaScript Validation
+
+All custom JavaScript was reviewed using [JSHint](https://jshint.com/) and metrics analysis.
+
+> 📸 ![JS Validation](./assets/testing/js_validation.png)
+
+- No syntax errors or warnings reported
+- Cyclomatic complexity is low (2), confirming good maintainability
+- All DOM manipulation logic and event listeners are scoped, clean, and modular
+
+#### ✅ Python Style Validation
+
+All Python files were validated using [`flake8`](https://flake8.pycqa.org/en/latest/) to ensure compliance with PEP8 standards.
+
+> ℹ️ Screenshot omitted due to long terminal output — results described below.
+
+- `flake8` returned a few `E501` (line too long) warnings in `tests.py` — retained for clarity
+- A small number of `E402` (import not at top of file) warnings were detected, but only in vendor or auto-generated files (e.g., `venv/`, `__init__.py`)
+- All core application files passed without warnings or critical issues
+
+
+#### 🛠️ Validation Commands Used
+
+To validate Python code style, the following commands were run from the project root:
+
+```bash
+# Install flake8 (inside virtual environment)
+pip install flake8
+
+# Run flake8 on all project files
+flake8 .
+
+# Ignore E501 (line too long) warnings
+flake8 . | Select-String -NotMatch "E501"
+
+# (Optional) Show only import placement issues (E402)
+flake8 . | Select-String "E402"
+```
+
+These commands confirmed that:
+- All critical application files are clean
+- Only non-blocking warnings appear in test files or vendor code
+
+
+> _All results were clean or had only minor non-breaking warnings related to Django template tags._
+
+### 🧠 5. Testing User Stories
+
+Each user story was tested through real usage flows and mapped to functionality.  
+📝 _See “User Stories” section for descriptions; each has been tested manually and/or automatically._
+
+### 🐞 6. Bugs Found & Fixes
+
+During development, all bugs were addressed immediately during feature implementation. One key issue was identified from a **previous submission** and has since been resolved.
+
+| **Bug**                             | **Cause**                                      | **Fix Applied**                                                           |
+|-------------------------------------|------------------------------------------------|----------------------------------------------------------------------------|
+| Mobile navbar not displaying properly | Required CSS class for JS toggle was missing   | Ensured correct CSS classes were present to allow JavaScript activation |
+
+> 📸 ![Mobile Navbar Fixed](./assets/testing/mobile_navbar.png)
+
+✅ The mobile navigation bar is now fully responsive and functions as expected across all devices.
+
+
+### 🚨 7. Known Issues
+
+✅ No known issues present at the time of submission.  
+All functionality behaves as expected across all supported user roles and devices.
+
+## 🛠 Troubleshooting Common Errors
 
 ### **Database Errors During Testing**
 
-**Error:** `django.db.utils.ProgrammingError: relation "security_permissiondefinition" does not exist`
+**Error:**
 
-**Solution:** Ensure migrations are properly applied before running tests:
+```
+django.db.utils.ProgrammingError: relation "security_permissiondefinition" does not exist
+```
+
+**Solution:**
+
+Ensure all migrations are applied before testing:
 
 ```bash
 python manage.py makemigrations security people_management
 python manage.py migrate
 ```
 
-If the error persists, try resetting the test database:
+If problems persist, try resetting the test DB:
 
 ```bash
 python manage.py flush
-```
-
-Then, rerun:
-
-```bash
 python manage.py test
 ```
 
 ---
+
 
 ## Installation & Setup
 
