@@ -68,34 +68,53 @@ The design philosophy for this system was centered on **simplicity**, **clarity*
 This visual distinction supports intuitive navigation and helps users immediately understand the difference between overview vs. action.
 
 ---
+### **User Roles & Goals**
+
+| Role     | UX Focus                                 | Permissions Behavior                             |
+|----------|-------------------------------------------|--------------------------------------------------|
+| HR Admin | Manage all employees and assign roles     | Full access to all features via group permissions |
+| Manager  | View and manage team members              | Limited to own team; no access to Security       |
+| Employee | View personal details and contracts only  | Read-only interface                              |
+
+The application uses a **hybrid access control model**:
+
+- **Roles (`person.role`)** are stored in the database and used to control the **dashboard layout and sidebar navigation**.
+- **Django Groups and Permissions** determine what actions users can perform (e.g., adding people, editing contracts).
+
+This structure allows:
+- A flexible UI tailored to each user's role
+- Secure backend enforcement using Django’s built-in permission system
+- Easy expansion of access logic without rewriting frontend views
 
 ### 👥 Role-Specific UX
 
-Each user type sees a version of the application designed specifically for their responsibilities:
+Each role experiences a different version of the system:
 
 - **HR Admin:**
-  - Full access to all system data (People, Contracts, Users, Groups).
-  - Can manage users and assign permission groups.
-  - Sees all employees and contracts in the dashboard widgets.
+  - Full access to People, Contracts, and Security
+  - Can manage users and assign permission groups
+  - Sees all employees and all contracts
 
 - **Manager:**
-  - Sees only employees assigned to them (via manager field).
-  - Can add and edit contracts for those employees.
-  - Cannot access security or group management areas.
+  - Sees only their assigned employees (via `manager` field)
+  - Can create/edit contracts for those employees
+  - No access to user or group management
 
 - **Employee:**
-  - Can only view their own personal data and contracts.
-  - Read-only interface. No management or admin access.
-
----
+  - Can only see their own personal and contract data
+  - Read-only experience, no ability to manage or update records
 
 ### 🔐 Permissions & Modular Access
 
-The app uses Django’s permission system and custom **Groups** to control feature access.
+- Permissions are assigned through **Groups** (e.g., `people.add_person`, `contracts.view_contract`)
+- The system uses Django **permission mixins** in class-based views to check access
+- Admins can configure new Groups to create custom permission sets
+- If a user has the required permission, the associated action or page becomes accessible
 
-- Each **Group** contains a set of permissions (e.g., `people.add_person`, `contracts.change_contract`).
-- When a **User** is assigned to a group, their interface updates automatically based on available views and actions.
-- This makes the system highly configurable and scalable — admins can create tailored permission sets for different organizational needs.
+### ✅ Summary
+
+- `person.role` → controls what you **see**
+- Django permissions → control what you **can do**
 
 ---
 
@@ -152,15 +171,7 @@ The following wireframes were created during the design process and influenced t
 ```
 
 
-### **User Roles & Goals**
 
-| Role     | Goals                                  |
-| -------- | -------------------------------------- |
-| HR Admin | Manage all employees and assign roles. |
-| Manager  | View and manage team members.          |
-| Employee | View personal details and contracts.   |
-
-User Roles have been replaced to use djangos in built permission system. There is base of HR Admin, Manager, Employee for permissions but custom groups are creatable. Permissions are checked for as mixins with the class based views. If the user has a group with the required permiission they can access the functionality. Roled are used to restrict the sidenav of the dashboard.
 
 ![Permissions](./assets/groups/assign_permission.png)
 
