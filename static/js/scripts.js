@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (window.innerWidth <= 768) {
             sidebar.classList.toggle("open");
         } else {
-            sidebar.classList.toggle("collapse")
-            main.classList.toggle("expand")
+            sidebar.classList.toggle("collapse");
+            main.classList.toggle("expand");
         }
     });
 });
