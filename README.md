@@ -216,7 +216,7 @@ Public self-registration is intentionally **not** supported. This is a deliberat
 - Creating users manually ensures proper permissions and relationships (e.g., manager assignments).
 
 Users are created via the **Security → Users → Create User** interface.  
-👉 [See: Creating a User](#📩-creating-a-user-and-sending-login-credentials)
+👉 [See: Creating a User](#-creating-a-user-and-sending-login-credentials)
 
 #### 🏗️ Future Support: Multi-Tenancy
 
