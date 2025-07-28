@@ -156,18 +156,46 @@ To support user flow, the system is divided into clear sections:
 
 The following wireframes were created during the design process and influenced the implementation of both structure and visual hierarchy. You can see how they translate directly into the implemented dashboard, people list, forms, and navigation system.
 
-> 💡 To add images, use this Markdown template per image:
+**📌 All Employees**  
+<img src="./assets/wireframes/All_Employees.jpg" alt="All Employees" width="600"/>
 
-```md
-**📌 [Wireframe Title]**  
-![Wireframe](./assets/wireframes/FILENAME.png)
-```
+**📌 Audit Log**  
+<img src="./assets/wireframes/Audit.jpg" alt="Audit Log" width="600"/>
 
-> Example:
+**📌 Contract Details**  
+<img src="./assets/wireframes/Contract_details.jpg" alt="Contract Details" width="600"/>
 
-```md
-**📌 Dashboard Wireframe**  
-![Wireframe](./assets/wireframes/dashboard_wireframe.png)
+**📌 Update Contract**  
+<img src="./assets/wireframes/contract_update.jpg" alt="Contract Update" width="600"/>
+
+**📌 Contracts List**  
+<img src="./assets/wireframes/Contracts.jpg" alt="Contracts" width="600"/>
+
+**📌 Delete Confirmation**  
+<img src="./assets/wireframes/Delete.jpg" alt="Delete" width="600"/>
+
+**📌 Edit Person**  
+<img src="./assets/wireframes/Edit_person.jpg" alt="Edit Person" width="600"/>
+
+**📌 Groups Management**  
+<img src="./assets/wireframes/Groups.jpg" alt="Groups" width="600"/>
+
+**📌 Login**  
+<img src="./assets/wireframes/Login.jpg" alt="Login" width="600"/>
+
+**📌 Dashboard (Main)**  
+<img src="./assets/wireframes/Main.jpg" alt="Main Dashboard" width="600"/>
+
+**📌 New Contract**  
+<img src="./assets/wireframes/New_contract.jpg" alt="New Contract" width="600"/>
+
+**📌 New Person**  
+<img src="./assets/wireframes/New_person.jpg" alt="New Person" width="600"/>
+
+**📌 View Person**  
+<img src="./assets/wireframes/View_person.jpg" alt="View Person" width="600"/>
+
+
 ```
 
 
